@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1 {
+  font-family: Jomhuria;
+}
+
+p {
+  font-family: Jomolhari;
+}
+
+a {
+  width: fit-content;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
