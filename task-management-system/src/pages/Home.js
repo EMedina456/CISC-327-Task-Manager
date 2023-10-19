@@ -1,4 +1,8 @@
-// import logo from './logo.svg'
+// Program Intention: Home page to handle the various components and pages
+// Input/Output: The page will handle the input/output of the various components and pages, which are all controlled by user control
+// Run Intention: The page will run the various components and pages through the running of the website, which are all controlled by user control
+
+// Import files and depenndencies here
 import './../App.css'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { MdOutlineAccountCircle } from 'react-icons/md'
@@ -13,7 +17,10 @@ import EditProject from '../components/EditProject'
 import EditTask from '../components/EditTask'
 import Tasks from '../components/Tasks'
 import PriorityTasks from '../components/PriorityTasks'
+
+// Home Page
 const Home = () => {
+  // Variables used in the page to trigger different components
   const [createTask, setCreateTask] = useState(false)
   const [createProject, setCreateProject] = useState(false)
   const [create, setCreate] = useState(false)
@@ -23,27 +30,40 @@ const Home = () => {
   const [editTask, setEditTask] = useState(false)
   const [deadline, setDeadline] = useState(false)
   const [priority, setPriority] = useState(true)
+
+  // Functions to handle the different components
+  // Handle the deadline component, by setting it true and the priority component false
   const handleDeadline = () => {
     setDeadline(true)
     setPriority(false)
   }
+
+  // Handle the priority component, by setting it true and the deadline component false
   const handlePriority = () => {
     setPriority(true)
     setDeadline(false)
   }
+
+  // Handle the create task component, by setting it true and the other components false
   const handleCreateTask = () => {
     setCreateTask(true)
     setCreateProject(false)
     setCreate(false)
   }
+
+  // Handle the create component, which is the plus button, by setting it true and the other components false
   const handleCreate = () => {
     setCreate(!create)
   }
+
+  // Handle the create project component, by setting it true and the other components false
   const handleCreateProject = () => {
     setCreateProject(true)
     setCreateTask(false)
     setCreate(false)
   }
+
+  // Handle the reset component, which resets the page, by setting it true and the other components false
   const handleReset = () => {
     setCreateTask(false)
     setCreateProject(false)
@@ -52,6 +72,7 @@ const Home = () => {
     setViewProject(false)
   }
 
+  // Handle the view task component by setting it true and the other components false
   const handleViewTask = () => {
     setViewTask(true)
     setCreateTask(false)
@@ -60,6 +81,7 @@ const Home = () => {
     setViewProject(false)
   }
 
+  // Handle the view project component by setting it true and the other components false
   const handleViewProject = () => {
     setViewProject(true)
     setViewTask(false)
@@ -68,6 +90,7 @@ const Home = () => {
     setCreate(false)
   }
 
+  // Handle the edit project component by setting it true and the other components false
   const handleEditProject = () => {
     setEditProject(true)
     setViewProject(false)
@@ -77,6 +100,8 @@ const Home = () => {
     setCreate(false)
     setEditTask(false)
   }
+
+  // Handle the edit task component by setting it true and the other components false
   const handleEditTask = () => {
     setEditTask(true)
     setEditProject(false)
@@ -86,8 +111,11 @@ const Home = () => {
     setCreateProject(false)
     setCreate(false)
   }
+
+  // Return the page
   return (
     <div className="bg-[#D9D9D9] h-[100vh]">
+      {/* The Create + plus that handles the create project and create task components */}
       <header className="flex h-[15%] bg-[#FF9FB2] items-center">
         <button onClick={handleReset}>
           <h1 className="text-6xl text-left ml-6 font-extrabold">Task-it</h1>
@@ -117,17 +145,20 @@ const Home = () => {
             </div>
           ) : null}
         </div>
-
+        {/* The user icon that handles the login component */}
         <Link to="/login" className="text-6xl text-right ml-auto mr-6">
           <MdOutlineAccountCircle />
         </Link>
       </header>
       <div className="flex h-[85%]">
+        {/* The sidebar that handles the different sorting components */}
         <div className="flex flex-col justify-top p-[2%] items-center space-y-8 w-[20%] bg-[#FBDCE2]">
           <h1 className="text-4xl font-bold mb-2">Sort By </h1>
           <div className="border-[#60AB9A] w-full h-1 border-2" />
           <div className="flex flex-row ">
             <div className="flex flex-col">
+              {/* The deadline and priority buttons that handle the different sorting components */}
+              {/* The deadline button is used to sort the tasks by deadline */}
               <button onClick={handleDeadline}>
                 <h1 className="text-3xl m-2 font-bold mb-2">Deadline </h1>
                 <div className="mr-2 border-[#60AB9A] w-full h-1 border-2" />
@@ -135,18 +166,21 @@ const Home = () => {
             </div>
 
             <div className="flex flex-col">
+              {/* The priority button is used to sort the tasks by priority */}
               <button onClick={handlePriority}>
                 <h1 className="text-3xl m-2 font-bold mb-2">Priority </h1>
                 <div className=" ml-2 border-[#60AB9A] w-full h-1 border-2" />
               </button>
             </div>
           </div>
+          {/* The tasks and priority tasks components that handle the different sorting components */}
           {deadline ? (
             <Tasks handleViewTask={handleViewTask} />
           ) : (
             <PriorityTasks handleViewTask={handleViewTask} />
           )}
         </div>
+        {/* The main component that handles the different components, which checks which variable is true and uses that component */}
         {createTask ? (
           <CreateTask />
         ) : createProject ? (
