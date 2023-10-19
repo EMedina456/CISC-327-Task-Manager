@@ -12,13 +12,14 @@ const EditTask = () => {
   const [deadline, setDeadline] = useState('')
   const [project, setProject] = useState('')
 
-  // Handle the submission of the task, currently just prints the task vairables to the console
+  // Handle the submission of the task, currently just prints the task vairables to the console, and alerts user
   const handleSubmit = (e) => {
     console.log('name', task_name)
     console.log('description', description)
     console.log('priority', priority)
     console.log('deadline', deadline)
     console.log('project', project)
+    alert('Task edited successfully')
   }
   // Edit Task Page
   return (

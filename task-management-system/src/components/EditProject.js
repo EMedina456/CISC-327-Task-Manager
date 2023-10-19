@@ -9,10 +9,11 @@ const EditProject = () => {
   const [project_name, setProjectName] = useState('')
   const [description, setDescription] = useState('')
 
-  // Handles the submission of the project name and description, currently just logs them
+  // Handles the submission of the project name and description, currently just logs them, and alerts user
   const handleSubmit = (e) => {
     console.log('name', project_name)
     console.log('description', description)
+    alert('Project edited successfully')
   }
   // Edit Project Page
   return (

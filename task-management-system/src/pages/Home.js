@@ -2,8 +2,7 @@
 // Input/Output: The page will handle the input/output of the various components and pages, which are all controlled by user control
 // Run Intention: The page will run the various components and pages through the running of the website, which are all controlled by user control
 
-// Import files and depenndencies here
-import './../App.css'
+// Import files and dependencies here
 import { AiOutlinePlus } from 'react-icons/ai'
 import { MdOutlineAccountCircle } from 'react-icons/md'
 import { Link } from 'react-router-dom'
@@ -17,6 +16,7 @@ import EditProject from '../components/EditProject'
 import EditTask from '../components/EditTask'
 import Tasks from '../components/Tasks'
 import PriorityTasks from '../components/PriorityTasks'
+import './../App.css'
 
 // Home Page
 const Home = () => {
@@ -159,7 +159,11 @@ const Home = () => {
             <div className="flex flex-col">
               {/* The deadline and priority buttons that handle the different sorting components */}
               {/* The deadline button is used to sort the tasks by deadline */}
-              <button onClick={handleDeadline}>
+              <button
+                id="handleDeadline"
+                onClick={handleDeadline}
+                alt="handleDeadline"
+              >
                 <h1 className="text-3xl m-2 font-bold mb-2">Deadline </h1>
                 <div className="mr-2 border-[#60AB9A] w-full h-1 border-2" />
               </button>
@@ -167,7 +171,11 @@ const Home = () => {
 
             <div className="flex flex-col">
               {/* The priority button is used to sort the tasks by priority */}
-              <button onClick={handlePriority}>
+              <button
+                id="handlePriority"
+                onClick={handlePriority}
+                alt="handlePriority"
+              >
                 <h1 className="text-3xl m-2 font-bold mb-2">Priority </h1>
                 <div className=" ml-2 border-[#60AB9A] w-full h-1 border-2" />
               </button>

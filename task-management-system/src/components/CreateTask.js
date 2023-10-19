@@ -19,6 +19,7 @@ const CreateTask = () => {
     console.log('priority', priority)
     console.log('deadline', deadline)
     console.log('project', project)
+    alert('Task created successfully')
   }
   // Create Task Page
   return (

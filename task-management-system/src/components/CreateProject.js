@@ -13,6 +13,7 @@ const CreateProject = () => {
   const handleSubmit = (e) => {
     console.log('name', project_name)
     console.log('description', description)
+    alert('Project created successfully')
   }
 
   // Create Project Page
