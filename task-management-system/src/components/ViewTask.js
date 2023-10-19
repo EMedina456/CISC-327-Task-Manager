@@ -3,20 +3,20 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import { BsCheck } from 'react-icons/bs'
-import { RiDeleteBin5Line } from 'react-icons/ri'
-import { AiOutlineUserAdd } from 'react-icons/ai'
-import { useState } from 'react'
-import SingleTask from './SingleTask'
-import AddMember from './AddMember'
+import { BsCheck } from 'react-icons/bs';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import { AiOutlineUserAdd } from 'react-icons/ai';
+import { useState } from 'react';
+import SingleTask from './SingleTask';
+import AddMember from './AddMember';
 const ViewTask = ({ handleViewProject, handleEditTask }) => {
   // Handle the variables required for the page
-  const [addMember, setAddMember] = useState(false)
+  const [addMember, setAddMember] = useState(false);
 
   // Handle the addition of a member, set addMember to true and the rest to false
   const handleAddMember = () => {
-    setAddMember(true)
-  }
+    setAddMember(true);
+  };
   // View Task Page
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
@@ -30,30 +30,26 @@ const ViewTask = ({ handleViewProject, handleEditTask }) => {
           {/* Handle the edit task button*/}
           <button
             onClick={handleEditTask}
-            className="flex m-auto self-end flex-col"
-          >
+            className="flex m-auto self-end flex-col">
             <h1 className="text-3xl font-bold mb-2">Edit</h1>
             <div className="border-[#60AB9A] w-20 h-1 border-2" />
           </button>
           {/* Handle the add member button*/}
           <button
             onClick={handleAddMember}
-            className="flex m-auto self-end flex-col"
-          >
+            className="flex m-auto self-end flex-col">
             <AiOutlineUserAdd className="text-5xl" />
           </button>
           {/* Handle the delete button, and send an alert to confirm the deletion*/}
           <button
             onClick={() => alert('Task Deleted')}
-            className="flex m-auto self-end flex-col"
-          >
+            className="flex m-auto self-end flex-col">
             <RiDeleteBin5Line className="text-5xl" />
           </button>
           {/* Handle the complete button, and send an alert to confirm the completion*/}
           <button
             onClick={() => alert('Task Completed')}
-            className="flex m-auto self-end flex-col"
-          >
+            className="flex m-auto self-end flex-col">
             <BsCheck className="text-7xl" />
           </button>
         </div>
@@ -65,6 +61,6 @@ const ViewTask = ({ handleViewProject, handleEditTask }) => {
         )}
       </div>
     </div>
-  )
-}
-export default ViewTask
+  );
+};
+export default ViewTask;

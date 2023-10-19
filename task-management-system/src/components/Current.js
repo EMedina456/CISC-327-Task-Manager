@@ -12,26 +12,22 @@ const Current = ({ handleViewTask, handleViewProject }) => {
         {/* Handle the view of the projects and be able to click on them*/}
         <button
           onClick={handleViewProject}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Project 1
         </button>
         <button
           onClick={handleViewProject}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Project 2
         </button>
         <button
           onClick={handleViewProject}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Project 3
         </button>
         <button
           onClick={handleViewProject}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           ...
         </button>
         <div className="my-16" />
@@ -41,26 +37,22 @@ const Current = ({ handleViewTask, handleViewProject }) => {
         {/* Handle the view and be able to click on the overdue tasks*/}
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 3
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           ...
         </button>
       </div>
@@ -72,67 +64,57 @@ const Current = ({ handleViewTask, handleViewProject }) => {
         {/* Handle the view of the tasks and be able to click on them*/}
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 3
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 4
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 5
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 6
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 7
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 8
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           Task 9
         </button>
         <button
           onClick={handleViewTask}
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
           ...
         </button>
       </div>
       <div className="my-16" />
     </div>
-  )
-}
-export default Current
+  );
+};
+export default Current;

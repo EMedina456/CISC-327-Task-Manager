@@ -114,11 +114,11 @@ const Home = () => {
 
   // Return the page
   return (
-    <div className="bg-[#D9D9D9] h-[100vh]">
+    <div className="bg-[#D9D9D9] min-h-[100vh]">
       {/* The Create + plus that handles the create project and create task components */}
-      <header className="flex h-[15%] bg-[#FF9FB2] items-center">
+      <header className="flex min-h-[15%] bg-[#FF9FB2] items-center">
         <button onClick={handleReset}>
-          <h1 className="text-6xl text-left ml-6 font-extrabold">Task-it</h1>
+          <h1 className="text-6xl text-left m-6 font-extrabold">Task-it</h1>
         </button>
 
         <div className="flex items-center align-center">
@@ -150,7 +150,7 @@ const Home = () => {
           <MdOutlineAccountCircle />
         </Link>
       </header>
-      <div className="flex h-[85%]">
+      <div className="flex min-h-[85%]">
         {/* The sidebar that handles the different sorting components */}
         <div className="flex flex-col justify-top p-[2%] items-center space-y-8 w-[20%] bg-[#FBDCE2]">
           <h1 className="text-4xl font-bold mb-2">Sort By </h1>
