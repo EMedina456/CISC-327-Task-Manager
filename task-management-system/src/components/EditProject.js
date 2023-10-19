@@ -3,17 +3,17 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 const EditProject = () => {
   // Handles the variables for the project name and description
-  const [project_name, setProjectName] = useState('')
-  const [description, setDescription] = useState('')
+  const [project_name, setProjectName] = useState('');
+  const [description, setDescription] = useState('');
 
   // Handles the submission of the project name and description, currently just logs them
   const handleSubmit = (e) => {
-    console.log('name', project_name)
-    console.log('description', description)
-  }
+    console.log('name', project_name);
+    console.log('description', description);
+  };
   // Edit Project Page
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
@@ -55,6 +55,6 @@ const EditProject = () => {
         </form>
       </div>
     </div>
-  )
-}
-export default EditProject
+  );
+};
+export default EditProject;

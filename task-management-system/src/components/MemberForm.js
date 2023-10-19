@@ -3,17 +3,17 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import { useState } from 'react'
+import { useState } from 'react';
 const MemberForm = ({ title }) => {
   // Handle the memebre and permission of the member, permission only need with the management of a member
-  const [member, setMember] = useState('')
-  const [permission, setPermission] = useState('')
+  const [member, setMember] = useState('');
+  const [permission, setPermission] = useState('');
 
   // Handle the submit of the form, currently only console.log the member and permission
   const handleSubmit = (e) => {
-    console.log('name', member)
-    console.log('permission', permission)
-  }
+    console.log('name', member);
+    console.log('permission', permission);
+  };
 
   // Member Form Page
   return (
@@ -54,6 +54,6 @@ const MemberForm = ({ title }) => {
         </div>
       </form>
     </div>
-  )
-}
-export default MemberForm
+  );
+};
+export default MemberForm;

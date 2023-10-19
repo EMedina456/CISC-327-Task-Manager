@@ -3,9 +3,9 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import MemberForm from './MemberForm'
+import MemberForm from './MemberForm';
 const AddMember = () => {
   // Add Member Page
-  return <MemberForm title={'Add a member'} />
-}
-export default AddMember
+  return <MemberForm title={'Add a member'} />;
+};
+export default AddMember;

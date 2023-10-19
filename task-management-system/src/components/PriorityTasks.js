@@ -15,20 +15,17 @@ const PriorityTasks = ({ handleViewTask }) => {
         {/* Handle the view and be able to click on the highest priority tasks*/}
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
           Task 3
         </button>
       </div>
@@ -39,20 +36,17 @@ const PriorityTasks = ({ handleViewTask }) => {
         {/* Handle the view and be able to click on the second highest priority tasks*/}
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
           Task 3
         </button>
       </div>
@@ -63,24 +57,21 @@ const PriorityTasks = ({ handleViewTask }) => {
         {/* Handle the view and be able to click on the third highest priority tasks*/}
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
-        >
+          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
           Task 3
         </button>
       </div>
     </div>
-  )
-}
-export default PriorityTasks
+  );
+};
+export default PriorityTasks;
