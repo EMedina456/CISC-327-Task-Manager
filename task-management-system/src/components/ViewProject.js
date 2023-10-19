@@ -17,6 +17,7 @@ import AddMember from './AddMember';
 import RemoveMember from './RemoveMember';
 import TransferOwnership from './TransferOwnership';
 import ManageMember from './ManageMember';
+
 const ViewProject = ({ handleViewTask, handleEditProject }) => {
   // Handle the variables required for the page
   const [addMember, setAddMember] = useState(false);

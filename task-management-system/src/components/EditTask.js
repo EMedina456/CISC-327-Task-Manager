@@ -4,6 +4,7 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
+
 const EditTask = () => {
   // Handle the variables of the task
   const [task_name, setTaskName] = useState('');

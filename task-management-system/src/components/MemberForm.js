@@ -4,6 +4,7 @@
 
 // Import files and dependencies here
 import { useState } from 'react';
+
 const MemberForm = ({ title }) => {
   // Handle the memebre and permission of the member, permission only need with the management of a member
   const [member, setMember] = useState('');

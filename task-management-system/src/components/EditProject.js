@@ -4,6 +4,7 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
+
 const EditProject = () => {
   // Handles the variables for the project name and description
   const [project_name, setProjectName] = useState('');

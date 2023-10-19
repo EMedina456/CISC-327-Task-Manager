@@ -4,6 +4,7 @@
 
 // Import files and dependencies here
 import MemberForm from './MemberForm';
+
 const ManageMember = () => {
   // Manage Member Page
   return <MemberForm title={'Manage a member'} />;
