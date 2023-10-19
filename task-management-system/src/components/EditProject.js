@@ -20,7 +20,7 @@ const EditProject = () => {
     <div className="flex flex-col md:flex-row w-[80%]">
       <div className="flex-1 flex-col p-[2%] justify-center items-center h-full">
         {/* Handle the form of edit project*/}
-        <h1 className="flex text-5xl font-bold mb-2">Create a Project</h1>
+        <h1 className="flex text-5xl font-bold mb-2">Edit a Project</h1>
         <div className="border-[#60AB9A] w-80 h-1 border-2" />
         <form onSubmit={handleSubmit}>
           <div className="">
