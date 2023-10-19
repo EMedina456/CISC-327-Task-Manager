@@ -1,4 +1,4 @@
-// Program Intention: Handle the creation of a project
+// Program Intention: Handle the edit of a project
 // Input/Output: Handle the name and description of the project
 // Run Intention: Run with the entire website
 

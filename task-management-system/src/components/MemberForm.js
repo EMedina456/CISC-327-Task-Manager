@@ -17,7 +17,7 @@ const MemberForm = ({ title }) => {
 
   // Member Form Page
   return (
-    <div className="flex-1 flex-col p-[2%] justify-center items-center h-full">
+    <div className="flex-1 flex-col p-[2%] justify-center items-center h-[85%]">
       {/* Handle the form of member, title changes based on the argument given*/}
       <h1 className="flex text-3xl font-bold mb-2">{title}</h1>
       <div className="border-[#60AB9A] w-60 h-1 border-2" />

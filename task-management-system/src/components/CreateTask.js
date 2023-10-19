@@ -12,7 +12,7 @@ const CreateTask = () => {
   const [deadline, setDeadline] = useState('');
   const [project, setProject] = useState('');
 
-  // Handle the submission of the task, currently just prints the task vairables to the console
+  // Handle the submission of the task, currently just prints the task variables to the console
   const handleSubmit = (e) => {
     console.log('name', task_name);
     console.log('description', description);
