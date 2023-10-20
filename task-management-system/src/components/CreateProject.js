@@ -7,15 +7,15 @@ import React, { useState } from 'react';
 
 const CreateProject = () => {
   // Variables that handle the project name and description
-  const [project_name, setProjectName] = useState('')
-  const [description, setDescription] = useState('')
+  const [project_name, setProjectName] = useState('');
+  const [description, setDescription] = useState('');
 
   // Handle the submission of the project name and description, currently just console logs them
   const handleSubmit = (e) => {
-    console.log('name', project_name)
-    console.log('description', description)
-    alert('Project created successfully')
-  }
+    console.log('name', project_name);
+    console.log('description', description);
+    alert('Project created successfully');
+  };
 
   // Create Project Page
   return (
@@ -56,6 +56,6 @@ const CreateProject = () => {
         </form>
       </div>
     </div>
-  )
-}
-export default CreateProject
+  );
+};
+export default CreateProject;

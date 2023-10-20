@@ -7,16 +7,16 @@ import { useState } from 'react';
 
 const MemberForm = ({ title }) => {
   // Handle the memebre and permission of the member, permissions, their permissions not needed when removing
-  const [member, setMember] = useState('')
-  const [yourPermission, setYourPermission] = useState('')
-  const [theirPermission, setTheirPermission] = useState('')
+  const [member, setMember] = useState('');
+  const [yourPermission, setYourPermission] = useState('');
+  const [theirPermission, setTheirPermission] = useState('');
 
   // Handle the submit of the form, currently only console.log the member and permissions
   const handleSubmit = (e) => {
-    console.log('name', member)
-    console.log('permission', yourPermission)
-    console.log('permission', theirPermission)
-  }
+    console.log('name', member);
+    console.log('permission', yourPermission);
+    console.log('permission', theirPermission);
+  };
 
   // Member Form Page
   return (
@@ -69,6 +69,6 @@ const MemberForm = ({ title }) => {
         </div>
       </form>
     </div>
-  )
-}
-export default MemberForm
+  );
+};
+export default MemberForm;

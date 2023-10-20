@@ -7,22 +7,21 @@ import React, { useState } from 'react';
 
 const EditTask = () => {
   // Handle the variables of the task
-  const [task_name, setTaskName] = useState('')
-  const [description, setDescription] = useState('')
-  const [priority, setPriority] = useState('')
-  const [deadline, setDeadline] = useState('')
-  const [project, setProject] = useState('')
-
+  const [task_name, setTaskName] = useState('');
+  const [description, setDescription] = useState('');
+  const [priority, setPriority] = useState('');
+  const [deadline, setDeadline] = useState('');
+  const [project, setProject] = useState('');
 
   // Handle the submission of the task, currently just prints the task vairables to the console, and alerts user
   const handleSubmit = (e) => {
-    console.log('name', task_name)
-    console.log('description', description)
-    console.log('priority', priority)
-    console.log('deadline', deadline)
-    console.log('project', project)
-    alert('Task edited successfully')
-  }
+    console.log('name', task_name);
+    console.log('description', description);
+    console.log('priority', priority);
+    console.log('deadline', deadline);
+    console.log('project', project);
+    alert('Task edited successfully');
+  };
   // Edit Task Page
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
@@ -97,6 +96,6 @@ const EditTask = () => {
         </form>
       </div>
     </div>
-  )
-}
-export default EditTask
+  );
+};
+export default EditTask;
