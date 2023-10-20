@@ -1,9 +1,10 @@
-// Program Intention: Handle the creation of a project
+// Program Intention: Handle the edit of a project
 // Input/Output: Handle the name and description of the project
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+
 const EditProject = () => {
   // Handles the variables for the project name and description
   const [project_name, setProjectName] = useState('')

@@ -3,7 +3,8 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+
 const EditTask = () => {
   // Handle the variables of the task
   const [task_name, setTaskName] = useState('')
@@ -11,6 +12,7 @@ const EditTask = () => {
   const [priority, setPriority] = useState('')
   const [deadline, setDeadline] = useState('')
   const [project, setProject] = useState('')
+
 
   // Handle the submission of the task, currently just prints the task vairables to the console, and alerts user
   const handleSubmit = (e) => {

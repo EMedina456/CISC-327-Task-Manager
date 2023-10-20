@@ -3,7 +3,8 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+
 const CreateProject = () => {
   // Variables that handle the project name and description
   const [project_name, setProjectName] = useState('')
