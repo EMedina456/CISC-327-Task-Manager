@@ -6,15 +6,17 @@
 import { useState } from 'react';
 
 const MemberForm = ({ title }) => {
-  // Handle the memebre and permission of the member, permission only need with the management of a member
-  const [member, setMember] = useState('');
-  const [permission, setPermission] = useState('');
+  // Handle the memebre and permission of the member, permissions, their permissions not needed when removing
+  const [member, setMember] = useState('')
+  const [yourPermission, setYourPermission] = useState('')
+  const [theirPermission, setTheirPermission] = useState('')
 
-  // Handle the submit of the form, currently only console.log the member and permission
+  // Handle the submit of the form, currently only console.log the member and permissions
   const handleSubmit = (e) => {
-    console.log('name', member);
-    console.log('permission', permission);
-  };
+    console.log('name', member)
+    console.log('permission', yourPermission)
+    console.log('permission', theirPermission)
+  }
 
   // Member Form Page
   return (
@@ -30,22 +32,34 @@ const MemberForm = ({ title }) => {
             <input
               type="text"
               id="member_name"
+              alt="member_name"
               className="box-border h-8 w-44 p-4 border-4"
               onChange={(e) => setMember(e.target.value)}
             />
           </label>
-          {/* Handle the permission input, only needed with the management of a member*/}
-          {title === 'Manage a member' && (
+          {/* Handle your permission input*/}
+          <label>
+            <h1 className="text-2xl font-bold mb-4 mt-4">your permission</h1>
+            <input
+              type="text"
+              id="your-permisson"
+              className="box-border h-8 w-44 p-4 border-4"
+              onChange={(e) => setYourPermission(e.target.value)}
+            />
+          </label>
+          {/* Handle their permission input, not needed when removing a member*/}
+          {title === 'Remove a member' ? null : (
             <label>
-              <h1 className="text-2xl font-bold mb-4 mt-4">permission</h1>
+              <h1 className="text-2xl font-bold mb-4 mt-4">their permission</h1>
               <input
                 type="text"
-                id="permisson"
+                id="their-permisson"
                 className="box-border h-8 w-44 p-4 border-4"
-                onChange={(e) => setPermission(e.target.value)}
+                onChange={(e) => setTheirPermission(e.target.value)}
               />
             </label>
           )}
+
           <div className="justify-center items-center text-left">
             {/* Handle the submit button*/}
             <button className="text-xl font-bold mt-2 underline decoration-[#0acdff]">
@@ -55,6 +69,6 @@ const MemberForm = ({ title }) => {
         </div>
       </form>
     </div>
-  );
-};
-export default MemberForm;
+  )
+}
+export default MemberForm

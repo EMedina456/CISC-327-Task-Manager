@@ -7,20 +7,21 @@ import React, { useState } from 'react';
 
 const EditProject = () => {
   // Handles the variables for the project name and description
-  const [project_name, setProjectName] = useState('');
-  const [description, setDescription] = useState('');
+  const [project_name, setProjectName] = useState('')
+  const [description, setDescription] = useState('')
 
-  // Handles the submission of the project name and description, currently just logs them
+  // Handles the submission of the project name and description, currently just logs them, and alerts user
   const handleSubmit = (e) => {
-    console.log('name', project_name);
-    console.log('description', description);
-  };
+    console.log('name', project_name)
+    console.log('description', description)
+    alert('Project edited successfully')
+  }
   // Edit Project Page
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
       <div className="flex-1 flex-col p-[2%] justify-center items-center h-full">
         {/* Handle the form of edit project*/}
-        <h1 className="flex text-5xl font-bold mb-2">Create a Project</h1>
+        <h1 className="flex text-5xl font-bold mb-2">Edit a Project</h1>
         <div className="border-[#60AB9A] w-80 h-1 border-2" />
         <form onSubmit={handleSubmit}>
           <div className="">
@@ -56,6 +57,6 @@ const EditProject = () => {
         </form>
       </div>
     </div>
-  );
-};
-export default EditProject;
+  )
+}
+export default EditProject
