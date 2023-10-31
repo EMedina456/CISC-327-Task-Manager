@@ -3,10 +3,11 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
+
 const PriorityTasks = ({ handleViewTask }) => {
   // Priority Tasks Page
   return (
-    <div className=" space-y-8 ">
+    <div className="space-y-8 ">
       <div className="flex flex-col justify-center">
         {/* Priority Tasks Page */}
         {/* Highest Priority */}

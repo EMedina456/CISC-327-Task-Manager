@@ -3,23 +3,24 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import { useState } from 'react'
+import { useState } from 'react';
+
 const MemberForm = ({ title }) => {
   // Handle the memebre and permission of the member, permissions, their permissions not needed when removing
-  const [member, setMember] = useState('')
-  const [yourPermission, setYourPermission] = useState('')
-  const [theirPermission, setTheirPermission] = useState('')
+  const [member, setMember] = useState('');
+  const [yourPermission, setYourPermission] = useState('');
+  const [theirPermission, setTheirPermission] = useState('');
 
   // Handle the submit of the form, currently only console.log the member and permissions
   const handleSubmit = (e) => {
-    console.log('name', member)
-    console.log('permission', yourPermission)
-    console.log('permission', theirPermission)
-  }
+    console.log('name', member);
+    console.log('permission', yourPermission);
+    console.log('permission', theirPermission);
+  };
 
   // Member Form Page
   return (
-    <div className="flex-1 flex-col p-[2%] justify-center items-center h-full">
+    <div className="flex-1 flex-col p-[2%] justify-center items-center h-[85%]">
       {/* Handle the form of member, title changes based on the argument given*/}
       <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
         {title}
@@ -76,6 +77,6 @@ const MemberForm = ({ title }) => {
         </div>
       </form>
     </div>
-  )
-}
-export default MemberForm
+  );
+};
+export default MemberForm;

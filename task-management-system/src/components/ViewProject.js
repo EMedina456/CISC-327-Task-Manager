@@ -10,13 +10,15 @@ import {
   AiOutlineUserDelete,
   AiOutlineUserSwitch,
   AiOutlineUser,
-} from 'react-icons/ai'
-import { useState } from 'react'
-import Tasks from './Tasks'
-import AddMember from './AddMember'
-import RemoveMember from './RemoveMember'
-import TransferOwnership from './TransferOwnership'
-import ManageMember from './ManageMember'
+
+} from 'react-icons/ai';
+import { useState } from 'react';
+import Tasks from './Tasks';
+import AddMember from './AddMember';
+import RemoveMember from './RemoveMember';
+import TransferOwnership from './TransferOwnership';
+import ManageMember from './ManageMember';
+
 const ViewProject = ({ handleViewTask, handleEditProject }) => {
   // Handle the variables required for the page
   const [addMember, setAddMember] = useState(false)

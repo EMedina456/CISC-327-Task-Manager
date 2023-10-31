@@ -1,20 +1,21 @@
-// Program Intention: Handle the creation of a project
+// Program Intention: Handle the edit of a project
 // Input/Output: Handle the name and description of the project
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+
 const EditProject = () => {
   // Handles the variables for the project name and description
-  const [project_name, setProjectName] = useState('')
-  const [description, setDescription] = useState('')
+  const [project_name, setProjectName] = useState('');
+  const [description, setDescription] = useState('');
 
   // Handles the submission of the project name and description, currently just logs them, and alerts user
   const handleSubmit = (e) => {
-    console.log('name', project_name)
-    console.log('description', description)
-    alert('Project edited successfully')
-  }
+    console.log('name', project_name);
+    console.log('description', description);
+    alert('Project edited successfully');
+  };
   // Edit Project Page
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
@@ -62,6 +63,6 @@ const EditProject = () => {
         </form>
       </div>
     </div>
-  )
-}
-export default EditProject
+  );
+};
+export default EditProject;

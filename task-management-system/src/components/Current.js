@@ -1,6 +1,7 @@
 // Program Intention: Handle the current tasks and projects
 // Input/Output: Handle the current tasks and projects, and allow the user to click on them and redirect to their pages
 // Run Intention: Run with the entire website
+
 const Current = ({ handleViewTask, handleViewProject }) => {
   // Current Page with the methods to handle the view of tasks and projects
   return (

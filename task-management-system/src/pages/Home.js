@@ -3,120 +3,120 @@
 // Run Intention: The page will run the various components and pages through the running of the website, which are all controlled by user control
 
 // Import files and dependencies here
-import { AiOutlinePlus } from 'react-icons/ai'
-import { MdOutlineAccountCircle } from 'react-icons/md'
-import { Link } from 'react-router-dom'
-import Current from '../components/Current'
-import CreateTask from '../components/CreateTask'
-import { useState } from 'react'
-import CreateProject from '../components/CreateProject'
-import ViewProject from '../components/ViewProject'
-import ViewTask from '../components/ViewTask'
-import EditProject from '../components/EditProject'
-import EditTask from '../components/EditTask'
-import Tasks from '../components/Tasks'
-import PriorityTasks from '../components/PriorityTasks'
-import './../App.css'
+import { AiOutlinePlus } from 'react-icons/ai';
+import { MdOutlineAccountCircle } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import Current from '../components/Current';
+import CreateTask from '../components/CreateTask';
+import { useState } from 'react';
+import CreateProject from '../components/CreateProject';
+import ViewProject from '../components/ViewProject';
+import ViewTask from '../components/ViewTask';
+import EditProject from '../components/EditProject';
+import EditTask from '../components/EditTask';
+import Tasks from '../components/Tasks';
+import PriorityTasks from '../components/PriorityTasks';
+import './../App.css';
 
 // Home Page
 const Home = () => {
   // Variables used in the page to trigger different components
-  const [createTask, setCreateTask] = useState(false)
-  const [createProject, setCreateProject] = useState(false)
-  const [create, setCreate] = useState(false)
-  const [viewTask, setViewTask] = useState(false)
-  const [viewProject, setViewProject] = useState(false)
-  const [editProject, setEditProject] = useState(false)
-  const [editTask, setEditTask] = useState(false)
-  const [deadline, setDeadline] = useState(false)
-  const [priority, setPriority] = useState(true)
+  const [createTask, setCreateTask] = useState(false);
+  const [createProject, setCreateProject] = useState(false);
+  const [create, setCreate] = useState(false);
+  const [viewTask, setViewTask] = useState(false);
+  const [viewProject, setViewProject] = useState(false);
+  const [editProject, setEditProject] = useState(false);
+  const [editTask, setEditTask] = useState(false);
+  const [deadline, setDeadline] = useState(false);
+  const [priority, setPriority] = useState(true);
 
   // Functions to handle the different components
   // Handle the deadline component, by setting it true and the priority component false
   const handleDeadline = () => {
-    setDeadline(true)
-    setPriority(false)
-  }
+    setDeadline(true);
+    setPriority(false);
+  };
 
   // Handle the priority component, by setting it true and the deadline component false
   const handlePriority = () => {
-    setPriority(true)
-    setDeadline(false)
-  }
+    setPriority(true);
+    setDeadline(false);
+  };
 
   // Handle the create task component, by setting it true and the other components false
   const handleCreateTask = () => {
-    setCreateTask(true)
-    setCreateProject(false)
-    setCreate(false)
-  }
+    setCreateTask(true);
+    setCreateProject(false);
+    setCreate(false);
+  };
 
   // Handle the create component, which is the plus button, by setting it true and the other components false
   const handleCreate = () => {
-    setCreate(!create)
-  }
+    setCreate(!create);
+  };
 
   // Handle the create project component, by setting it true and the other components false
   const handleCreateProject = () => {
-    setCreateProject(true)
-    setCreateTask(false)
-    setCreate(false)
-  }
+    setCreateProject(true);
+    setCreateTask(false);
+    setCreate(false);
+  };
 
-  // Handle the reset component, which resets the page, by setting it true and the other components false
+  // Handle the reset component, which resets the page by setting the components false
   const handleReset = () => {
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-    setViewTask(false)
-    setViewProject(false)
-  }
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+    setViewTask(false);
+    setViewProject(false);
+  };
 
   // Handle the view task component by setting it true and the other components false
   const handleViewTask = () => {
-    setViewTask(true)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-    setViewProject(false)
-  }
+    setViewTask(true);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+    setViewProject(false);
+  };
 
   // Handle the view project component by setting it true and the other components false
   const handleViewProject = () => {
-    setViewProject(true)
-    setViewTask(false)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-  }
+    setViewProject(true);
+    setViewTask(false);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+  };
 
   // Handle the edit project component by setting it true and the other components false
   const handleEditProject = () => {
-    setEditProject(true)
-    setViewProject(false)
-    setViewTask(false)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-    setEditTask(false)
-  }
+    setEditProject(true);
+    setViewProject(false);
+    setViewTask(false);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+    setEditTask(false);
+  };
 
   // Handle the edit task component by setting it true and the other components false
   const handleEditTask = () => {
-    setEditTask(true)
-    setEditProject(false)
-    setViewProject(false)
-    setViewTask(false)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-  }
+    setEditTask(true);
+    setEditProject(false);
+    setViewProject(false);
+    setViewTask(false);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+  };
 
   // Return the page
   return (
     <div className="bg-[#D9D9D9] min-h-[100vh]">
       {/* The Create + plus that handles the create project and create task components */}
-      <header className="flex min-h-[15%] bg-[#FF9FB2] items-center">
+      <header className="flex min-h-[15vh] bg-[#FF9FB2] items-center">
         <button onClick={handleReset}>
           <h1 className="text-3xl text-left m-6 font-extrabold md:text-6xl lg:text-6xl">
             Task-it
@@ -155,7 +155,7 @@ const Home = () => {
           <MdOutlineAccountCircle />
         </Link>
       </header>
-      <div className="flex min-h-[85%]">
+      <div className="flex min-h-[85vh]">
         {/* The sidebar that handles the different sorting components */}
         <div className="flex flex-col justify-top p-[2%] items-center space-y-8 w-3/12 min-h-[100vh] bg-[#FBDCE2]">
           <h1 className="text-lg m-0 font-bold mb-2 md:text-2xl lg:text-4xl sm:text-base">
@@ -226,7 +226,7 @@ const Home = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
