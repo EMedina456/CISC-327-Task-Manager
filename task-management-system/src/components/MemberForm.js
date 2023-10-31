@@ -22,13 +22,17 @@ const MemberForm = ({ title }) => {
   return (
     <div className="flex-1 flex-col p-[2%] justify-center items-center h-[85%]">
       {/* Handle the form of member, title changes based on the argument given*/}
-      <h1 className="flex text-3xl font-bold mb-2">{title}</h1>
+      <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
+        {title}
+      </h1>
       <div className="border-[#60AB9A] w-60 h-1 border-2" />
       <form onSubmit={handleSubmit}>
         <div className="">
           <label>
             {/* Handle the member name input*/}
-            <h1 className="text-2xl font-bold mb-4 mt-4">name</h1>
+            <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+              name
+            </h1>
             <input
               type="text"
               id="member_name"
@@ -39,7 +43,9 @@ const MemberForm = ({ title }) => {
           </label>
           {/* Handle your permission input*/}
           <label>
-            <h1 className="text-2xl font-bold mb-4 mt-4">your permission</h1>
+            <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+              your permission
+            </h1>
             <input
               type="text"
               id="your-permisson"
@@ -50,7 +56,9 @@ const MemberForm = ({ title }) => {
           {/* Handle their permission input, not needed when removing a member*/}
           {title === 'Remove a member' ? null : (
             <label>
-              <h1 className="text-2xl font-bold mb-4 mt-4">their permission</h1>
+              <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+                their permission
+              </h1>
               <input
                 type="text"
                 id="their-permisson"

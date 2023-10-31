@@ -118,40 +118,50 @@ const Home = () => {
       {/* The Create + plus that handles the create project and create task components */}
       <header className="flex min-h-[15vh] bg-[#FF9FB2] items-center">
         <button onClick={handleReset}>
-          <h1 className="text-6xl text-left m-6 font-extrabold">Task-it</h1>
+          <h1 className="text-3xl text-left m-6 font-extrabold md:text-6xl lg:text-6xl">
+            Task-it
+          </h1>
         </button>
 
         <div className="flex items-center align-center">
           <button
             onClick={handleCreate}
-            className="text-6xl text-right ml-auto mr-6">
+            className="text-4xl text-right ml-auto mr-6 lg:text-6xl md:text-6xl"
+          >
             <AiOutlinePlus />
           </button>
           {create ? (
             <div>
               <button
                 onClick={handleCreateProject}
-                className="text-4xl text-right ml-auto mr-6">
+                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl"
+              >
                 Create Project
               </button>
               <button
                 onClick={handleCreateTask}
-                className="text-4xl text-right ml-auto mr-6">
+                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl"
+              >
                 Create Task
               </button>
             </div>
           ) : null}
         </div>
         {/* The user icon that handles the login component */}
-        <Link to="/login" className="text-6xl text-right ml-auto mr-6">
+        <Link
+          to="/login"
+          className="text-2xl text-right ml-auto mr-6 lg:text-6xl md:text-4xl"
+        >
           <MdOutlineAccountCircle />
         </Link>
       </header>
       <div className="flex min-h-[85vh]">
         {/* The sidebar that handles the different sorting components */}
-        <div className="flex flex-col justify-top p-[2%] items-center min-h-[85vh] space-y-8 w-[20%] bg-[#FBDCE2]">
-          <h1 className="text-4xl font-bold mb-2">Sort By </h1>
-          <div className="border-[#60AB9A] w-full h-1 border-2" />
+        <div className="flex flex-col justify-top p-[2%] items-center space-y-8 w-3/12 min-h-[100vh] bg-[#FBDCE2]">
+          <h1 className="text-lg m-0 font-bold mb-2 md:text-2xl lg:text-4xl sm:text-base">
+            Sort By{' '}
+          </h1>
+          <div className="border-[#60AB9A]  h-1 border-2 w-3/12 lg:w-full md:w-6/12" />
           <div className="flex flex-row ">
             <div className="flex flex-col">
               {/* The deadline and priority buttons that handle the different sorting components */}
@@ -159,9 +169,12 @@ const Home = () => {
               <button
                 id="handleDeadline"
                 onClick={handleDeadline}
-                alt="handleDeadline">
-                <h1 className="text-3xl m-2 font-bold mb-2">Deadline </h1>
-                <div className="mr-2 border-[#60AB9A] w-full h-1 border-2" />
+                alt="handleDeadline"
+              >
+                <h1 className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm">
+                  Deadline{' '}
+                </h1>
+                <div className="mr-2 border-[#60AB9A] w-11/12 lg:w-full md:w-11/12 h-1 border-2" />
               </button>
             </div>
 
@@ -170,9 +183,12 @@ const Home = () => {
               <button
                 id="handlePriority"
                 onClick={handlePriority}
-                alt="handlePriority">
-                <h1 className="text-3xl m-2 font-bold mb-2">Priority </h1>
-                <div className=" ml-2 border-[#60AB9A] w-full h-1 border-2" />
+                alt="handlePriority"
+              >
+                <h1 className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm">
+                  Priority{' '}
+                </h1>
+                <div className=" ml-2 border-[#60AB9A] w-11/12 lg:w-full md:w-11/12 h-1 border-2" />
               </button>
             </div>
           </div>
