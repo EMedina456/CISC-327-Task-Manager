@@ -10,68 +10,83 @@ const PriorityTasks = ({ handleViewTask }) => {
       <div className="flex flex-col justify-center">
         {/* Priority Tasks Page */}
         {/* Highest Priority */}
-        <h1 className="text-4xl font-bold mb-2">!!! Priority</h1>
+        <h1 className="text-lg font-bold mb-2 lg:text-4xl md:text-2xl">
+          !!! Priority
+        </h1>
         <div className="border-[#60AB9A] w-full h-1 border-2" />
         {/* Handle the view and be able to click on the highest priority tasks*/}
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
+        >
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
+        >
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
+        >
           Task 3
         </button>
       </div>
       <div className="flex flex-col justify-center ">
         {/* Second Highest Priority */}
-        <h1 className="text-4xl font-bold mb-2">!! Priority</h1>
+        <h1 className="text-lg font-bold mb-2 lg:text-4xl md:text-2xl">
+          !! Priority
+        </h1>
         <div className="border-[#60AB9A] w-full h-1 border-2" />
         {/* Handle the view and be able to click on the second highest priority tasks*/}
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
+        >
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
+        >
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
+        >
           Task 3
         </button>
       </div>
       <div className="flex flex-col justify-center">
         {/* Third Highest Priority */}
-        <h1 className="text-4xl font-bold mb-2">! Priority</h1>
+        <h1 className="text-lg font-bold mb-2 lg:text-4xl md:text-2xl">
+          ! Priority
+        </h1>
         <div className="border-[#60AB9A] w-full h-1 border-2" />
         {/* Handle the view and be able to click on the third highest priority tasks*/}
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
+        >
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
+        >
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]">
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
+        >
           Task 3
         </button>
       </div>
     </div>
-  );
-};
-export default PriorityTasks;
+  )
+}
+export default PriorityTasks

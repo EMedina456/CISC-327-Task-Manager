@@ -26,13 +26,17 @@ const EditTask = () => {
     <div className="flex flex-col md:flex-row w-[80%]">
       <div className="flex-1 flex-col p-[2%] justify-center items-center h-full">
         {/* Handle the form of edit task*/}
-        <h1 className="flex text-5xl font-bold mb-2">Edit Task</h1>
-        <div className="border-[#60AB9A] w-80 h-1 border-2" />
+        <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
+          Edit Task
+        </h1>
+        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-40 lg:w-60 md:w-60 h-1" />
         <form onSubmit={handleSubmit}>
           <div className="">
             <label>
               {/* Handle the task name input*/}
-              <h1 className="text-2xl font-bold mb-4 mt-4">name</h1>
+              <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+                name
+              </h1>
               <input
                 type="text"
                 id="task_name"
@@ -43,7 +47,9 @@ const EditTask = () => {
             </label>
             <label>
               {/* Handle the task description input*/}
-              <h1 className="text-2xl font-bold mb-4 mt-4">description</h1>
+              <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+                description
+              </h1>
               <input
                 type="text"
                 id="description"
@@ -54,7 +60,9 @@ const EditTask = () => {
             </label>
             <label>
               {/* Handle the task priority input, only numbers allowed*/}
-              <h1 className="text-2xl font-bold mb-4 mt-4">priority</h1>
+              <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+                priority
+              </h1>
               <input
                 type="number"
                 id="priority"
@@ -65,7 +73,9 @@ const EditTask = () => {
             </label>
             <label>
               {/* Handle the task deadline input, only dates allowed*/}
-              <h1 className="text-2xl font-bold mb-4 mt-4">deadline</h1>
+              <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+                deadline
+              </h1>
               <input
                 type="date"
                 id="deadline"
@@ -76,7 +86,9 @@ const EditTask = () => {
             </label>
             <label>
               {/* Handle the task project input*/}
-              <h1 className="text-2xl font-bold mb-4 mt-4">project</h1>
+              <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+                project
+              </h1>
               <input
                 type="text"
                 id="project"

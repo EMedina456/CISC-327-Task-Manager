@@ -26,6 +26,6 @@ const SingleTask = ({ handleViewProject }) => {
         Project
       </button>
     </div>
-  );
-};
-export default SingleTask;
+  )
+}
+export default SingleTask

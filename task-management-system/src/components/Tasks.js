@@ -11,21 +11,24 @@ const Tasks = ({ handleViewTask }) => {
       {/* Be able to click on a task and view it */}
       <button
         onClick={handleViewTask}
-        className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
+        className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "
+      >
         Task 1
       </button>
       <button
         onClick={handleViewTask}
-        className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
+        className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "
+      >
         Task 2
       </button>
       <button
         onClick={handleViewTask}
-        className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]">
+        className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "
+      >
         Task 3
       </button>
       <div className="my-16" />
     </div>
-  );
-};
-export default Tasks;
+  )
+}
+export default Tasks

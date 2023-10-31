@@ -20,13 +20,17 @@ const EditProject = () => {
     <div className="flex flex-col md:flex-row w-[80%]">
       <div className="flex-1 flex-col p-[2%] justify-center items-center h-full">
         {/* Handle the form of edit project*/}
-        <h1 className="flex text-5xl font-bold mb-2">Edit a Project</h1>
-        <div className="border-[#60AB9A] w-80 h-1 border-2" />
+        <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
+          Edit a Project
+        </h1>
+        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-48 lg:w-72 md:w-72 h-1" />
         <form onSubmit={handleSubmit}>
           <div className="">
             {/* Handle the project name input*/}
             <label>
-              <h1 className="text-2xl font-bold mb-4 mt-4">name</h1>
+              <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+                name
+              </h1>
               <input
                 type="text"
                 id="project_name"
@@ -37,7 +41,9 @@ const EditProject = () => {
             </label>
             {/* Handle the project description input*/}
             <label>
-              <h1 className="text-2xl font-bold mb-4 mt-4">description</h1>
+              <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
+                description
+              </h1>
               <input
                 type="text"
                 id="description"
