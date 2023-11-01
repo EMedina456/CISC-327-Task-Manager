@@ -65,6 +65,8 @@ describe('Add Team Members', () => {
 
     // Compare the snapshot
     expect(tree).toMatchSnapshot()
+
+    // CHECK IF THE USER IS ADDED
   })
 
   // Test the addition of a member that does not exist
@@ -103,6 +105,8 @@ describe('Add Team Members', () => {
 
     // Compare the snapshot
     expect(tree).toMatchSnapshot()
+
+    // CHECK ERROR MESSAGE
   })
   // Test the addition of a member with invalid permissions
   it('Scenario Invalid Permissions', async () => {
@@ -139,5 +143,7 @@ describe('Add Team Members', () => {
     )
     // Compare the snapshot
     expect(tree).toMatchSnapshot()
+
+    // CHECK ERROR MESSAGE
   })
 })

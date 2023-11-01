@@ -3,18 +3,18 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
 const Signup = () => {
   // Variables used in the page to handle the username and password
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   // Handle the submit of the username and password, currently just console logs them
   const handleSubmit = (e) => {
-    console.log('username', username);
-    console.log('password', password);
-  };
+    console.log('username', username)
+    console.log('password', password)
+  }
 
   // Signup Page
   return (
@@ -29,6 +29,7 @@ const Signup = () => {
             <input
               type="text"
               id="username"
+              title="username"
               class="box-border h-8 w-44 p-4 border-4"
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -39,6 +40,7 @@ const Signup = () => {
             <input
               type="password"
               id="password"
+              title="password"
               class="box-border h-8 w-44 p-4 border-4"
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -62,6 +64,6 @@ const Signup = () => {
         </Link>
       </div>
     </div>
-  );
-};
-export default Signup;
+  )
+}
+export default Signup
