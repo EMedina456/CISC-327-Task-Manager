@@ -8,7 +8,7 @@ import { MdOutlineAccountCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import Current from '../components/Current';
 import CreateTask from '../components/CreateTask';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreateProject from '../components/CreateProject';
 import ViewProject from '../components/ViewProject';
 import ViewTask from '../components/ViewTask';
@@ -17,11 +17,40 @@ import EditTask from '../components/EditTask';
 import Tasks from '../components/Tasks';
 import PriorityTasks from '../components/PriorityTasks';
 import './../App.css';
-import { auth } from '../config/firebase';
+import { auth } from '../firebase/firebase';
 import { signOut } from 'firebase/auth';
+import { db } from '../firebase/firebase';
+import { getDocs, collection } from 'firebase/firestore';
+import { useAuth } from '../contexts/AuthContext';
+// import retrieveUserData from '../firebase/retrieveUserData';
 
 // Home Page
 const Home = () => {
+  const [tasks, setTasks] = useState([]);
+  const [projects, setProjects] = useState([]);
+
+  const userCollection = collection(db, 'users');
+
+  //   const { currentUser } = useAuth();
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      //   if (currentUser === null) {
+      //     window.location.href = '/login';
+      //     return;
+      //   }
+      //   setAppData((await retrieveUserData(currentUser.uid)).result);
+      try {
+        const data = await getDocs(userCollection);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUserInfo();
+  }, []);
+
   // Variables used in the page to trigger different components
   const [createTask, setCreateTask] = useState(false)
   const [createProject, setCreateProject] = useState(false)

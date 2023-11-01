@@ -5,8 +5,10 @@
 // Import files and dependencies here
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { auth } from '../config/firebase';
+import { auth } from '../firebase/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
   // Variables used in the page to handle the email and password
@@ -16,10 +18,37 @@ const Signup = () => {
   // Handle the submit of the email and password, currently just console logs them
   const handleSubmit = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const results = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const authInfo = {
+        uid: results.user.uid,
+        email: results.user.email,
+        projects: [],
+        tasks: [],
+      };
+
       window.location.href = '/';
     } catch (error) {
-      console.log(error);
+      if (error.code === 'auth/weak-password') {
+        toast('Password must be at least 6 characters long!', {
+          pauseOnHover: false,
+          type: 'error',
+        });
+      } else if (error.code === 'auth/email-already-in-use') {
+        toast('Email already in use!', {
+          pauseOnHover: false,
+          type: 'error',
+        });
+      } else if (error.code === 'auth/invalid-email') {
+        toast('Invalid email!', {
+          pauseOnHover: false,
+          type: 'error',
+        });
+      }
+      return;
     }
   };
 
@@ -66,6 +95,7 @@ const Signup = () => {
           </p>
         </Link>
       </div>
+      <ToastContainer />
     </div>
   )
 }
