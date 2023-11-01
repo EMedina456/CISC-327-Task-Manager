@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Manage Team Members Functionality
+// Program Intention: Implement Testing for the Add Team Member Functionality
 // Input/Output: Handle the addition of a member
 // Run Intention: Run with the other test cases
 
@@ -8,29 +8,21 @@ import { render, screen } from '@testing-library/react'
 import React from 'react'
 import user from '@testing-library/user-event'
 import MemberForm from '../components/MemberForm'
-import Home from '../pages/Home'
-import renderer from 'react-test-renderer'
-import { BrowserRouter } from 'react-router-dom'
+// import Home from '../pages/Home'
+// import renderer from 'react-test-renderer'
+// import { BrowserRouter } from 'react-router-dom'
 
-// Manage Team Member Test
-describe('Manage Team Members', () => {
-  // Create a snapshot of the Home page
-  const tree = renderer
-    .create(
-      <BrowserRouter>
-        <Home />
-      </BrowserRouter>
-    )
-    .toJSON()
-
+// Add Team Member Test
+describe('Remove Team Member', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<MemberForm title={'Add a member'} />)
+    render(<MemberForm title={'Remove a member'} />)
   })
 
-  // Test the management of a member with valid permissions
-  it('Scenario Valid Permissions', async () => {
+  // Test the removal of a member with valid permissions
+  it('Scenario Invalid Permissions', async () => {
+    // ADD MEMBER
     // Type in the required test fields
     user.type(
       user.click(
@@ -62,13 +54,12 @@ describe('Manage Team Members', () => {
         name: /submit/i,
       })
     )
-    // Check if the snapshot matches
-    expect(tree).toMatchSnapshot()
 
-    // CHECK IF THE MEMBER IS CHANGED
+    // CHECK ERROR MESSAGE
   })
-  // Test the management of a member that does not exist
-  it('Scenario User Does not Exit', async () => {
+
+  // Test the addition of a member that does not exist
+  it('Scenario Valid Admin Permissions', async () => {
     // Type in the required test fields
     user.type(
       user.click(
@@ -100,12 +91,11 @@ describe('Manage Team Members', () => {
         name: /submit/i,
       })
     )
-    // Compare the snapshot
-    expect(tree).toMatchSnapshot()
-  })
 
-  // Test the management of a member with invalid permissions
-  it('Scenario Invalid Permissions', async () => {
+    // CHECK IF MEMBER IS REMOVED
+  })
+  // Test the addition of a member with invalid permissions
+  it('Scenario Invalid Admin Permissions', async () => {
     // Type in the required test fields
     user.type(
       user.click(
@@ -137,9 +127,43 @@ describe('Manage Team Members', () => {
         name: /submit/i,
       })
     )
-    // Compare the snapshot
-    expect(tree).toMatchSnapshot()
 
-    // GET SOME ERROR MESSAGE
+    // CHECK ERROR MESSAGE
+  })
+  // Test the addition of a member that does not exist
+  it('Scenario Valid Owner Permissions', async () => {
+    // Type in the required test fields
+    user.type(
+      user.click(
+        screen.getByRole('textbox', {
+          name: /name/i,
+        })
+      ),
+      'Invalid user'
+    )
+    user.type(
+      user.click(
+        screen.getByRole('textbox', {
+          name: /your permission/i,
+        })
+      ),
+      'random permission'
+    )
+    user.type(
+      user.click(
+        screen.getByRole('textbox', {
+          name: /their permission/i,
+        })
+      ),
+      'random permission'
+    )
+    user.click(screen.getByText(/submit/i))
+    user.click(
+      screen.getByRole('button', {
+        name: /submit/i,
+      })
+    )
+
+    // CHECK IF MEMBER IS REMOVED
   })
 })

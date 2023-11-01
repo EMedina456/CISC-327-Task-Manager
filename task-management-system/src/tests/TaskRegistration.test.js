@@ -29,7 +29,7 @@ describe('Task Registration', () => {
     render(<CreateTask />)
   })
 
-  // Test the registration of a task with valid permissions
+  // Test the registration of a task with invalid permissions
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
     user.type(
@@ -91,5 +91,8 @@ describe('Task Registration', () => {
     )
     // Compare the snapshot
     expect(tree).toMatchSnapshot()
+
+    // NEED TO CHECK DATABASE FOR TASK
+    // DELETE TASK FROM DATABASE
   })
 })

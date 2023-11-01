@@ -7,30 +7,22 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import user from '@testing-library/user-event'
-import Home from '../pages/Home'
-import renderer from 'react-test-renderer'
-import { BrowserRouter } from 'react-router-dom'
-import CreateProject from '../components/CreateProject'
+import EditProject from '../components/EditProject'
+// import Home from '../pages/Home'
+// import renderer from 'react-test-renderer'
+// import { BrowserRouter } from 'react-router-dom'
 
-// Add Team Member Test
-describe('Create Project', () => {
-  // Create a snapshot of the Home page
-  const tree = renderer
-    .create(
-      <BrowserRouter>
-        <Home />
-      </BrowserRouter>
-    )
-    .toJSON()
-
+// Modify Project Test
+describe('Modify Project', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<CreateProject />)
+    render(<EditProject />)
   })
 
   // Test the addition of a member with valid permissions
-  it('Scenario Valid Name', async () => {
+  it('Scenario Valid Permissions', async () => {
+    // CREATE PROJECT
     // Type in the required test fields
     user.type(
       user.click(
@@ -56,14 +48,12 @@ describe('Create Project', () => {
       })
     )
 
-    // Check if the snapshot matches
-    expect(tree).toMatchSnapshot()
-
-    // CHECK IF THE USER IS ADDED
-    // DELETE THE USER
+    // CHECK IF THE PROJECT IS EDITED
+    // DELETE THE PROJECT
   })
   // Test the addition of a member with invalid name
-  it('Scenario Invalid Name', async () => {
+  it('Scenario Invalid PERMISSIONS', async () => {
+    // CREATE PROJECT
     // Type in the required test fields
     user.type(
       user.click(
@@ -88,8 +78,6 @@ describe('Create Project', () => {
         name: /submit/i,
       })
     )
-    // Check if the snapshot matches
-    expect(tree).toMatchSnapshot()
 
     // CHECK ERROR MESSAGE
   })

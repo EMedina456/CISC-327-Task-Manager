@@ -50,6 +50,7 @@ const ViewTask = ({ handleViewProject, handleEditTask }) => {
           <button
             onClick={() => alert('Task Deleted')}
             className="flex m-auto self-end flex-col"
+            title="delete"
           >
             <RiDeleteBin5Line className="text-3xl lg:text-5xl md:text-5xl" />
           </button>
@@ -57,6 +58,7 @@ const ViewTask = ({ handleViewProject, handleEditTask }) => {
           <button
             onClick={() => alert('Task Completed')}
             className="flex m-auto self-end flex-col"
+            title="complete"
           >
             <BsCheck className="text-3xl lg:text-5xl md:text-5xl" />
           </button>
