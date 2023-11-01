@@ -10,14 +10,13 @@ import {
   AiOutlineUserDelete,
   AiOutlineUserSwitch,
   AiOutlineUser,
-
-} from 'react-icons/ai';
-import { useState } from 'react';
-import Tasks from './Tasks';
-import AddMember from './AddMember';
-import RemoveMember from './RemoveMember';
-import TransferOwnership from './TransferOwnership';
-import ManageMember from './ManageMember';
+} from 'react-icons/ai'
+import { useState } from 'react'
+import Tasks from './Tasks'
+import AddMember from './AddMember'
+import RemoveMember from './RemoveMember'
+import TransferOwnership from './TransferOwnership'
+import ManageMember from './ManageMember'
 
 const ViewProject = ({ handleViewTask, handleEditProject }) => {
   // Handle the variables required for the page
@@ -113,6 +112,7 @@ const ViewProject = ({ handleViewTask, handleEditProject }) => {
           <button
             onClick={() => alert('Project Deleted')}
             className="flex m-auto self-end flex-col"
+            title="delete"
           >
             <RiDeleteBin5Line className="text-3xl lg:text-5xl md:text-5xl" />
           </button>

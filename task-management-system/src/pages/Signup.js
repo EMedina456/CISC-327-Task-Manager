@@ -67,6 +67,6 @@ const Signup = () => {
         </Link>
       </div>
     </div>
-  );
-};
-export default Signup;
+  )
+}
+export default Signup

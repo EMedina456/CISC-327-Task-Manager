@@ -23,96 +23,96 @@ import { signOut } from 'firebase/auth';
 // Home Page
 const Home = () => {
   // Variables used in the page to trigger different components
-  const [createTask, setCreateTask] = useState(false);
-  const [createProject, setCreateProject] = useState(false);
-  const [create, setCreate] = useState(false);
-  const [viewTask, setViewTask] = useState(false);
-  const [viewProject, setViewProject] = useState(false);
-  const [editProject, setEditProject] = useState(false);
-  const [editTask, setEditTask] = useState(false);
-  const [deadline, setDeadline] = useState(false);
-  const [priority, setPriority] = useState(true);
+  const [createTask, setCreateTask] = useState(false)
+  const [createProject, setCreateProject] = useState(false)
+  const [create, setCreate] = useState(false)
+  const [viewTask, setViewTask] = useState(false)
+  const [viewProject, setViewProject] = useState(false)
+  const [editProject, setEditProject] = useState(false)
+  const [editTask, setEditTask] = useState(false)
+  const [deadline, setDeadline] = useState(false)
+  const [priority, setPriority] = useState(true)
 
   // Functions to handle the different components
   // Handle the deadline component, by setting it true and the priority component false
   const handleDeadline = () => {
-    setDeadline(true);
-    setPriority(false);
-  };
+    setDeadline(true)
+    setPriority(false)
+  }
 
   // Handle the priority component, by setting it true and the deadline component false
   const handlePriority = () => {
-    setPriority(true);
-    setDeadline(false);
-  };
+    setPriority(true)
+    setDeadline(false)
+  }
 
   // Handle the create task component, by setting it true and the other components false
   const handleCreateTask = () => {
-    setCreateTask(true);
-    setCreateProject(false);
-    setCreate(false);
-  };
+    setCreateTask(true)
+    setCreateProject(false)
+    setCreate(false)
+  }
 
   // Handle the create component, which is the plus button, by setting it true and the other components false
   const handleCreate = () => {
-    setCreate(!create);
-  };
+    setCreate(!create)
+  }
 
   // Handle the create project component, by setting it true and the other components false
   const handleCreateProject = () => {
-    setCreateProject(true);
-    setCreateTask(false);
-    setCreate(false);
-  };
+    setCreateProject(true)
+    setCreateTask(false)
+    setCreate(false)
+  }
 
   // Handle the reset component, which resets the page by setting the components false
   const handleReset = () => {
-    setCreateTask(false);
-    setCreateProject(false);
-    setCreate(false);
-    setViewTask(false);
-    setViewProject(false);
-  };
+    setCreateTask(false)
+    setCreateProject(false)
+    setCreate(false)
+    setViewTask(false)
+    setViewProject(false)
+  }
 
   // Handle the view task component by setting it true and the other components false
   const handleViewTask = () => {
-    setViewTask(true);
-    setCreateTask(false);
-    setCreateProject(false);
-    setCreate(false);
-    setViewProject(false);
-  };
+    setViewTask(true)
+    setCreateTask(false)
+    setCreateProject(false)
+    setCreate(false)
+    setViewProject(false)
+  }
 
   // Handle the view project component by setting it true and the other components false
   const handleViewProject = () => {
-    setViewProject(true);
-    setViewTask(false);
-    setCreateTask(false);
-    setCreateProject(false);
-    setCreate(false);
-  };
+    setViewProject(true)
+    setViewTask(false)
+    setCreateTask(false)
+    setCreateProject(false)
+    setCreate(false)
+  }
 
   // Handle the edit project component by setting it true and the other components false
   const handleEditProject = () => {
-    setEditProject(true);
-    setViewProject(false);
-    setViewTask(false);
-    setCreateTask(false);
-    setCreateProject(false);
-    setCreate(false);
-    setEditTask(false);
-  };
+    setEditProject(true)
+    setViewProject(false)
+    setViewTask(false)
+    setCreateTask(false)
+    setCreateProject(false)
+    setCreate(false)
+    setEditTask(false)
+  }
 
   // Handle the edit task component by setting it true and the other components false
   const handleEditTask = () => {
-    setEditTask(true);
-    setEditProject(false);
-    setViewProject(false);
-    setViewTask(false);
-    setCreateTask(false);
-    setCreateProject(false);
-    setCreate(false);
-  };
+    setEditTask(true)
+    setEditProject(false)
+    setViewProject(false)
+    setViewTask(false)
+    setCreateTask(false)
+    setCreateProject(false)
+    setCreate(false)
+  }
 
   const handleLogout = async () => {
     try {
@@ -231,7 +231,7 @@ const Home = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
