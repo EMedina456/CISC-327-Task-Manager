@@ -3,9 +3,13 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+// import the necessary components for firebase
+import { doc, getDoc, collection, addDoc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
-const CreateTask = () => {
+const CreateTask = ({ user }) => {
   // Handle the variables for the task
   const [task_name, setTaskName] = useState('');
   const [description, setDescription] = useState('');
@@ -13,15 +17,93 @@ const CreateTask = () => {
   const [deadline, setDeadline] = useState('');
   const [project, setProject] = useState('');
 
+  const [projects, setProjects] = useState([]);
+  const [userInfo, setUserInfo] = useState(null);
+  const [projectNames, setProjectNames] = useState([]);
+
   // Handle the submission of the task, currently just prints the task variables to the console
-  const handleSubmit = (e) => {
-    console.log('name', task_name);
-    console.log('description', description);
-    console.log('priority', priority);
-    console.log('deadline', deadline);
-    console.log('project', project);
-    alert('Task created successfully');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const task = collection(db, 'tasks');
+      const task_data = {
+        name: task_name,
+        description: description,
+        priority: priority,
+        deadline: deadline,
+        project: project,
+        members: [user.uid],
+      };
+      const taskRef = await addDoc(task, task_data);
+      const task_id = taskRef.id;
+      if (user) {
+        const userRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(userRef);
+        const userTasks = docSnap.data().tasks || [];
+        setDoc(
+          userRef,
+          {
+            tasks: userTasks.concat(task_id),
+          },
+          { merge: true }
+        );
+      } else {
+        console.log('No user is signed in');
+      }
+      console.log('Document written with ID: ', taskRef.id);
+
+      alert('Task created successfully');
+      window.location.href = '/';
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  async function getUserInfo() {
+    try {
+      const auth = getAuth();
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const uid = user.uid;
+          setUserInfo(user);
+          const userRef = doc(db, 'users', uid);
+          const docSnap = await getDoc(userRef);
+          if (docSnap.exists()) {
+            let userProjects = docSnap.data().projects || [];
+            setProjects(Object.keys(userProjects));
+
+            // Retrieve project names and update the state
+            const projPromises = Object.keys(userProjects).map(async (key) => {
+              const projectDocRef = doc(db, 'projects', key);
+              const projectDocSnap = await getDoc(projectDocRef);
+              if (projectDocSnap.exists()) {
+                setProjectNames((prevNames) => ({
+                  ...prevNames,
+                  [key]: projectDocSnap.data().name,
+                }));
+              }
+            });
+
+            // Wait for all promises to complete before rendering
+            await Promise.all(projPromises);
+            console.log(projectNames);
+          } else {
+            console.log('No such document!');
+          }
+        } else {
+          window.location.href = '/login';
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   // Create Task Page
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
@@ -86,12 +168,20 @@ const CreateTask = () => {
               <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
                 project
               </h1>
-              <input
-                type="text"
-                id="project"
-                className="box-border h-8 w-44 p-4 border-4"
-                onChange={(e) => setProject(e.target.value)}
-              />
+              {projects.map((key) => {
+                return (
+                  <label className="flex flex-row space-x-3" key={key}>
+                    <input
+                      type="radio"
+                      onChange={(e) => setProject(e.target.value)}
+                      checked={project === key}
+                      value={key}
+                      className="flex text-sm font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl"
+                    />
+                    <span>{projectNames[key]}</span>
+                  </label>
+                );
+              })}
             </label>
             {/* Handle the submit button*/}
             <div className="justify-center items-center text-left">

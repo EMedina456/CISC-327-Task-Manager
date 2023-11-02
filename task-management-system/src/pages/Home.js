@@ -25,31 +25,21 @@ import { useAuth } from '../contexts/AuthContext';
 
 // Home Page
 const Home = () => {
-  //   const { currentUser } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
   const [user, setUser] = useState(null);
 
   async function getUserInfo() {
-    //  if (currentUser === null) {
-    //    window.location.href = '/login';
-    //    return;
-    //  }
-    //  setAppData((await retrieveUserData(currentUser.uid)).result);
     try {
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
           const uid = user.uid;
           setUser(user);
           const userRef = doc(db, 'users', uid);
           getDoc(userRef)
             .then((docSnap) => {
               if (docSnap.exists()) {
-                // setTasks(docSnap.data().tasks);
-
                 let userTasks = [];
                 let userProjects = [];
                 for (let key of docSnap.data().tasks) {
@@ -63,7 +53,6 @@ const Home = () => {
                 setTasks(userTasks);
                 setProjects(userProjects);
               } else {
-                // doc.data() will be undefined in this case
                 console.log('No such document!');
               }
             })
@@ -136,7 +125,7 @@ const Home = () => {
   };
 
   // Handle the view task component by setting it true and the other components false
-  const handleViewTask = (e) => {
+  const handleViewTask = async (e) => {
     console.log(e);
     setViewTask(true);
     setCreateTask(false);
@@ -269,7 +258,7 @@ const Home = () => {
         </div>
         {/* The main component that handles the different components, which checks which variable is true and uses that component */}
         {createTask ? (
-          <CreateTask />
+          <CreateTask user={user} projects={projects} />
         ) : createProject ? (
           <CreateProject user={user} />
         ) : viewTask ? (

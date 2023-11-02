@@ -5,11 +5,77 @@ import React from 'react';
 // import the necessary components for firebase
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 
-const Current = ({ handleViewTask, handleViewProject, projects, tasks }) => {
-  const projectKeys = Object.keys(projects);
-  const taskKeys = Object.keys(tasks);
+const Current = ({ handleViewTask, handleViewProject }) => {
+  const [tasks, setTasks] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [user, setUser] = useState(null);
+  const [projectNames, setProjectNames] = useState([]);
+  const [taskNames, setTaskNames] = useState([]);
+
+  async function getUserInfo() {
+    try {
+      const auth = getAuth();
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const uid = user.uid;
+          setUser(user);
+          const userRef = doc(db, 'users', uid);
+          const docSnap = await getDoc(userRef);
+          if (docSnap.exists()) {
+            let userTasks = docSnap.data().tasks || [];
+            let userProjects = docSnap.data().projects || [];
+
+            setTasks(userTasks);
+            setProjects(Object.keys(userProjects));
+
+            // Retrieve project names and update the state
+            const projPromises = Object.keys(userProjects).map(async (key) => {
+              const projectDocRef = doc(db, 'projects', key);
+              const projectDocSnap = await getDoc(projectDocRef);
+              if (projectDocSnap.exists()) {
+                setProjectNames((prevNames) => ({
+                  ...prevNames,
+                  [key]: projectDocSnap.data().name,
+                }));
+              }
+            });
+
+            const taskPromises = userTasks.map(async (key) => {
+              const taskDocRef = doc(db, 'tasks', key);
+              const taskDocSnap = await getDoc(taskDocRef);
+              if (taskDocSnap.exists()) {
+                setTaskNames((prevNames) => ({
+                  ...prevNames,
+                  [key]: taskDocSnap.data().name,
+                }));
+              }
+            });
+
+            // Wait for all promises to complete before rendering
+            await Promise.all(projPromises);
+            await Promise.all(taskPromises);
+          } else {
+            console.log('No such document!');
+          }
+        } else {
+          window.location.href = '/login';
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  //   const projectKeys = Object.keys(projects);
+  //   console.log('projects', projects);
+  //   const taskKeys = Object.keys(tasks);
 
   // Current Page with the methods to handle the view of tasks and projects
   return (
@@ -21,19 +87,14 @@ const Current = ({ handleViewTask, handleViewProject, projects, tasks }) => {
         </h1>
         <div className="border-[#60AB9A] w-80 h-1 border-2" />
         {/* Handle the view of the projects and be able to click on them*/}
-        {projectKeys.map((key) => (
+        {projects.map((key) => (
           <button
             onClick={handleViewProject}
             key={key}
             className="flex text-sm font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl">
-            {/* {getDoc(doc(db, 'projects', key)).then((doc) => {
-              if (doc.exists()) {
-                return doc.data().name;
-              } else {
-                console.log('No such document!');
-              }
-            })} */}
-            {projects[key]}
+            {/* {key} */}
+            {projectNames[key]}
+            {/* {projects[key]} */}
           </button>
         ))}
         <div className="my-16" />
@@ -43,13 +104,13 @@ const Current = ({ handleViewTask, handleViewProject, projects, tasks }) => {
         </h1>
         <div className="border-[#60AB9A] w-80 h-1 border-2" />
         {/* Handle the view and be able to click on the overdue tasks*/}
-        {taskKeys.map((key) => {
+        {tasks.map((key) => {
           return (
             <button
-              onClick={handleViewTask}
+              onClick={() => handleViewTask(key)}
               key={key}
               className="flex text-sm font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl">
-              {tasks[key]}
+              {taskNames[key]}
             </button>
           );
         })}
@@ -62,14 +123,14 @@ const Current = ({ handleViewTask, handleViewProject, projects, tasks }) => {
         </h1>
         <div className="border-[#60AB9A] w-80 h-1 border-2" />
         {/* Handle the view of the tasks and be able to click on them*/}
-        {taskKeys.map((key) => {
+        {tasks.map((key) => {
           return (
             <button
-              onClick={handleViewTask}
+              onClick={() => handleViewTask(key)}
               key={key}
               value={key}
               className="flex text-sm font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl">
-              {tasks[key]}
+              {taskNames[key]}
             </button>
           );
         })}
