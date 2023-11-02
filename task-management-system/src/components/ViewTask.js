@@ -10,59 +10,32 @@ import { useState, useEffect } from 'react';
 import SingleTask from './SingleTask';
 import AddMember from './AddMember';
 
-import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { doc, getDoc, collection } from 'firebase/firestore';
 
-const ViewTask = ({ handleViewProject, handleEditTask }) => {
+const ViewTask = ({ handleViewProject, handleEditTask, task }) => {
   // Handle the variables required for the page
   const [addMember, setAddMember] = useState(false);
-  const [tasks, setTasks] = useState([]);
   const [user, setUser] = useState(null);
-  const [taskNames, setTaskNames] = useState([]);
+  const [taskData, setTaskData] = useState(null);
 
-  async function getUserInfo() {
+  async function getTaskInfo() {
     try {
-      const auth = getAuth();
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const uid = user.uid;
-          setUser(user);
-          const userRef = doc(db, 'users', uid);
-          const docSnap = await getDoc(userRef);
-          if (docSnap.exists()) {
-            let userTasks = docSnap.data().tasks || [];
-            let userProjects = docSnap.data().projects || [];
-
-            setTasks(userTasks);
-
-            const taskPromises = userTasks.map(async (key) => {
-              const taskDocRef = doc(db, 'tasks', key);
-              const taskDocSnap = await getDoc(taskDocRef);
-              if (taskDocSnap.exists()) {
-                setTaskNames((prevNames) => ({
-                  ...prevNames,
-                  [key]: taskDocSnap.data().name,
-                }));
-              }
-            });
-
-            // Wait for all promises to complete before rendering
-            await Promise.all(taskPromises);
-          } else {
-            console.log('No such document!');
-          }
-        } else {
-          window.location.href = '/login';
-        }
-      });
+      const taskRef = doc(db, 'tasks', task);
+      const docSnap = await getDoc(taskRef);
+      if (docSnap.exists()) {
+        setTaskData(docSnap.data());
+      } else {
+        console.log('No such document!');
+      }
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-    getUserInfo();
+    getTaskInfo();
   }, []);
 
   // Handle the addition of a member, set addMember to true and the rest to false
@@ -115,7 +88,7 @@ const ViewTask = ({ handleViewProject, handleEditTask }) => {
         {addMember ? (
           <AddMember />
         ) : (
-          <SingleTask handleViewProject={handleViewProject} />
+          <SingleTask handleViewProject={handleViewProject} task={taskData} />
         )}
       </div>
     </div>

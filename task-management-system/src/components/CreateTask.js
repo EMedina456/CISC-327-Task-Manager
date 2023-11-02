@@ -18,7 +18,6 @@ const CreateTask = ({ user }) => {
   const [project, setProject] = useState('');
 
   const [projects, setProjects] = useState([]);
-  const [userInfo, setUserInfo] = useState(null);
   const [projectNames, setProjectNames] = useState([]);
 
   // Handle the submission of the task, currently just prints the task variables to the console
@@ -51,6 +50,21 @@ const CreateTask = ({ user }) => {
       } else {
         console.log('No user is signed in');
       }
+
+      if (project != '') {
+        const projectRef = doc(db, 'projects', project);
+        const docSnap = await getDoc(projectRef);
+        const projectTasks = docSnap.data().tasks || [];
+        setDoc(
+          projectRef,
+          {
+            tasks: projectTasks.concat(task_id),
+          },
+          { merge: true }
+        );
+      } else {
+        console.log('No project is selected');
+      }
       console.log('Document written with ID: ', taskRef.id);
 
       alert('Task created successfully');
@@ -66,7 +80,6 @@ const CreateTask = ({ user }) => {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const uid = user.uid;
-          setUserInfo(user);
           const userRef = doc(db, 'users', uid);
           const docSnap = await getDoc(userRef);
           if (docSnap.exists()) {
@@ -102,7 +115,7 @@ const CreateTask = ({ user }) => {
 
   useEffect(() => {
     getUserInfo();
-  }, []);
+  });
 
   // Create Task Page
   return (

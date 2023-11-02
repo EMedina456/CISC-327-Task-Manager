@@ -89,12 +89,10 @@ const Current = ({ handleViewTask, handleViewProject }) => {
         {/* Handle the view of the projects and be able to click on them*/}
         {projects.map((key) => (
           <button
-            onClick={handleViewProject}
+            onClick={() => handleViewProject(key)}
             key={key}
             className="flex text-sm font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl">
-            {/* {key} */}
             {projectNames[key]}
-            {/* {projects[key]} */}
           </button>
         ))}
         <div className="my-16" />

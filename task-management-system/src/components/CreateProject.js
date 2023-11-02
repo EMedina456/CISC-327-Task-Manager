@@ -6,7 +6,6 @@
 import React, { useState } from 'react';
 import { setDoc, addDoc, doc, collection } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const CreateProject = ({ user }) => {
   // Variables that handle the project name and description
@@ -21,7 +20,7 @@ const CreateProject = ({ user }) => {
       const proj_data = {
         name: project_name,
         description: description,
-        tasks: {},
+        tasks: [],
         members: {},
         user_permissions: { [user.uid]: 'owner' },
       };

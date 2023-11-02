@@ -28,6 +28,8 @@ const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
   const [user, setUser] = useState(null);
+  const [currentProject, setCurrentProject] = useState(null);
+  const [currentTask, setCurrentTask] = useState(null);
 
   async function getUserInfo() {
     try {
@@ -103,7 +105,7 @@ const Home = () => {
     setCreate(false);
   };
 
-  // Handle the create component, which is the plus button, by setting it true and the other components false
+  // Handle the create component, which is the plus button, by setting it its opposite state
   const handleCreate = () => {
     setCreate(!create);
   };
@@ -125,8 +127,8 @@ const Home = () => {
   };
 
   // Handle the view task component by setting it true and the other components false
-  const handleViewTask = async (e) => {
-    console.log(e);
+  const handleViewTask = (task) => {
+    setCurrentTask(task);
     setViewTask(true);
     setCreateTask(false);
     setCreateProject(false);
@@ -135,8 +137,8 @@ const Home = () => {
   };
 
   // Handle the view project component by setting it true and the other components false
-  const handleViewProject = (e) => {
-    console.log(e);
+  const handleViewProject = (project) => {
+    setCurrentProject(project);
     setViewProject(true);
     setViewTask(false);
     setCreateTask(false);
@@ -265,11 +267,13 @@ const Home = () => {
           <ViewTask
             handleViewProject={handleViewProject}
             handleEditTask={handleEditTask}
+            task={currentTask}
           />
         ) : viewProject ? (
           <ViewProject
             handleViewTask={handleViewTask}
             handleEditProject={handleEditProject}
+            project={currentProject}
           />
         ) : editProject ? (
           <EditProject />
