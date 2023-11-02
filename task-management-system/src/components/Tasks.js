@@ -24,10 +24,10 @@ const Tasks = ({ handleViewTask, tasks }) => {
               const taskDocRef = doc(db, 'tasks', key);
               const taskDocSnap = await getDoc(taskDocRef);
               if (taskDocSnap.exists()) {
-                setTaskList((prevNames) => ({
+                setTaskList((prevNames) => [
                   ...prevNames,
-                  [key]: taskDocSnap.data().name,
-                }));
+                  taskDocSnap.data().name,
+                ]);
               }
             });
 

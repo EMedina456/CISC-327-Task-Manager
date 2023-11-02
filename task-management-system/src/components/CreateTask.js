@@ -20,6 +20,8 @@ const CreateTask = ({ user }) => {
   const [projects, setProjects] = useState([]);
   const [projectNames, setProjectNames] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   // Handle the submission of the task, currently just prints the task variables to the console
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,22 +102,25 @@ const CreateTask = ({ user }) => {
 
             // Wait for all promises to complete before rendering
             await Promise.all(projPromises);
-            console.log(projectNames);
+            setLoading(false); // Move setLoading(false) here to ensure it runs after all async operations
           } else {
             console.log('No such document!');
+            setLoading(false); // Set loading to false even if there is no document
           }
         } else {
           window.location.href = '/login';
+          setLoading(false); // Set loading to false if there is no user
         }
       });
     } catch (error) {
       console.log(error);
+      setLoading(false); // Set loading to false in case of an error
     }
   }
 
   useEffect(() => {
     getUserInfo();
-  });
+  }, []);
 
   // Create Task Page
   return (
@@ -189,6 +194,7 @@ const CreateTask = ({ user }) => {
                       onChange={(e) => setProject(e.target.value)}
                       checked={project === key}
                       value={key}
+                      disabled={loading}
                       className="flex text-sm font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl"
                     />
                     <span>{projectNames[key]}</span>
