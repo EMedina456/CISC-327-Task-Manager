@@ -3,20 +3,22 @@
 // Run Intention: The page will run the various components and pages through the running of the website, which are all controlled by user control
 
 // Import files and dependencies here
-import { AiOutlinePlus } from 'react-icons/ai'
-import { MdOutlineAccountCircle } from 'react-icons/md'
-import { Link } from 'react-router-dom'
-import Current from '../components/Current'
-import CreateTask from '../components/CreateTask'
-import { useState } from 'react'
-import CreateProject from '../components/CreateProject'
-import ViewProject from '../components/ViewProject'
-import ViewTask from '../components/ViewTask'
-import EditProject from '../components/EditProject'
-import EditTask from '../components/EditTask'
-import Tasks from '../components/Tasks'
-import PriorityTasks from '../components/PriorityTasks'
-import './../App.css'
+import { AiOutlinePlus } from 'react-icons/ai';
+import { MdOutlineAccountCircle } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import Current from '../components/Current';
+import CreateTask from '../components/CreateTask';
+import { useState } from 'react';
+import CreateProject from '../components/CreateProject';
+import ViewProject from '../components/ViewProject';
+import ViewTask from '../components/ViewTask';
+import EditProject from '../components/EditProject';
+import EditTask from '../components/EditTask';
+import Tasks from '../components/Tasks';
+import PriorityTasks from '../components/PriorityTasks';
+import './../App.css';
+import { auth } from '../config/firebase';
+import { signOut } from 'firebase/auth';
 
 // Home Page
 const Home = () => {
@@ -112,6 +114,15 @@ const Home = () => {
     setCreate(false)
   }
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      window.location.href = '/login';
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Return the page
   return (
     <div className="bg-[#D9D9D9] min-h-[100vh]">
@@ -126,35 +137,30 @@ const Home = () => {
         <div className="flex items-center align-center">
           <button
             onClick={handleCreate}
-            className="text-4xl text-right ml-auto mr-6 lg:text-6xl md:text-6xl"
-          >
+            className="text-4xl text-right ml-auto mr-6 lg:text-6xl md:text-6xl">
             <AiOutlinePlus />
           </button>
           {create ? (
             <div>
               <button
                 onClick={handleCreateProject}
-                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl"
-              >
+                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl">
                 Create Project
               </button>
               <button
                 onClick={handleCreateTask}
-                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl"
-              >
+                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl">
                 Create Task
               </button>
             </div>
           ) : null}
         </div>
-        {/* The user icon that handles the login component */}
-        <Link
-          to="/login"
-          className="text-2xl text-right ml-auto mr-6 lg:text-6xl md:text-4xl"
-          title="account"
-        >
+        {/* The user icon that handles the logout component */}
+        <button
+          onClick={handleLogout}
+          className="text-2xl text-right ml-auto mr-6 lg:text-6xl md:text-4xl">
           <MdOutlineAccountCircle />
-        </Link>
+        </button>
       </header>
       <div className="flex min-h-[85vh]">
         {/* The sidebar that handles the different sorting components */}
@@ -170,8 +176,7 @@ const Home = () => {
               <button
                 id="handleDeadline"
                 onClick={handleDeadline}
-                alt="handleDeadline"
-              >
+                alt="handleDeadline">
                 <h1 className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm">
                   Deadline{' '}
                 </h1>
@@ -184,8 +189,7 @@ const Home = () => {
               <button
                 id="handlePriority"
                 onClick={handlePriority}
-                alt="handlePriority"
-              >
+                alt="handlePriority">
                 <h1 className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm">
                   Priority{' '}
                 </h1>
