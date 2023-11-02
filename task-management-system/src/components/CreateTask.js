@@ -51,7 +51,7 @@ const CreateTask = ({ user }) => {
         console.log('No user is signed in');
       }
 
-      if (project != '') {
+      if (project !== '') {
         const projectRef = doc(db, 'projects', project);
         const docSnap = await getDoc(projectRef);
         const projectTasks = docSnap.data().tasks || [];
@@ -125,7 +125,7 @@ const CreateTask = ({ user }) => {
         <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
           Create a Task
         </h1>
-        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-56 lg:w-90 md:w-96 h-1" />
+        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-56 lg:w-90 md:w-96" />
         <form onSubmit={handleSubmit}>
           <div className="">
             {/* Handle the task name input*/}

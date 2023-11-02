@@ -20,7 +20,7 @@ import ManageMember from './ManageMember';
 
 import { db } from '../firebase/firebase';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
-import { doc, getDoc, collection } from 'firebase/firestore';
+import { doc, getDocFromServer, collection, getDoc } from 'firebase/firestore';
 
 const ViewProject = ({ handleViewTask, handleEditProject, project }) => {
   // Handle the variables required for the page
@@ -69,18 +69,7 @@ const ViewProject = ({ handleViewTask, handleEditProject, project }) => {
       const docSnap = await getDoc(projectRef);
       if (docSnap.exists()) {
         setProjectData(docSnap.data());
-        const taskList = docSnap.data().tasks;
-        const taskPromises = taskList.map(async (key) => {
-          const taskDocRef = doc(db, 'tasks', key);
-          const taskDocSnap = await getDoc(taskDocRef);
-          if (taskDocSnap.exists()) {
-            setTasks((prevNames) => ({
-              ...prevNames,
-              [key]: taskDocSnap.data(),
-            }));
-          }
-        });
-        await Promise.all(taskPromises);
+        setTasks(docSnap.data().tasks);
       } else {
         console.log('No such document!');
       }
@@ -91,7 +80,7 @@ const ViewProject = ({ handleViewTask, handleEditProject, project }) => {
 
   useEffect(() => {
     getProjectInfo();
-  });
+  }, []);
 
   // View Project Page
   return (
@@ -163,7 +152,7 @@ const ViewProject = ({ handleViewTask, handleEditProject, project }) => {
         ) : transfer ? (
           <TransferOwnership />
         ) : (
-          <Tasks handleViewTask={handleViewTask} />
+          <Tasks handleViewTask={handleViewTask} tasks={tasks} />
         )}
       </div>
     </div>
