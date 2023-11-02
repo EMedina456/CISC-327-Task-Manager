@@ -7,7 +7,7 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import user from '@testing-library/user-event'
-import MemberForm from '../components/MemberForm'
+import RemoveMember from '../components/RemoveMember'
 // import Home from '../pages/Home'
 // import renderer from 'react-test-renderer'
 // import { BrowserRouter } from 'react-router-dom'
@@ -17,7 +17,7 @@ describe('Remove Team Member', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<MemberForm title={'Remove a member'} />)
+    render(<RemoveMember />)
   })
 
   // Test the removal of a member with valid permissions

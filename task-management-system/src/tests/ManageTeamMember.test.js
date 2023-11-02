@@ -7,10 +7,10 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import user from '@testing-library/user-event'
-import MemberForm from '../components/MemberForm'
 import Home from '../pages/Home'
 import renderer from 'react-test-renderer'
 import { BrowserRouter } from 'react-router-dom'
+import RemoveMember from '../components/RemoveMember'
 
 // Manage Team Member Test
 describe('Manage Team Members', () => {
@@ -26,7 +26,7 @@ describe('Manage Team Members', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<MemberForm title={'Add a member'} />)
+    render(<RemoveMember />)
   })
 
   // Test the management of a member with valid permissions
