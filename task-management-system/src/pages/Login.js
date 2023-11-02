@@ -5,8 +5,10 @@
 // Import files and dependencies here
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { auth } from '../config/firebase';
+import { auth } from '../firebase/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   // Variables used in the page to handle the email and password
@@ -19,7 +21,26 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       window.location.href = '/';
     } catch (error) {
-      console.log(error);
+      if (error.code === 'auth/user-not-found') {
+        toast('No user with that email exists', {
+          type: 'error',
+        });
+        return;
+      } else if (error.code === 'auth/wrong-password') {
+        toast('Wrong password', { type: 'error' });
+        return;
+      } else if (error.code === 'auth/email-not-verified') {
+        toast('Email not verified. Check your inbox and spam.', {
+          type: 'error',
+        });
+        return;
+      } else if (error.code === 'auth/invalid-login-credentials') {
+        toast('Invalid login credentials', { type: 'error' });
+        return;
+      } else {
+        toast(error, { type: 'error' });
+        return;
+      }
     }
   };
 
@@ -66,6 +87,7 @@ const Login = () => {
           </p>
         </Link>
       </div>
+      <ToastContainer />
     </div>
   )
 }

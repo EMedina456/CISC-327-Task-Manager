@@ -4,17 +4,49 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
+import { setDoc, addDoc, doc, collection } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-const CreateProject = () => {
+const CreateProject = ({ user }) => {
   // Variables that handle the project name and description
   const [project_name, setProjectName] = useState('');
   const [description, setDescription] = useState('');
 
   // Handle the submission of the project name and description, currently just console logs them
-  const handleSubmit = (e) => {
-    console.log('name', project_name);
-    console.log('description', description);
-    alert('Project created successfully');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const project = collection(db, 'projects');
+      const proj_data = {
+        name: project_name,
+        description: description,
+        tasks: {},
+        members: {},
+        user_permissions: { [user.uid]: 'owner' },
+      };
+      const projRef = await addDoc(project, proj_data);
+      const proj_id = projRef.id;
+      if (user) {
+        const userRef = doc(db, 'users', user.uid);
+        setDoc(
+          userRef,
+          {
+            projects: {
+              [proj_id]: 'owner',
+            },
+          },
+          { merge: true }
+        );
+      } else {
+        console.log('No user is signed in');
+      }
+      console.log('Document written with ID: ', projRef.id);
+      window.location.href = '/';
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Create Project Page
