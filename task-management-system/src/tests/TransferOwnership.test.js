@@ -7,7 +7,7 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import user from '@testing-library/user-event'
-import MemberForm from '../components/MemberForm'
+import TransferOwnership from '../components/TransferOwnership'
 // import Home from '../pages/Home'
 // import renderer from 'react-test-renderer'
 // import { BrowserRouter } from 'react-router-dom'
@@ -17,7 +17,7 @@ describe('Transfer Ownership', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<MemberForm title={'Transfer Ownership'} />)
+    render(<TransferOwnership />)
   })
   // Test the addition of a member that does not exist
   it('Scenario Valid Owner Permissions', async () => {

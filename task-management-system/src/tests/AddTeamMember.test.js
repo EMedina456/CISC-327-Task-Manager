@@ -7,10 +7,10 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import user from '@testing-library/user-event'
-import MemberForm from '../components/MemberForm'
 import Home from '../pages/Home'
 import renderer from 'react-test-renderer'
 import { BrowserRouter } from 'react-router-dom'
+import AddMember from '../components/AddMember'
 
 // Add Team Member Test
 describe('Add Team Members', () => {
@@ -26,7 +26,7 @@ describe('Add Team Members', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<MemberForm title={'Add a member'} />)
+    render(<AddMember />)
   })
 
   // Test the addition of a member with valid permissions
@@ -83,7 +83,7 @@ describe('Add Team Members', () => {
     user.type(
       user.click(
         screen.getByRole('textbox', {
-          name: /your permission/i,
+          name: /your permisson/i,
         })
       ),
       'random permission'
@@ -91,7 +91,7 @@ describe('Add Team Members', () => {
     user.type(
       user.click(
         screen.getByRole('textbox', {
-          name: /their permission/i,
+          name: /their permisson/i,
         })
       ),
       'random permission'

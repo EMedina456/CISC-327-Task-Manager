@@ -3,20 +3,20 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import { useState } from 'react';
+import { useState } from 'react'
 
 const MemberForm = ({ title }) => {
   // Handle the memebre and permission of the member, permissions, their permissions not needed when removing
-  const [member, setMember] = useState('');
-  const [yourPermission, setYourPermission] = useState('');
-  const [theirPermission, setTheirPermission] = useState('');
+  const [member, setMember] = useState('')
+  const [yourPermission, setYourPermission] = useState('')
+  const [theirPermission, setTheirPermission] = useState('')
 
   // Handle the submit of the form, currently only console.log the member and permissions
   const handleSubmit = (e) => {
-    console.log('name', member);
-    console.log('permission', yourPermission);
-    console.log('permission', theirPermission);
-  };
+    console.log('name', member)
+    console.log('permission', yourPermission)
+    console.log('permission', theirPermission)
+  }
 
   // Member Form Page
   return (
@@ -49,6 +49,7 @@ const MemberForm = ({ title }) => {
             <input
               type="text"
               id="your-permisson"
+              title="your permisson"
               className="box-border h-8 w-44 p-4 border-4"
               onChange={(e) => setYourPermission(e.target.value)}
             />
@@ -62,6 +63,7 @@ const MemberForm = ({ title }) => {
               <input
                 type="text"
                 id="their-permisson"
+                title="their permisson"
                 className="box-border h-8 w-44 p-4 border-4"
                 onChange={(e) => setTheirPermission(e.target.value)}
               />
@@ -77,6 +79,6 @@ const MemberForm = ({ title }) => {
         </div>
       </form>
     </div>
-  );
-};
-export default MemberForm;
+  )
+}
+export default MemberForm
