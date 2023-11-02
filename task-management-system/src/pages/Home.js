@@ -18,130 +18,164 @@ import Tasks from '../components/Tasks';
 import PriorityTasks from '../components/PriorityTasks';
 import './../App.css';
 import { auth } from '../firebase/firebase';
-import { signOut } from 'firebase/auth';
+import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
 import { db } from '../firebase/firebase';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDoc, collection, setDoc, doc } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
-// import retrieveUserData from '../firebase/retrieveUserData';
 
 // Home Page
 const Home = () => {
+  //   const { currentUser } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [user, setUser] = useState(null);
 
-  const userCollection = collection(db, 'users');
+  async function getUserInfo() {
+    //  if (currentUser === null) {
+    //    window.location.href = '/login';
+    //    return;
+    //  }
+    //  setAppData((await retrieveUserData(currentUser.uid)).result);
+    try {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/auth.user
+          const uid = user.uid;
+          setUser(user);
+          const userRef = doc(db, 'users', uid);
+          getDoc(userRef)
+            .then((docSnap) => {
+              if (docSnap.exists()) {
+                // setTasks(docSnap.data().tasks);
 
-  //   const { currentUser } = useAuth();
+                let userTasks = [];
+                let userProjects = [];
+                for (let key of docSnap.data().tasks) {
+                  userTasks.push(key);
+                }
+                for (let [key, value] of Object.entries(
+                  docSnap.data().projects
+                )) {
+                  userProjects.push(key);
+                }
+                setTasks(userTasks);
+                setProjects(userProjects);
+              } else {
+                // doc.data() will be undefined in this case
+                console.log('No such document!');
+              }
+            })
+            .catch((error) => {
+              console.log('Error getting document:', error);
+            });
+        } else {
+          window.location.href = '/login';
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      //   if (currentUser === null) {
-      //     window.location.href = '/login';
-      //     return;
-      //   }
-      //   setAppData((await retrieveUserData(currentUser.uid)).result);
-      try {
-        const data = await getDocs(userCollection);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     getUserInfo();
   }, []);
 
   // Variables used in the page to trigger different components
-  const [createTask, setCreateTask] = useState(false)
-  const [createProject, setCreateProject] = useState(false)
-  const [create, setCreate] = useState(false)
-  const [viewTask, setViewTask] = useState(false)
-  const [viewProject, setViewProject] = useState(false)
-  const [editProject, setEditProject] = useState(false)
-  const [editTask, setEditTask] = useState(false)
-  const [deadline, setDeadline] = useState(false)
-  const [priority, setPriority] = useState(true)
+  const [createTask, setCreateTask] = useState(false);
+  const [createProject, setCreateProject] = useState(false);
+  const [create, setCreate] = useState(false);
+  const [viewTask, setViewTask] = useState(false);
+  const [viewProject, setViewProject] = useState(false);
+  const [editProject, setEditProject] = useState(false);
+  const [editTask, setEditTask] = useState(false);
+  const [deadline, setDeadline] = useState(false);
+  const [priority, setPriority] = useState(true);
 
   // Functions to handle the different components
   // Handle the deadline component, by setting it true and the priority component false
   const handleDeadline = () => {
-    setDeadline(true)
-    setPriority(false)
-  }
+    setDeadline(true);
+    setPriority(false);
+  };
 
   // Handle the priority component, by setting it true and the deadline component false
   const handlePriority = () => {
-    setPriority(true)
-    setDeadline(false)
-  }
+    setPriority(true);
+    setDeadline(false);
+  };
 
   // Handle the create task component, by setting it true and the other components false
   const handleCreateTask = () => {
-    setCreateTask(true)
-    setCreateProject(false)
-    setCreate(false)
-  }
+    setCreateTask(true);
+    setCreateProject(false);
+    setCreate(false);
+  };
 
   // Handle the create component, which is the plus button, by setting it true and the other components false
   const handleCreate = () => {
-    setCreate(!create)
-  }
+    setCreate(!create);
+  };
 
   // Handle the create project component, by setting it true and the other components false
   const handleCreateProject = () => {
-    setCreateProject(true)
-    setCreateTask(false)
-    setCreate(false)
-  }
+    setCreateProject(true);
+    setCreateTask(false);
+    setCreate(false);
+  };
 
   // Handle the reset component, which resets the page by setting the components false
   const handleReset = () => {
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-    setViewTask(false)
-    setViewProject(false)
-  }
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+    setViewTask(false);
+    setViewProject(false);
+  };
 
   // Handle the view task component by setting it true and the other components false
-  const handleViewTask = () => {
-    setViewTask(true)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-    setViewProject(false)
-  }
+  const handleViewTask = (e) => {
+    console.log(e);
+    setViewTask(true);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+    setViewProject(false);
+  };
 
   // Handle the view project component by setting it true and the other components false
-  const handleViewProject = () => {
-    setViewProject(true)
-    setViewTask(false)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-  }
+  const handleViewProject = (e) => {
+    console.log(e);
+    setViewProject(true);
+    setViewTask(false);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+  };
 
   // Handle the edit project component by setting it true and the other components false
   const handleEditProject = () => {
-    setEditProject(true)
-    setViewProject(false)
-    setViewTask(false)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-    setEditTask(false)
-  }
+    setEditProject(true);
+    setViewProject(false);
+    setViewTask(false);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+    setEditTask(false);
+  };
 
   // Handle the edit task component by setting it true and the other components false
   const handleEditTask = () => {
-    setEditTask(true)
-    setEditProject(false)
-    setViewProject(false)
-    setViewTask(false)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-  }
+    setEditTask(true);
+    setEditProject(false);
+    setViewProject(false);
+    setViewTask(false);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+  };
 
   const handleLogout = async () => {
     try {
@@ -237,7 +271,7 @@ const Home = () => {
         {createTask ? (
           <CreateTask />
         ) : createProject ? (
-          <CreateProject />
+          <CreateProject user={user} />
         ) : viewTask ? (
           <ViewTask
             handleViewProject={handleViewProject}
@@ -256,11 +290,13 @@ const Home = () => {
           <Current
             handleViewTask={handleViewTask}
             handleViewProject={handleViewProject}
+            projects={projects}
+            tasks={tasks}
           />
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
