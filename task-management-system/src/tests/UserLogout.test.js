@@ -13,15 +13,6 @@ import { BrowserRouter } from 'react-router-dom'
 
 // Add Team Member Test
 describe('Logout', () => {
-  // Create a snapshot of the Home page
-  const tree = renderer
-    .create(
-      <BrowserRouter>
-        <Home />
-      </BrowserRouter>
-    )
-    .toJSON()
-
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
@@ -36,9 +27,6 @@ describe('Logout', () => {
         name: /account/i,
       })
     )
-
-    // Compare the snapshot
-    expect(tree).toMatchSnapshot()
 
     // CHECK IF THE USER IS ADDED
   })

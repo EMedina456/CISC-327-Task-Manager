@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Assign Task Functionality
-// Input/Output: Handle the assignment of a task
+// Program Intention: Implement Testing for the Add Team Member Functionality
+// Input/Output: Handle the addition of a member
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
@@ -10,7 +10,7 @@ import AddMember from '../components/AddMember'
 import { handleLogin } from './handleLogin'
 
 // Add Team Member Test
-describe('Assign a Task', () => {
+describe('Add Team Members', () => {
   // Create a snapshot of the Home page
   // Render the Member Form before each test
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe('Assign a Task', () => {
     return { name, yourPermission, theirPermission, submit }
   }
 
-  // Test the assignment of a member with valid permissions
+  // Test the addition of a member with valid permissions
   it('Scenario Valid Permissions', async () => {
     // Type in the required test fields
     const { name, yourPermission, theirPermission, submit } = setup()
@@ -49,7 +49,21 @@ describe('Assign a Task', () => {
     expect(result.code).toBe('success')
   })
 
-  // Test the assignment of a member with invalid permissions
+  // Test the addition of a member that does not exist
+  it('Scenario User Does not Exit', async () => {
+    // Type in the required test fields
+    const { name, yourPermission, theirPermission, submit } = setup()
+    fireEvent.change(name, { target: { value: 'user99' } })
+    fireEvent.change(yourPermission, { target: { value: 'admin' } })
+    fireEvent.change(theirPermission, { target: { value: 'viewer' } })
+    expect(name.value).toBe('user99')
+    expect(yourPermission.value).toBe('admin')
+    expect(theirPermission.value).toBe('viewer')
+    fireEvent.click(submit)
+    const result = await handleLogin('t@t.com', 'test123')
+    expect(result.code).toBe('error')
+  })
+  // Test the addition of a member with invalid permissions
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
     const { name, yourPermission, theirPermission, submit } = setup()
@@ -61,6 +75,6 @@ describe('Assign a Task', () => {
     expect(theirPermission.value).toBe('viewer')
     fireEvent.click(submit)
     const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
+    expect(result.code).toBe('error')
   })
 })

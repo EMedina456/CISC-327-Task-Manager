@@ -6,63 +6,71 @@
 // Import files and dependencies here
 import { render, screen } from '@testing-library/react'
 import React from 'react'
-import user from '@testing-library/user-event'
 import Login from '../pages/Login'
-// import Home from '../pages/Home'
-// import renderer from 'react-test-renderer'
-// import { BrowserRouter } from 'react-router-dom'
-
+import { BrowserRouter } from 'react-router-dom'
+import { fireEvent } from '@testing-library/react'
+import { handleLogin } from './handleLogin'
 // Add Team Member Test
 describe('Login', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<Login />)
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    )
   })
+
+  const setup = () => {
+    const email = screen.getByRole('textbox', {
+      name: /email/i,
+    })
+
+    const password = screen.getByTitle(/password/i)
+    const submit = screen.getByRole('button', {
+      name: /submit/i,
+    })
+    return { email, password, submit }
+  }
+
   // Test the addition of a member that does not exist
   it('User does not exist', async () => {
-    // Type in the required test fields
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /username/i,
-        })
-      ),
-      'user_dne'
+    const { email, password, submit } = setup()
+    fireEvent.change(email, { target: { value: 'user_dne@gmail.com' } })
+    fireEvent.change(password, { target: { value: 'any' } })
+    expect(email.value).toBe('user_dne@gmail.com')
+    expect(password.value).toBe('any')
+    fireEvent.click(submit)
+    expect(await handleLogin('user_dne@gmail.com', 'password')).toBe(
+      'auth/invalid-login-credentials'
     )
-    user.type(user.click(screen.getByTitle(/password/i)), 'any')
-    user.click(screen.getByText(/submit/i))
-    // CHECK ERROR CODE
   })
   it('Password Incorrect', async () => {
     // CREATE THE USER
     // Type in the required test fields
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /username/i,
-        })
-      ),
-      'test_user'
+    const { email, password, submit } = setup()
+    fireEvent.change(email, { target: { value: 't@t.com' } })
+    fireEvent.change(password, { target: { value: 'wrongpassword' } })
+    expect(email.value).toBe('t@t.com')
+    expect(password.value).toBe('wrongpassword')
+    fireEvent.click(submit)
+    expect(await handleLogin('t@t.com', 'wrongpassword')).toBe(
+      'auth/invalid-login-credentials'
     )
-    user.type(user.click(screen.getByTitle(/password/i)), 'any')
-    user.click(screen.getByText(/submit/i))
     // CHECK ERROR CODE
     // DELETE THE USER
   })
   it('Valid Credentials', async () => {
     // CREATE THE USER
     // Type in the required test fields
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /username/i,
-        })
-      ),
-      'test_user'
-    )
-    user.type(user.click(screen.getByTitle(/password/i)), 'valid_password')
-    user.click(screen.getByText(/submit/i))
-    // DELETE THE USER
+    const { email, password, submit } = setup()
+    fireEvent.change(email, { target: { value: 't@t.com' } })
+    fireEvent.change(password, { target: { value: 'test123' } })
+    expect(email.value).toBe('t@t.com')
+    expect(password.value).toBe('test123')
+    fireEvent.click(submit)
+    const result = await handleLogin('t@t.com', 'test123')
+    expect(result.code).toBe('success')
   })
 })

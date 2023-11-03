@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`View Tasks renders correctly 1`] = `
+exports[`View Tasks View Tasks renders correctly 1`] = `
 <div>
   <button
     className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "

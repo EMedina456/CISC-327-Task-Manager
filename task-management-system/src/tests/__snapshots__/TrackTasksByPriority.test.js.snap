@@ -5,13 +5,13 @@ exports[`Track Tasks by Priority 1`] = `
   className="bg-[#D9D9D9] min-h-[100vh]"
 >
   <header
-    className="flex min-h-[15%] bg-[#FF9FB2] items-center"
+    className="flex min-h-[15vh] bg-[#FF9FB2] items-center"
   >
     <button
       onClick={[Function]}
     >
       <h1
-        className="text-6xl text-left m-6 font-extrabold"
+        className="text-3xl text-left m-6 font-extrabold md:text-6xl lg:text-6xl"
       >
         Task-it
       </h1>
@@ -20,7 +20,7 @@ exports[`Track Tasks by Priority 1`] = `
       className="flex items-center align-center"
     >
       <button
-        className="text-6xl text-right ml-auto mr-6"
+        className="text-4xl text-right ml-auto mr-6 lg:text-6xl md:text-6xl"
         onClick={[Function]}
       >
         <svg
@@ -46,9 +46,8 @@ exports[`Track Tasks by Priority 1`] = `
         </svg>
       </button>
     </div>
-    <a
-      className="text-6xl text-right ml-auto mr-6"
-      href="/login"
+    <button
+      className="text-2xl text-right ml-auto mr-6 lg:text-6xl md:text-4xl"
       onClick={[Function]}
     >
       <svg
@@ -76,21 +75,22 @@ exports[`Track Tasks by Priority 1`] = `
           d="M12 6c-1.93 0-3.5 1.57-3.5 3.5S10.07 13 12 13s3.5-1.57 3.5-3.5S13.93 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"
         />
       </svg>
-    </a>
+    </button>
   </header>
   <div
-    className="flex min-h-[85%]"
+    className="flex min-h-[85vh]"
   >
     <div
-      className="flex flex-col justify-top p-[2%] items-center space-y-8 w-[20%] bg-[#FBDCE2]"
+      className="flex flex-col justify-top p-[2%] items-center space-y-8 w-3/12 min-h-[100vh] bg-[#FBDCE2]"
     >
       <h1
-        className="text-4xl font-bold mb-2"
+        className="text-lg m-0 font-bold mb-2 md:text-2xl lg:text-4xl sm:text-base"
       >
-        Sort By 
+        Sort By
+         
       </h1>
       <div
-        className="border-[#60AB9A] w-full h-1 border-2"
+        className="border-[#60AB9A]  h-1 border-2 w-3/12 lg:w-full md:w-6/12"
       />
       <div
         className="flex flex-row "
@@ -104,12 +104,13 @@ exports[`Track Tasks by Priority 1`] = `
             onClick={[Function]}
           >
             <h1
-              className="text-3xl m-2 font-bold mb-2"
+              className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm"
             >
-              Deadline 
+              Deadline
+               
             </h1>
             <div
-              className="mr-2 border-[#60AB9A] w-full h-1 border-2"
+              className="mr-2 border-[#60AB9A] w-11/12 lg:w-full md:w-11/12 h-1 border-2"
             />
           </button>
         </div>
@@ -122,24 +123,25 @@ exports[`Track Tasks by Priority 1`] = `
             onClick={[Function]}
           >
             <h1
-              className="text-3xl m-2 font-bold mb-2"
+              className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm"
             >
-              Priority 
+              Priority
+               
             </h1>
             <div
-              className=" ml-2 border-[#60AB9A] w-full h-1 border-2"
+              className=" ml-2 border-[#60AB9A] w-11/12 lg:w-full md:w-11/12 h-1 border-2"
             />
           </button>
         </div>
       </div>
       <div
-        className=" space-y-8 "
+        className="space-y-8 "
       >
         <div
           className="flex flex-col justify-center"
         >
           <h1
-            className="text-4xl font-bold mb-2"
+            className="text-lg font-bold mb-2 lg:text-4xl md:text-2xl"
           >
             !!! Priority
           </h1>
@@ -147,19 +149,19 @@ exports[`Track Tasks by Priority 1`] = `
             className="border-[#60AB9A] w-full h-1 border-2"
           />
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 1
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 2
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 3
@@ -169,7 +171,7 @@ exports[`Track Tasks by Priority 1`] = `
           className="flex flex-col justify-center "
         >
           <h1
-            className="text-4xl font-bold mb-2"
+            className="text-lg font-bold mb-2 lg:text-4xl md:text-2xl"
           >
             !! Priority
           </h1>
@@ -177,19 +179,19 @@ exports[`Track Tasks by Priority 1`] = `
             className="border-[#60AB9A] w-full h-1 border-2"
           />
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 1
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 2
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 3
@@ -199,7 +201,7 @@ exports[`Track Tasks by Priority 1`] = `
           className="flex flex-col justify-center"
         >
           <h1
-            className="text-4xl font-bold mb-2"
+            className="text-lg font-bold mb-2 lg:text-4xl md:text-2xl"
           >
             ! Priority
           </h1>
@@ -207,19 +209,19 @@ exports[`Track Tasks by Priority 1`] = `
             className="border-[#60AB9A] w-full h-1 border-2"
           />
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 1
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 2
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 3
@@ -231,147 +233,39 @@ exports[`Track Tasks by Priority 1`] = `
       className="flex flex-col md:flex-row w-[80%]"
     >
       <div
-        className="flex-1 flex-col p-[2%] justify-center items-center h-full"
+        className="flex-1 flex-col p-[2%] justify-center items-center"
       >
         <h1
-          className="flex text-5xl font-bold mb-2"
+          className="flex text-xl font-bold mb-2 md:text-3xl lg:text-5xl"
         >
           Projects
         </h1>
         <div
           className="border-[#60AB9A] w-80 h-1 border-2"
         />
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Project 1
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Project 2
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Project 3
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          ...
-        </button>
         <div
           className="my-16"
         />
         <h1
-          className="flex text-5xl font-bold mb-2"
+          className="flex text-xl font-bold mb-2 lg:text-5xl md:text-3xl"
         >
           Overdue Tasks
         </h1>
         <div
           className="border-[#60AB9A] w-80 h-1 border-2"
         />
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 1
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 2
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 3
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          ...
-        </button>
       </div>
       <div
         className="flex-1 flex-col p-[2%] justify-center items-center h-full"
       >
         <h1
-          className="flex text-5xl font-bold mb-2"
+          className="flex text-xl font-bold mb-2 lg:text-5xl md:text-3xl"
         >
           Tasks
         </h1>
         <div
           className="border-[#60AB9A] w-80 h-1 border-2"
         />
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 1
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 2
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 3
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 4
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 5
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 6
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 7
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 8
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 9
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          ...
-        </button>
       </div>
       <div
         className="my-16"
@@ -386,13 +280,13 @@ exports[`Track Tasks by Priority 2`] = `
   className="bg-[#D9D9D9] min-h-[100vh]"
 >
   <header
-    className="flex min-h-[15%] bg-[#FF9FB2] items-center"
+    className="flex min-h-[15vh] bg-[#FF9FB2] items-center"
   >
     <button
       onClick={[Function]}
     >
       <h1
-        className="text-6xl text-left m-6 font-extrabold"
+        className="text-3xl text-left m-6 font-extrabold md:text-6xl lg:text-6xl"
       >
         Task-it
       </h1>
@@ -401,7 +295,7 @@ exports[`Track Tasks by Priority 2`] = `
       className="flex items-center align-center"
     >
       <button
-        className="text-6xl text-right ml-auto mr-6"
+        className="text-4xl text-right ml-auto mr-6 lg:text-6xl md:text-6xl"
         onClick={[Function]}
       >
         <svg
@@ -427,9 +321,8 @@ exports[`Track Tasks by Priority 2`] = `
         </svg>
       </button>
     </div>
-    <a
-      className="text-6xl text-right ml-auto mr-6"
-      href="/login"
+    <button
+      className="text-2xl text-right ml-auto mr-6 lg:text-6xl md:text-4xl"
       onClick={[Function]}
     >
       <svg
@@ -457,21 +350,22 @@ exports[`Track Tasks by Priority 2`] = `
           d="M12 6c-1.93 0-3.5 1.57-3.5 3.5S10.07 13 12 13s3.5-1.57 3.5-3.5S13.93 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"
         />
       </svg>
-    </a>
+    </button>
   </header>
   <div
-    className="flex min-h-[85%]"
+    className="flex min-h-[85vh]"
   >
     <div
-      className="flex flex-col justify-top p-[2%] items-center space-y-8 w-[20%] bg-[#FBDCE2]"
+      className="flex flex-col justify-top p-[2%] items-center space-y-8 w-3/12 min-h-[100vh] bg-[#FBDCE2]"
     >
       <h1
-        className="text-4xl font-bold mb-2"
+        className="text-lg m-0 font-bold mb-2 md:text-2xl lg:text-4xl sm:text-base"
       >
-        Sort By 
+        Sort By
+         
       </h1>
       <div
-        className="border-[#60AB9A] w-full h-1 border-2"
+        className="border-[#60AB9A]  h-1 border-2 w-3/12 lg:w-full md:w-6/12"
       />
       <div
         className="flex flex-row "
@@ -485,12 +379,13 @@ exports[`Track Tasks by Priority 2`] = `
             onClick={[Function]}
           >
             <h1
-              className="text-3xl m-2 font-bold mb-2"
+              className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm"
             >
-              Deadline 
+              Deadline
+               
             </h1>
             <div
-              className="mr-2 border-[#60AB9A] w-full h-1 border-2"
+              className="mr-2 border-[#60AB9A] w-11/12 lg:w-full md:w-11/12 h-1 border-2"
             />
           </button>
         </div>
@@ -503,24 +398,25 @@ exports[`Track Tasks by Priority 2`] = `
             onClick={[Function]}
           >
             <h1
-              className="text-3xl m-2 font-bold mb-2"
+              className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm"
             >
-              Priority 
+              Priority
+               
             </h1>
             <div
-              className=" ml-2 border-[#60AB9A] w-full h-1 border-2"
+              className=" ml-2 border-[#60AB9A] w-11/12 lg:w-full md:w-11/12 h-1 border-2"
             />
           </button>
         </div>
       </div>
       <div
-        className=" space-y-8 "
+        className="space-y-8 "
       >
         <div
           className="flex flex-col justify-center"
         >
           <h1
-            className="text-4xl font-bold mb-2"
+            className="text-lg font-bold mb-2 lg:text-4xl md:text-2xl"
           >
             !!! Priority
           </h1>
@@ -528,19 +424,19 @@ exports[`Track Tasks by Priority 2`] = `
             className="border-[#60AB9A] w-full h-1 border-2"
           />
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 1
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 2
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 3
@@ -550,7 +446,7 @@ exports[`Track Tasks by Priority 2`] = `
           className="flex flex-col justify-center "
         >
           <h1
-            className="text-4xl font-bold mb-2"
+            className="text-lg font-bold mb-2 lg:text-4xl md:text-2xl"
           >
             !! Priority
           </h1>
@@ -558,19 +454,19 @@ exports[`Track Tasks by Priority 2`] = `
             className="border-[#60AB9A] w-full h-1 border-2"
           />
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 1
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 2
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 3
@@ -580,7 +476,7 @@ exports[`Track Tasks by Priority 2`] = `
           className="flex flex-col justify-center"
         >
           <h1
-            className="text-4xl font-bold mb-2"
+            className="text-lg font-bold mb-2 lg:text-4xl md:text-2xl"
           >
             ! Priority
           </h1>
@@ -588,19 +484,19 @@ exports[`Track Tasks by Priority 2`] = `
             className="border-[#60AB9A] w-full h-1 border-2"
           />
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 1
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 2
           </button>
           <button
-            className="text-xl text-left font-bold mt-2 underline decoration-[#0acdff]"
+            className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
             onClick={[Function]}
           >
             Task 3
@@ -612,147 +508,39 @@ exports[`Track Tasks by Priority 2`] = `
       className="flex flex-col md:flex-row w-[80%]"
     >
       <div
-        className="flex-1 flex-col p-[2%] justify-center items-center h-full"
+        className="flex-1 flex-col p-[2%] justify-center items-center"
       >
         <h1
-          className="flex text-5xl font-bold mb-2"
+          className="flex text-xl font-bold mb-2 md:text-3xl lg:text-5xl"
         >
           Projects
         </h1>
         <div
           className="border-[#60AB9A] w-80 h-1 border-2"
         />
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Project 1
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Project 2
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Project 3
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          ...
-        </button>
         <div
           className="my-16"
         />
         <h1
-          className="flex text-5xl font-bold mb-2"
+          className="flex text-xl font-bold mb-2 lg:text-5xl md:text-3xl"
         >
           Overdue Tasks
         </h1>
         <div
           className="border-[#60AB9A] w-80 h-1 border-2"
         />
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 1
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 2
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 3
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          ...
-        </button>
       </div>
       <div
         className="flex-1 flex-col p-[2%] justify-center items-center h-full"
       >
         <h1
-          className="flex text-5xl font-bold mb-2"
+          className="flex text-xl font-bold mb-2 lg:text-5xl md:text-3xl"
         >
           Tasks
         </h1>
         <div
           className="border-[#60AB9A] w-80 h-1 border-2"
         />
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 1
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 2
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 3
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 4
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 5
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 6
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 7
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 8
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          Task 9
-        </button>
-        <button
-          className="flex text-2xl font-bold mt-2 underline decoration-[#0acdff]"
-          onClick={[Function]}
-        >
-          ...
-        </button>
       </div>
       <div
         className="my-16"

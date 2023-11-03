@@ -4,12 +4,8 @@
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
-import user from '@testing-library/user-event'
-// import Home from '../pages/Home'
-// import renderer from 'react-test-renderer'
-// import { BrowserRouter } from 'react-router-dom'
 import ViewTask from '../components/ViewTask'
 
 // Mark Task As Completed Test
@@ -25,7 +21,7 @@ describe('Mark Task as Completed', () => {
     // Type in the required test fields
     // CREATE TASK
 
-    user.click(
+    fireEvent.click(
       screen.getByRole('button', {
         name: /complete/i,
       })

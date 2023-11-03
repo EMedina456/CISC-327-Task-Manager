@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --updateSnapshot",
+    "test": "DOTENV_CONFIG_PATH=.env.local jest --silent --setupFiles=dotenv/config",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -7,90 +7,102 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import user from '@testing-library/user-event'
-import Home from '../pages/Home'
-import renderer from 'react-test-renderer'
-import { BrowserRouter } from 'react-router-dom'
 import CreateTask from '../components/CreateTask'
-
+import { fireEvent } from '@testing-library/react'
+import { handleLogin } from './handleLogin'
+import { handleCreateTask } from './handleTaskCreate'
+import { auth } from '../firebase/firebase'
+import { signOut } from 'firebase/auth'
 // Task Registration Test
 describe('Task Registration', () => {
-  // Create a snapshot of the Home page
-  const tree = renderer
-    .create(
-      <BrowserRouter>
-        <Home />
-      </BrowserRouter>
-    )
-    .toJSON()
-
   // Render the Member Form before each test
-  beforeEach(() => {
+  beforeEach(async () => {
     // eslint-disable-next-line testing-library/no-render-in-setup
     render(<CreateTask />)
   })
 
+  const setup = () => {
+    const name = screen.getByRole('textbox', {
+      name: /name/i,
+    })
+    const description = screen.getByRole('textbox', {
+      name: /description/i,
+    })
+    const submit = screen.getByRole('button', {
+      name: /submit/i,
+    })
+    const priority = screen.getByRole('spinbutton', {
+      name: /priority/i,
+    })
+    const project = screen.getByRole('textbox', {
+      name: /project/i,
+    })
+
+    return { name, description, submit, priority, project }
+  }
+
   // Test the registration of a task with invalid permissions
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /name/i,
-        })
-      ),
-      'example'
-    )
+    const { name, description, submit, priority, project } = setup()
+    fireEvent.change(name, { target: { value: 'Generic name' } })
+    fireEvent.change(description, { target: { value: 'description' } })
+    fireEvent.change(priority, { target: { value: 1 } })
+    fireEvent.change(project, { target: { value: 'project' } })
+    expect(name.value).toBe('Generic name')
+    expect(description.value).toBe('description')
+    expect(priority.value).toBe('1')
+    expect(project.value).toBe('project')
+    fireEvent.click(submit)
+    const result = await handleLogin('t@t.com', 'test123')
+    expect(result.code).toBe('success')
+    expect(await handleCreateTask(result, '', 'Something')).toBe('success')
+    signOut(auth)
 
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /description/i,
-        })
-      ),
-      'description of task'
-    )
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /your permission/i,
-        })
-      ),
-      'invalid permission'
-    )
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /their permission/i,
-        })
-      ),
-      'random permission'
-    )
+    // NEED TO CHECK DATABASE FOR TASK
+    // DELETE TASK FROM DATABASE
+  })
 
-    user.type(
-      user.click(
-        screen.getByRole('spinbutton', {
-          name: /priority/i,
-        })
-      ),
-      1
-    )
+  // Test the registration of a task with invalid permissions
+  it('Scenario Valid Permissions', async () => {
+    // Type in the required test fields
+    const { name, description, submit, priority, project } = setup()
+    fireEvent.change(name, { target: { value: 'Generic name' } })
+    fireEvent.change(description, { target: { value: 'description' } })
+    fireEvent.change(priority, { target: { value: 1 } })
+    fireEvent.change(project, { target: { value: 'project' } })
+    expect(name.value).toBe('Generic name')
+    expect(description.value).toBe('description')
+    expect(priority.value).toBe('1')
+    expect(project.value).toBe('project')
+    fireEvent.click(submit)
+    const result = await handleLogin('t@t.com', 'test123')
+    expect(result.code).toBe('success')
+    expect(await handleCreateTask(result, '', 'Something')).toBe('success')
+    signOut(auth)
 
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /project/i,
-        })
-      ),
-      '1'
+    // NEED TO CHECK DATABASE FOR TASK
+    // DELETE TASK FROM DATABASE
+  })
+  // Test the registration of a task with invalid permissions
+  it('Scenario Already Created', async () => {
+    // Type in the required test fields
+    const { name, description, submit, priority, project } = setup()
+    fireEvent.change(name, { target: { value: 'example' } })
+    fireEvent.change(description, { target: { value: 'description' } })
+    fireEvent.change(priority, { target: { value: 1 } })
+    fireEvent.change(project, { target: { value: 'project' } })
+    expect(name.value).toBe('example')
+    expect(description.value).toBe('description')
+    expect(priority.value).toBe('1')
+    expect(project.value).toBe('project')
+    fireEvent.click(submit)
+    const result = await handleLogin('t@t.com', 'test123')
+    expect(result.code).toBe('success')
+    expect(await handleCreateTask(result, '', 'Something')).not.toEqual(
+      'success'
     )
-    user.click(screen.getByText(/submit/i))
-    user.click(
-      screen.getByRole('button', {
-        name: /submit/i,
-      })
-    )
-    // Compare the snapshot
-    expect(tree).toMatchSnapshot()
+    signOut(auth)
 
     // NEED TO CHECK DATABASE FOR TASK
     // DELETE TASK FROM DATABASE
