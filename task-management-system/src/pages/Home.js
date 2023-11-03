@@ -72,6 +72,7 @@ const Home = () => {
 
   useEffect(() => {
     getUserInfo();
+    console.log('fetched');
   }, []);
 
   // Variables used in the page to trigger different components

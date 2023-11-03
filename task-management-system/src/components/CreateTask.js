@@ -85,7 +85,7 @@ const CreateTask = ({ user }) => {
           const userRef = doc(db, 'users', uid);
           const docSnap = await getDoc(userRef);
           if (docSnap.exists()) {
-            let userProjects = docSnap.data().projects || [];
+            let userProjects = docSnap.data().projects || {};
             setProjects(Object.keys(userProjects));
 
             // Retrieve project names and update the state
@@ -120,6 +120,7 @@ const CreateTask = ({ user }) => {
 
   useEffect(() => {
     getUserInfo();
+    console.log('Projects: ', projects);
   }, []);
 
   // Create Task Page
