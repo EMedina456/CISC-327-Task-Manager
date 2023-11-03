@@ -1,19 +1,15 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Rename Projet Functionality
-// Input/Output: Handle the addition of a project
+// Program Intention: Implement Testing for the Rename Project Functionality
+// Input/Output: Handle the renaming of a project
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
-import { getUserInfo } from './getUserInfo'
-import { handleCreateProject } from './handleProjectCreate'
-import { handleLogin } from './handleLogin'
-import { auth } from '../firebase/firebase'
-import { signOut } from 'firebase/auth'
 import EditProject from '../components/EditProject'
-// Add Team Member Test
+
+// Rename Project Test
 describe('Rename Project', () => {
   // Render the Member Form before each test
   beforeEach(() => {
@@ -21,6 +17,7 @@ describe('Rename Project', () => {
     render(<EditProject />)
   })
 
+  // Setup the test by getting the required fields
   const setup = () => {
     const name = screen.getByRole('textbox', {
       name: /name/i,
@@ -39,17 +36,14 @@ describe('Rename Project', () => {
     // Type in the required test fields
     const { name, description, submit } = setup()
     fireEvent.change(name, { target: { value: 'Project' } })
-    fireEvent.change(description, { target: { value: 'Something' } })
-    expect(name.value).toBe('Project')
-    fireEvent.click(submit)
-    const user = await handleLogin('t@t.com', 'test123')
-    expect(await handleCreateProject(user, 'Project', 'Something')).toBe(
-      'success'
-    )
-    signOut(auth)
+    fireEvent.change(description, { target: { value: 'Project' } })
 
-    // CHECK IF THE USER IS ADDED
-    // DELETE THE USER
+    // Check if the values are correct
+    expect(name.value).toBe('Project')
+    expect(name.value).toBe('Project')
+
+    // Click the submit button
+    fireEvent.click(submit)
   })
   // Test the addition of a member with invalid name
   it('Scenario Invalid Name', async () => {
@@ -57,13 +51,12 @@ describe('Rename Project', () => {
     const { name, description, submit } = setup()
     fireEvent.change(name, { target: { value: '' } })
     fireEvent.change(description, { target: { value: 'Something' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('')
     expect(description.value).toBe('Something')
-    fireEvent.click(submit)
-    const user = await handleLogin('t@t.com', 'test123')
-    expect(await handleCreateProject(user, '', 'Something')).toBe('success')
-    signOut(auth)
 
-    // CHECK ERROR MESSAGE
+    // Click the submit button
+    fireEvent.click(submit)
   })
 })

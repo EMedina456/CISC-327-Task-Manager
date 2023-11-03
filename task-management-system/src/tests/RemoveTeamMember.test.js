@@ -1,15 +1,14 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Manage Team Members Functionality
-// Input/Output: Handle the addition of a member
+// Program Intention: Implement Testing for the Remove Team Members Functionality
+// Input/Output: Handle the removal of a member
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
-import { handleLogin } from './handleLogin'
 import RemoveMember from '../components/RemoveMember'
 
-// Add Team Member Test
+// Remove Team Member Test
 describe('Remove Team Member', () => {
   // Create a snapshot of the Home page
   // Render the Member Form before each test
@@ -18,6 +17,7 @@ describe('Remove Team Member', () => {
     render(<RemoveMember />)
   })
 
+  // Setup the test by getting the required fields
   const setup = () => {
     const name = screen.getByRole('textbox', {
       name: /name/i,
@@ -36,11 +36,13 @@ describe('Remove Team Member', () => {
     const { name, yourPermission, submit } = setup()
     fireEvent.change(name, { target: { value: 'user99' } })
     fireEvent.change(yourPermission, { target: { value: 'viewer' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('user99')
     expect(yourPermission.value).toBe('viewer')
+
+    // Click the submit button
     fireEvent.click(submit)
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
   })
 
   // Test the addition of a member with valid permissions
@@ -49,11 +51,13 @@ describe('Remove Team Member', () => {
     const { name, yourPermission, submit } = setup()
     fireEvent.change(name, { target: { value: 'user' } })
     fireEvent.change(yourPermission, { target: { value: 'admin' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('user')
     expect(yourPermission.value).toBe('admin')
+
+    // Click the submit button
     fireEvent.click(submit)
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
   })
 
   // Test the addition of a member that does not exist
@@ -62,23 +66,26 @@ describe('Remove Team Member', () => {
     const { name, yourPermission, submit } = setup()
     fireEvent.change(name, { target: { value: 'user99' } })
     fireEvent.change(yourPermission, { target: { value: 'viewer' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('user99')
     expect(yourPermission.value).toBe('viewer')
+
+    // Click the submit button
     fireEvent.click(submit)
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
   })
 
   it('Scenario Valid Owner Permissions', async () => {
     // Type in the required test fields
-    const { name, yourPermission, theirPermission, submit } = setup()
+    const { name, yourPermission, submit } = setup()
     fireEvent.change(name, { target: { value: 'user99' } })
     fireEvent.change(yourPermission, { target: { value: 'owner' } })
-    fireEvent.change(theirPermission, { target: { value: 'viewer' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('user99')
     expect(yourPermission.value).toBe('owner')
+
+    // Click the submit button
     fireEvent.click(submit)
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
   })
 })

@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Create Projet Functionality
+// Program Intention: Implement Testing for the Create Project Functionality
 // Input/Output: Handle the addition of a project
 // Run Intention: Run with the other test cases
 
@@ -8,12 +8,12 @@ import { render, screen } from '@testing-library/react'
 import React from 'react'
 import CreateProject from '../components/CreateProject'
 import { fireEvent } from '@testing-library/react'
-import { getUserInfo } from './getUserInfo'
 import { handleCreateProject } from './handleProjectCreate'
 import { handleLogin } from './handleLogin'
 import { auth } from '../firebase/firebase'
 import { signOut } from 'firebase/auth'
-// Add Team Member Test
+
+// Create Project Test
 describe('Create Project', () => {
   // Render the Member Form before each test
   beforeEach(() => {
@@ -21,6 +21,7 @@ describe('Create Project', () => {
     render(<CreateProject />)
   })
 
+  // Setup the test by getting the required fields
   const setup = () => {
     const name = screen.getByRole('textbox', {
       name: /name/i,
@@ -38,19 +39,24 @@ describe('Create Project', () => {
   it('Scenario Valid Name', async () => {
     // Type in the required test fields
     const { name, description, submit } = setup()
+
+    // Type in the required test fields
     fireEvent.change(name, { target: { value: 'Project' } })
     fireEvent.change(description, { target: { value: 'Something' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('Project')
     expect(description.value).toBe('Something')
+
+    // Click the submit button
     fireEvent.click(submit)
+
+    // Check if the project was added
     const user = await handleLogin('t@t.com', 'test123')
     expect(await handleCreateProject(user, 'Example', 'Something')).toBe(
       'success'
     )
     signOut(auth)
-
-    // CHECK IF THE USER IS ADDED
-    // DELETE THE USER
   })
   // Test the addition of a member with invalid name
   it('Scenario Invalid Name', async () => {

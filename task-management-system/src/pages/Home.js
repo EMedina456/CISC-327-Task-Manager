@@ -226,6 +226,7 @@ const Home = () => {
         <button
           onClick={handleLogout}
           className="text-2xl text-right ml-auto mr-6 lg:text-6xl md:text-4xl"
+          title="account"
         >
           <MdOutlineAccountCircle />
         </button>

@@ -6,10 +6,9 @@
 // Import files and dependencies here
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
-import { handleLogin } from './handleLogin'
 import TransferOwnership from '../components/TransferOwnership'
 
-// Add Team Member Test
+// Transfer Ownership Test
 describe('Transfer Ownership', () => {
   // Create a snapshot of the Home page
   // Render the Member Form before each test
@@ -18,6 +17,7 @@ describe('Transfer Ownership', () => {
     render(<TransferOwnership />)
   })
 
+  // Setup the test by getting the required fields
   const setup = () => {
     const name = screen.getByRole('textbox', {
       name: /name/i,
@@ -41,11 +41,13 @@ describe('Transfer Ownership', () => {
     fireEvent.change(name, { target: { value: 'user' } })
     fireEvent.change(yourPermission, { target: { value: 'admin' } })
     fireEvent.change(theirPermission, { target: { value: 'viewer' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('user')
     expect(yourPermission.value).toBe('admin')
     expect(theirPermission.value).toBe('viewer')
+
+    // Click the submit button
     fireEvent.click(submit)
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
   })
 })

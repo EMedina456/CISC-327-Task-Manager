@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Mark Task a Completed Functionality
+// Program Intention: Implement Testing for the Mark Task as Completed Functionality
 // Input/Output: Handle the completion of a task
 // Run Intention: Run with the other test cases
 
@@ -19,15 +19,11 @@ describe('Mark Task as Completed', () => {
   // Test the completion of a task
   it('Click Completed', async () => {
     // Type in the required test fields
-    // CREATE TASK
 
     fireEvent.click(
       screen.getByRole('button', {
         name: /complete/i,
       })
     )
-
-    // CHECK IF TASK IS COMPLETE
-    // DELETE THE USER
   })
 })

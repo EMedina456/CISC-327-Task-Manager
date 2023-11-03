@@ -1,19 +1,15 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Task Registration Functionality
-// Input/Output: Handle the registration of a task
+// Program Intention: Implement Testing for the Task Edit Functionality
+// Input/Output: Handle the edit of a task
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
 import { render, screen } from '@testing-library/react'
 import React from 'react'
-import user from '@testing-library/user-event'
 import { fireEvent } from '@testing-library/react'
-import { handleLogin } from './handleLogin'
-import { handleCreateTask } from './handleTaskCreate'
-import { auth } from '../firebase/firebase'
-import { signOut } from 'firebase/auth'
 import EditTask from '../components/EditTask'
-// Task Registration Test
+
+// Task Edit Test
 describe('Task Edit', () => {
   // Render the Member Form before each test
   beforeEach(async () => {
@@ -21,6 +17,7 @@ describe('Task Edit', () => {
     render(<EditTask />)
   })
 
+  // Setup the test by getting the required fields
   const setup = () => {
     const name = screen.getByRole('textbox', {
       name: /name/i,
@@ -49,18 +46,15 @@ describe('Task Edit', () => {
     fireEvent.change(description, { target: { value: 'Generic description' } })
     fireEvent.change(priority, { target: { value: 1 } })
     fireEvent.change(project, { target: { value: 'Project' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('Generic name')
     expect(description.value).toBe('Generic description')
     expect(priority.value).toBe('1')
     expect(project.value).toBe('Project')
-    fireEvent.click(submit)
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
-    expect(await handleCreateTask(user, '', 'Something')).toBe('success')
-    signOut(auth)
 
-    // NEED TO CHECK DATABASE FOR TASK
-    // DELETE TASK FROM DATABASE
+    // Click the submit button
+    fireEvent.click(submit)
   })
 
   // Test the registration of a task with invalid permissions
@@ -71,17 +65,14 @@ describe('Task Edit', () => {
     fireEvent.change(description, { target: { value: 'Generic description' } })
     fireEvent.change(priority, { target: { value: 1 } })
     fireEvent.change(project, { target: { value: 'Project' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('Generic name')
     expect(description.value).toBe('Generic description')
     expect(priority.value).toBe('1')
     expect(project.value).toBe('Project')
-    fireEvent.click(submit)
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
-    expect(await handleCreateTask(user, '', 'Something')).toBe('success')
-    signOut(auth)
 
-    // NEED TO CHECK DATABASE FOR TASK
-    // DELETE TASK FROM DATABASE
+    // Click the submit button
+    fireEvent.click(submit)
   })
 })

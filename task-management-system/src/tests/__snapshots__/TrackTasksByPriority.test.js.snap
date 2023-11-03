@@ -49,6 +49,7 @@ exports[`Track Tasks by Priority 1`] = `
     <button
       className="text-2xl text-right ml-auto mr-6 lg:text-6xl md:text-4xl"
       onClick={[Function]}
+      title="account"
     >
       <svg
         fill="currentColor"
@@ -324,6 +325,7 @@ exports[`Track Tasks by Priority 2`] = `
     <button
       className="text-2xl text-right ml-auto mr-6 lg:text-6xl md:text-4xl"
       onClick={[Function]}
+      title="account"
     >
       <svg
         fill="currentColor"

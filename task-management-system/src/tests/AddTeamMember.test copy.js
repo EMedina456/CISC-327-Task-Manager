@@ -12,12 +12,13 @@ import { handleLogin } from './handleLogin'
 // Add Team Member Test
 describe('Add Team Members', () => {
   // Create a snapshot of the Home page
-  // Render the Member Form before each test
+  // Render the AddMember Form before each test
   beforeEach(() => {
     //eslint-disable-next-line testing-library/no-render-in-setup
     render(<AddMember />)
   })
 
+  // Setup the test by getting the required fields
   const setup = () => {
     const name = screen.getByRole('textbox', {
       name: /name/i,
@@ -41,10 +42,16 @@ describe('Add Team Members', () => {
     fireEvent.change(name, { target: { value: 'user' } })
     fireEvent.change(yourPermission, { target: { value: 'admin' } })
     fireEvent.change(theirPermission, { target: { value: 'viewer' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('user')
     expect(yourPermission.value).toBe('admin')
     expect(theirPermission.value).toBe('viewer')
+
+    // Click the submit button
     fireEvent.click(submit)
+
+    // Check if the user was added
     const result = await handleLogin('t@t.com', 'test123')
     expect(result.code).toBe('success')
   })
@@ -53,13 +60,21 @@ describe('Add Team Members', () => {
   it('Scenario User Does not Exit', async () => {
     // Type in the required test fields
     const { name, yourPermission, theirPermission, submit } = setup()
+
+    // Type in the required test fields
     fireEvent.change(name, { target: { value: 'user99' } })
     fireEvent.change(yourPermission, { target: { value: 'admin' } })
     fireEvent.change(theirPermission, { target: { value: 'viewer' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('user99')
     expect(yourPermission.value).toBe('admin')
     expect(theirPermission.value).toBe('viewer')
+
+    // Click the submit button
     fireEvent.click(submit)
+
+    // Check if the user was added
     const result = await handleLogin('t@t.com', 'test123')
     expect(result.code).toBe('error')
   })
@@ -70,10 +85,16 @@ describe('Add Team Members', () => {
     fireEvent.change(name, { target: { value: 'user99' } })
     fireEvent.change(yourPermission, { target: { value: 'viewer' } })
     fireEvent.change(theirPermission, { target: { value: 'viewer' } })
+
+    // Check if the values are correct
     expect(name.value).toBe('user99')
     expect(yourPermission.value).toBe('viewer')
     expect(theirPermission.value).toBe('viewer')
+
+    // Click the submit button
     fireEvent.click(submit)
+
+    // Check if the user was added
     const result = await handleLogin('t@t.com', 'test123')
     expect(result.code).toBe('error')
   })
