@@ -14,22 +14,6 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 }
-// const REACT_APP_FIREBASE_API_KEY = 'AIzaSyDvHhdAcdHTteZr1tXtD3ZnlH4YMpIiEkY'
-// const REACT_APP_FIREBASE_AUTH_DOMAIN = 'cisc327newprojectdb.firebaseapp.com'
-// const REACT_APP_FIREBASE_PROJECT_ID = 'cisc327newprojectdb'
-// const REACT_APP_FIREBASE_STORAGE_BUCKET = 'cisc327newprojectdb.appspot.com'
-// const REACT_APP_FIREBASE_MESSAGING_SENDER_ID = '679278145236'
-// const REACT_APP_FIREBASE_APP_ID = '1:679278145236:web:8b357753fe7e691733d541'
-// const REACT_APP_FIREBASE_MEASUREMENT_ID = 'G-CB9JN5YJDK'
-// const firebaseConfig = {
-//   apiKey: REACT_APP_FIREBASE_API_KEY,
-//   authDomain: REACT_APP_FIREBASE_AUTH_DOMAIN,
-//   projectId: REACT_APP_FIREBASE_PROJECT_ID,
-//   storageBucket: REACT_APP_FIREBASE_STORAGE_BUCKET,
-//   messagingSenderId: REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-//   appId: REACT_APP_FIREBASE_APP_ID,
-//   measurementId: REACT_APP_FIREBASE_MEASUREMENT_ID,
-// }
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
