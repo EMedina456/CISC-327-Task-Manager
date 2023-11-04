@@ -9,7 +9,7 @@ import { doc, getDoc, collection, addDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
-const CreateTask = ({ user }) => {
+const CreateTask = ({ user, projects }) => {
   // Handle the variables for the task
   const [task_name, setTaskName] = useState('');
   const [description, setDescription] = useState('');
@@ -17,7 +17,6 @@ const CreateTask = ({ user }) => {
   const [deadline, setDeadline] = useState('');
   const [project, setProject] = useState('');
 
-  const [projects, setProjects] = useState([]);
   const [projectNames, setProjectNames] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -52,11 +51,10 @@ const CreateTask = ({ user }) => {
       } else {
         console.log('No user is signed in');
       }
-
+      console.log('Project: ', project);
       if (project !== '') {
         const projectRef = doc(db, 'projects', project);
-        const docSnap = await getDoc(projectRef);
-        const projectTasks = docSnap.data().tasks || [];
+        const projectTasks = projects[project].tasks || [];
         setDoc(
           projectRef,
           {
@@ -76,52 +74,53 @@ const CreateTask = ({ user }) => {
     }
   };
 
-  async function getUserInfo() {
-    try {
-      const auth = getAuth();
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const uid = user.uid;
-          const userRef = doc(db, 'users', uid);
-          const docSnap = await getDoc(userRef);
-          if (docSnap.exists()) {
-            let userProjects = docSnap.data().projects || {};
-            setProjects(Object.keys(userProjects));
+  //   useEffect(() => {
+  //     const getUserInfo = async () => {
+  //       try {
+  //         const auth = getAuth();
+  //         onAuthStateChanged(auth, async (user) => {
+  //           if (user) {
+  //             const uid = user.uid;
+  //             const userRef = doc(db, 'users', uid);
+  //             const docSnap = await getDoc(userRef);
+  //             if (docSnap.exists()) {
+  //               let userProjects = docSnap.data().projects || {};
+  //               setProjects(Object.keys(userProjects));
 
-            // Retrieve project names and update the state
-            const projPromises = Object.keys(userProjects).map(async (key) => {
-              const projectDocRef = doc(db, 'projects', key);
-              const projectDocSnap = await getDoc(projectDocRef);
-              if (projectDocSnap.exists()) {
-                setProjectNames((prevNames) => ({
-                  ...prevNames,
-                  [key]: projectDocSnap.data().name,
-                }));
-              }
-            });
+  //               // Retrieve project names and update the state
+  //               const projPromises = Object.keys(userProjects).map(
+  //                 async (key) => {
+  //                   const projectDocRef = doc(db, 'projects', key);
+  //                   const projectDocSnap = await getDoc(projectDocRef);
+  //                   if (projectDocSnap.exists()) {
+  //                     setProjectNames((prevNames) => ({
+  //                       ...prevNames,
+  //                       [key]: projectDocSnap.data().name,
+  //                     }));
+  //                   }
+  //                 }
+  //               );
 
-            // Wait for all promises to complete before rendering
-            await Promise.all(projPromises);
-            setLoading(false); // Move setLoading(false) here to ensure it runs after all async operations
-          } else {
-            console.log('No such document!');
-            setLoading(false); // Set loading to false even if there is no document
-          }
-        } else {
-          window.location.href = '/login';
-          setLoading(false); // Set loading to false if there is no user
-        }
-      });
-    } catch (error) {
-      console.log(error);
-      setLoading(false); // Set loading to false in case of an error
-    }
-  }
-
-  useEffect(() => {
-    getUserInfo();
-    console.log('Projects: ', projects);
-  }, []);
+  //               // Wait for all promises to complete before rendering
+  //               await Promise.all(projPromises);
+  //               setLoading(false); // Move setLoading(false) here to ensure it runs after all async operations
+  //             } else {
+  //               console.log('No such document!');
+  //               setLoading(false); // Set loading to false even if there is no document
+  //             }
+  //           } else {
+  //             window.location.href = '/login';
+  //             setLoading(false); // Set loading to false if there is no user
+  //           }
+  //         });
+  //       } catch (error) {
+  //         console.log(error);
+  //         setLoading(false); // Set loading to false in case of an error
+  //       }
+  //     };
+  //     getUserInfo();
+  //     console.log('Projects: ', projects);
+  //   }, []);
 
   // Create Task Page
   return (
@@ -187,18 +186,18 @@ const CreateTask = ({ user }) => {
               <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
                 project
               </h1>
-              {projects.map((key) => {
+              {/* This currently does not work. Needs testing */}
+              {Object.keys(projects).map((key) => {
                 return (
                   <label className="flex flex-row space-x-3" key={key}>
                     <input
                       type="radio"
                       onChange={(e) => setProject(e.target.value)}
-                      checked={project === key}
+                      checked={project.toString() === key.toString()}
                       value={key}
-                      disabled={loading}
                       className="flex text-sm font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl"
                     />
-                    <span>{projectNames[key]}</span>
+                    <span>{projects[key].name}</span>
                   </label>
                 );
               })}

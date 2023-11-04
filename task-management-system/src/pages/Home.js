@@ -17,10 +17,17 @@ import EditTask from '../components/EditTask';
 import Tasks from '../components/Tasks';
 import PriorityTasks from '../components/PriorityTasks';
 import './../App.css';
-import { auth } from '../firebase/firebase';
+import { auth, db } from '../firebase/firebase';
 import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
-import { db } from '../firebase/firebase';
-import { getDoc, collection, setDoc, doc } from 'firebase/firestore';
+import {
+  getDoc,
+  collection,
+  setDoc,
+  doc,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
 
 // Home Page
@@ -31,48 +38,55 @@ const Home = () => {
   const [currentProject, setCurrentProject] = useState(null);
   const [currentTask, setCurrentTask] = useState(null);
 
-  async function getUserInfo() {
-    try {
-      const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const uid = user.uid;
-          setUser(user);
-          const userRef = doc(db, 'users', uid);
-          getDoc(userRef)
-            .then((docSnap) => {
-              if (docSnap.exists()) {
-                let userTasks = [];
-                let userProjects = [];
-                for (let key of docSnap.data().tasks) {
-                  userTasks.push(key);
-                }
-                for (let [key, value] of Object.entries(
-                  docSnap.data().projects
-                )) {
-                  userProjects.push(key);
-                }
-                setTasks(userTasks);
-                setProjects(userProjects);
-              } else {
-                console.log('No such document!');
-              }
-            })
-            .catch((error) => {
-              console.log('Error getting document:', error);
-            });
-        } else {
-          window.location.href = '/login';
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            const uid = user.uid;
+            setUser(user);
+            const userRef = doc(db, 'users', uid);
+            getDoc(userRef)
+              .then(async (docSnap) => {
+                if (docSnap.exists()) {
+                  let userTasks = {};
+                  let userProjects = {};
+                  const t = query(
+                    collection(db, 'tasks'),
+                    where('members', 'array-contains', uid)
+                  );
+                  const taskSnapshot = await getDocs(t);
+                  taskSnapshot.forEach((doc) => {
+                    userTasks[doc.id] = doc.data();
+                  });
+
+                  for (let [key, value] of Object.entries(
+                    docSnap.data().projects
+                  )) {
+                    const projectDocRef = doc(db, 'projects', key);
+                    const projectDocSnap = await getDoc(projectDocRef);
+                    userProjects[projectDocSnap.id] = projectDocSnap.data();
+                  }
+                  setTasks(userTasks);
+                  setProjects(userProjects);
+                } else {
+                  console.log('No such document!');
+                }
+              })
+              .catch((error) => {
+                console.log('Error getting document:', error);
+              });
+          } else {
+            window.location.href = '/login';
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getUserInfo();
-    console.log('fetched');
+    console.log('ran');
   }, []);
 
   // Variables used in the page to trigger different components
@@ -269,17 +283,26 @@ const Home = () => {
             handleViewProject={handleViewProject}
             handleEditTask={handleEditTask}
             task={currentTask}
+            tasks={tasks}
+            projects={projects}
           />
         ) : viewProject ? (
           <ViewProject
             handleViewTask={handleViewTask}
             handleEditProject={handleEditProject}
             project={currentProject}
+            projects={projects}
+            tasks={tasks}
           />
         ) : editProject ? (
           <EditProject />
         ) : editTask ? (
-          <EditTask />
+          <EditTask
+            user={user}
+            task={currentTask}
+            projects={projects}
+            tasks={tasks}
+          />
         ) : (
           <Current
             handleViewTask={handleViewTask}

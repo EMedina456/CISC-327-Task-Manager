@@ -22,14 +22,19 @@ import { db } from '../firebase/firebase';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { doc, getDocFromServer, collection, getDoc } from 'firebase/firestore';
 
-const ViewProject = ({ handleViewTask, handleEditProject, project }) => {
+const ViewProject = ({
+  handleViewTask,
+  handleEditProject,
+  project,
+  projects,
+  tasks,
+}) => {
   // Handle the variables required for the page
   const [addMember, setAddMember] = useState(false);
   const [manageMember, setManageMember] = useState(false);
   const [removeMember, setRemoveMember] = useState(false);
   const [transfer, setTransfer] = useState(false);
-  const [projectData, setProjectData] = useState(null);
-  const [tasks, setTasks] = useState([]);
+  //   const [tasks, setTasks] = useState([]);
 
   // Handle the addition of a member, set addMember to true and the rest to false
   const handleAddMember = () => {
@@ -63,24 +68,25 @@ const ViewProject = ({ handleViewTask, handleEditProject, project }) => {
     setRemoveMember(false);
   };
 
-  async function getProjectInfo() {
-    try {
-      const projectRef = doc(db, 'projects', project);
-      const docSnap = await getDoc(projectRef);
-      if (docSnap.exists()) {
-        setProjectData(docSnap.data());
-        setTasks(docSnap.data().tasks);
-      } else {
-        console.log('No such document!');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getProjectInfo();
-  }, []);
+  //   useEffect(() => {
+  //     const getProjectInfo = async () => {
+  //       try {
+  //         for (let i = 0; i < project.tasks.length; i++) {
+  //           const taskRef = doc(db, 'tasks', project.tasks[i]);
+  //           const docSnap = await getDoc(taskRef);
+  //           if (docSnap.exists()) {
+  //             setTasks((prevTasks) => [...prevTasks, docSnap.data()]);
+  //             console.log(tasks);
+  //           } else {
+  //             console.log('No such document!');
+  //           }
+  //         }
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     };
+  //     getProjectInfo();
+  //   }, []);
 
   // View Project Page
   return (
@@ -152,7 +158,12 @@ const ViewProject = ({ handleViewTask, handleEditProject, project }) => {
         ) : transfer ? (
           <TransferOwnership />
         ) : (
-          <Tasks handleViewTask={handleViewTask} tasks={tasks} />
+          <Tasks
+            handleViewTask={handleViewTask}
+            tasks={tasks}
+            project={project}
+            projects={projects}
+          />
         )}
       </div>
     </div>

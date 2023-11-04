@@ -14,29 +14,34 @@ import { db } from '../firebase/firebase';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { doc, getDoc, collection } from 'firebase/firestore';
 
-const ViewTask = ({ handleViewProject, handleEditTask, task }) => {
+const ViewTask = ({
+  handleViewProject,
+  handleEditTask,
+  task: key,
+  tasks,
+  projects,
+}) => {
   // Handle the variables required for the page
   const [addMember, setAddMember] = useState(false);
   const [user, setUser] = useState(null);
   const [taskData, setTaskData] = useState(null);
 
-  async function getTaskInfo() {
-    try {
-      const taskRef = doc(db, 'tasks', task);
-      const docSnap = await getDoc(taskRef);
-      if (docSnap.exists()) {
-        setTaskData(docSnap.data());
-      } else {
-        console.log('No such document!');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getTaskInfo();
-  }, []);
+  //   useEffect(() => {
+  //     const getTaskInfo = async () => {
+  //       try {
+  //         const taskRef = doc(db, 'tasks', task);
+  //         const docSnap = await getDoc(taskRef);
+  //         if (docSnap.exists()) {
+  //           setTaskData(docSnap.data());
+  //         } else {
+  //           console.log('No such document!');
+  //         }
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     };
+  //     getTaskInfo();
+  //   }, []);
 
   // Handle the addition of a member, set addMember to true and the rest to false
   const handleAddMember = () => {
@@ -56,7 +61,7 @@ const ViewTask = ({ handleViewProject, handleEditTask, task }) => {
           </div>
           {/* Handle the edit task button*/}
           <button
-            onClick={handleEditTask}
+            onClick={() => handleEditTask(key)}
             className="flex m-auto self-end flex-col">
             <h1 className="text-xl lg:text-3xl md:text-3xl font-bold mb-2">
               Edit
@@ -88,7 +93,11 @@ const ViewTask = ({ handleViewProject, handleEditTask, task }) => {
         {addMember ? (
           <AddMember />
         ) : (
-          <SingleTask handleViewProject={handleViewProject} task={taskData} />
+          <SingleTask
+            handleViewProject={handleViewProject}
+            task={tasks[key]}
+            projects={projects}
+          />
         )}
       </div>
     </div>
