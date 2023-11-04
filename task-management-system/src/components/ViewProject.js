@@ -112,6 +112,7 @@ const ViewProject = ({
             <AiOutlineUserSwitch className="text-3xl lg:text-5xl md:text-5xl" />
           </button>
           {/* Handle the delete project button, and send alert that project has been deleted*/}
+          {/* Under progress */}
           <button
             onClick={() => alert('Project Deleted')}
             className="flex m-auto self-end flex-col"
@@ -119,6 +120,7 @@ const ViewProject = ({
             <RiDeleteBin5Line className="text-3xl lg:text-5xl md:text-5xl" />
           </button>
           {/* Handle the complete project button, and send alert that project has been completed*/}
+          {/* Under Progress */}
           <button
             onClick={() => alert('Project Completed')}
             className="flex m-auto self-end flex-col">

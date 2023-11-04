@@ -93,56 +93,56 @@ const Home = () => {
   }, []);
 
   // Variables used in the page to trigger different components
-  const [createTask, setCreateTask] = useState(false)
-  const [createProject, setCreateProject] = useState(false)
-  const [create, setCreate] = useState(false)
-  const [viewTask, setViewTask] = useState(false)
-  const [viewProject, setViewProject] = useState(false)
-  const [editProject, setEditProject] = useState(false)
-  const [editTask, setEditTask] = useState(false)
-  const [deadline, setDeadline] = useState(false)
-  const [priority, setPriority] = useState(true)
+  const [createTask, setCreateTask] = useState(false);
+  const [createProject, setCreateProject] = useState(false);
+  const [create, setCreate] = useState(false);
+  const [viewTask, setViewTask] = useState(false);
+  const [viewProject, setViewProject] = useState(false);
+  const [editProject, setEditProject] = useState(false);
+  const [editTask, setEditTask] = useState(false);
+  const [deadline, setDeadline] = useState(false);
+  const [priority, setPriority] = useState(true);
 
   // Functions to handle the different components
   // Handle the deadline component, by setting it true and the priority component false
   const handleDeadline = () => {
-    setDeadline(true)
-    setPriority(false)
-  }
+    setDeadline(true);
+    setPriority(false);
+  };
 
   // Handle the priority component, by setting it true and the deadline component false
   const handlePriority = () => {
-    setPriority(true)
-    setDeadline(false)
-  }
+    setPriority(true);
+    setDeadline(false);
+  };
 
   // Handle the create task component, by setting it true and the other components false
   const handleCreateTask = () => {
-    setCreateTask(true)
-    setCreateProject(false)
-    setCreate(false)
-  }
+    setCreateTask(true);
+    setCreateProject(false);
+    setCreate(false);
+  };
 
   // Handle the create component, which is the plus button, by setting it its opposite state
   const handleCreate = () => {
-    setCreate(!create)
-  }
+    setCreate(!create);
+  };
 
   // Handle the create project component, by setting it true and the other components false
   const handleCreateProject = () => {
-    setCreateProject(true)
-    setCreateTask(false)
-    setCreate(false)
-  }
+    setCreateProject(true);
+    setCreateTask(false);
+    setCreate(false);
+  };
 
   // Handle the reset component, which resets the page by setting the components false
   const handleReset = () => {
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-    setViewTask(false)
-    setViewProject(false)
-  }
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+    setViewTask(false);
+    setViewProject(false);
+  };
 
   // Handle the view task component by setting it true and the other components false
   const handleViewTask = (task) => {
@@ -166,34 +166,34 @@ const Home = () => {
 
   // Handle the edit project component by setting it true and the other components false
   const handleEditProject = () => {
-    setEditProject(true)
-    setViewProject(false)
-    setViewTask(false)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-    setEditTask(false)
-  }
+    setEditProject(true);
+    setViewProject(false);
+    setViewTask(false);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+    setEditTask(false);
+  };
 
   // Handle the edit task component by setting it true and the other components false
   const handleEditTask = () => {
-    setEditTask(true)
-    setEditProject(false)
-    setViewProject(false)
-    setViewTask(false)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-  }
+    setEditTask(true);
+    setEditProject(false);
+    setViewProject(false);
+    setViewTask(false);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+  };
 
   const handleLogout = async () => {
     try {
-      await signOut(auth)
-      window.location.href = '/login'
+      await signOut(auth);
+      window.location.href = '/login';
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   // Return the page
   return (
@@ -209,22 +209,19 @@ const Home = () => {
         <div className="flex items-center align-center">
           <button
             onClick={handleCreate}
-            className="text-4xl text-right ml-auto mr-6 lg:text-6xl md:text-6xl"
-          >
+            className="text-4xl text-right ml-auto mr-6 lg:text-6xl md:text-6xl">
             <AiOutlinePlus />
           </button>
           {create ? (
             <div>
               <button
                 onClick={handleCreateProject}
-                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl"
-              >
+                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl">
                 Create Project
               </button>
               <button
                 onClick={handleCreateTask}
-                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl"
-              >
+                className="text-xl text-right ml-auto mr-6 lg:text-5xl md:text-3xl">
                 Create Task
               </button>
             </div>
@@ -234,8 +231,7 @@ const Home = () => {
         <button
           onClick={handleLogout}
           className="text-2xl text-right ml-auto mr-6 lg:text-6xl md:text-4xl"
-          title="account"
-        >
+          title="account">
           <MdOutlineAccountCircle />
         </button>
       </header>
@@ -253,8 +249,7 @@ const Home = () => {
               <button
                 id="handleDeadline"
                 onClick={handleDeadline}
-                alt="handleDeadline"
-              >
+                alt="handleDeadline">
                 <h1 className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm">
                   Deadline{' '}
                 </h1>
@@ -267,8 +262,7 @@ const Home = () => {
               <button
                 id="handlePriority"
                 onClick={handlePriority}
-                alt="handlePriority"
-              >
+                alt="handlePriority">
                 <h1 className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm">
                   Priority{' '}
                 </h1>
@@ -277,8 +271,9 @@ const Home = () => {
             </div>
           </div>
           {/* The tasks and priority tasks components that handle the different sorting components */}
+          {/* Deadline is still in progress */}
           {deadline ? (
-            <Tasks handleViewTask={handleViewTask} />
+            <div />
           ) : (
             <PriorityTasks handleViewTask={handleViewTask} />
           )}
@@ -329,7 +324,7 @@ const Home = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

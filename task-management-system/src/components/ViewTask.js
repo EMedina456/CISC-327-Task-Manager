@@ -53,6 +53,7 @@ const ViewTask = ({
             <AiOutlineUserAdd className="text-3xl lg:text-5xl md:text-5xl" />
           </button>
           {/* Handle the delete button, and send an alert to confirm the deletion*/}
+          {/* Under Progress */}
           <button
             onClick={() => alert('Task Deleted')}
             className="flex m-auto self-end flex-col"
@@ -60,6 +61,7 @@ const ViewTask = ({
             <RiDeleteBin5Line className="text-3xl lg:text-5xl md:text-5xl" />
           </button>
           {/* Handle the complete button, and send an alert to confirm the completion*/}
+          {/* Under Progress */}
           <button
             onClick={() => alert('Task Completed')}
             className="flex m-auto self-end flex-col"
