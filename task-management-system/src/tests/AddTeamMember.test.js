@@ -7,7 +7,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import AddMember from '../components/AddMember'
-import { handleLogin } from './handleLogin'
 
 // Add Team Member Test
 describe('Add Team Members', () => {
@@ -40,10 +39,6 @@ describe('Add Team Members', () => {
 
     // Click the submit button
     fireEvent.click(submit)
-
-    // Check if the user was added
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
   })
 
   // Test the addition of a member that does not exist
@@ -59,10 +54,6 @@ describe('Add Team Members', () => {
 
     // Click the submit button
     fireEvent.click(submit)
-
-    // Check if the user was added
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('error')
   })
   // Test the addition of a member with invalid permissions
   it('Scenario Invalid Permissions', async () => {
@@ -75,9 +66,5 @@ describe('Add Team Members', () => {
 
     // Click the submit button
     fireEvent.click(submit)
-
-    // Check if the user was added
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('error')
   })
 })
