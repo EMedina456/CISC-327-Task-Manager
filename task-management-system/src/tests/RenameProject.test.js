@@ -1,54 +1,62 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Create Projet Functionality
-// Input/Output: Handle the addition of a project
+// Program Intention: Implement Testing for the Rename Project Functionality
+// Input/Output: Handle the renaming of a project
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
 import { render, screen } from '@testing-library/react'
 import React from 'react'
-import user from '@testing-library/user-event'
+import { fireEvent } from '@testing-library/react'
 import EditProject from '../components/EditProject'
-// import Home from '../pages/Home'
-// import renderer from 'react-test-renderer'
-// import { BrowserRouter } from 'react-router-dom'
 
 // Rename Project Test
-describe('Modify Project', () => {
+describe('Rename Project', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
     render(<EditProject />)
   })
 
-  // Test the addition of a member with valid permissions
-  it('Scenario Valid Permissions', async () => {
-    // CREATE PROJECT
-    // Type in the required test fields
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /name/i,
-        })
-      ),
-      'Example'
-    )
+  // Setup the test by getting the required fields
+  const setup = () => {
+    const name = screen.getByRole('textbox', {
+      name: /name/i,
+    })
+    const description = screen.getByRole('textbox', {
+      name: /description/i,
+    })
+    const submit = screen.getByRole('button', {
+      name: /submit/i,
+    })
+    return { name, description, submit }
+  }
 
-    // CHECK IF THE PROJECT IS EDITED
-    // DELETE THE PROJECT
+  // Test the addition of a member with valid permissions
+  it('Scenario Valid Name', async () => {
+    // Type in the required test fields
+    const { name, description, submit } = setup()
+    fireEvent.change(name, { target: { value: 'Project' } })
+    fireEvent.change(description, { target: { value: 'Project' } })
+
+    // Check if the values are correct
+    expect(name.value).toBe('Project')
+    expect(name.value).toBe('Project')
+
+    // Click the submit button
+    fireEvent.click(submit)
   })
   // Test the addition of a member with invalid name
-  it('Scenario Invalid Permissions', async () => {
-    // CREATE PROJECT
+  it('Scenario Invalid Name', async () => {
     // Type in the required test fields
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /name/i,
-        })
-      ),
-      'Example'
-    )
+    const { name, description, submit } = setup()
+    fireEvent.change(name, { target: { value: '' } })
+    fireEvent.change(description, { target: { value: 'Something' } })
 
-    // CHECK ERROR MESSAGE
+    // Check if the values are correct
+    expect(name.value).toBe('')
+    expect(description.value).toBe('Something')
+
+    // Click the submit button
+    fireEvent.click(submit)
   })
 })

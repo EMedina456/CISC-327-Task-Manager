@@ -1,15 +1,12 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Create Projet Functionality
-// Input/Output: Handle the addition of a project
+// Program Intention: Implement Testing for the Delete Project Functionality
+// Input/Output: Handle the deletion of a project
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import user from '@testing-library/user-event'
-// import Home from '../pages/Home'
-// import renderer from 'react-test-renderer'
-// import { BrowserRouter } from 'react-router-dom'
 import ViewProject from '../components/ViewProject'
 
 // Delete Project Test
@@ -20,29 +17,20 @@ describe('Delete Project', () => {
     render(<ViewProject />)
   })
 
-  // Test the addition of a member with valid permissions
+  // Test the deletion of a member with confirmation pressed
   it('Delete Confirmation Pressed', async () => {
-    // Type in the required test fields
+    // Click the delete button
     user.click(
       screen.getByRole('button', {
         name: /delete/i,
       })
     )
-
-    // CHECK IF USER IS DELETED
-    // DELETE THE USER
   })
-  // Test the addition of a member with invalid name
+  // Test the deletion of a member with confirmation not pressed
   it('Delete Confirmation Not Pressed', async () => {
-    user.click(
-      screen.getByRole('button', {
-        name: /delete/i,
-      })
-    )
-
-    // CHECK IF USER IS DELETED
-    // DELETE THE USER
-
-    // CHECK ERROR MESSAGE
+    // Delete button not clicked
+    screen.getByRole('button', {
+      name: /delete/i,
+    })
   })
 })
