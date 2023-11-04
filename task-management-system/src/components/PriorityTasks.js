@@ -5,7 +5,7 @@
 // Import files and dependencies here
 
 const PriorityTasks = ({ handleViewTask }) => {
-  // Priority Tasks Page
+  // Priority Tasks Page (Not Yet Completed)
   return (
     <div className="space-y-8 ">
       <div className="flex flex-col justify-center">
@@ -18,20 +18,17 @@ const PriorityTasks = ({ handleViewTask }) => {
         {/* Handle the view and be able to click on the highest priority tasks*/}
         <button
           onClick={handleViewTask}
-          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
-        >
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base">
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
-        >
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base">
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
-        >
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base">
           Task 3
         </button>
       </div>
@@ -44,20 +41,17 @@ const PriorityTasks = ({ handleViewTask }) => {
         {/* Handle the view and be able to click on the second highest priority tasks*/}
         <button
           onClick={handleViewTask}
-          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
-        >
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base">
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
-        >
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base">
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
-        >
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base">
           Task 3
         </button>
       </div>
@@ -70,24 +64,21 @@ const PriorityTasks = ({ handleViewTask }) => {
         {/* Handle the view and be able to click on the third highest priority tasks*/}
         <button
           onClick={handleViewTask}
-          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
-        >
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base">
           Task 1
         </button>
         <button
           onClick={handleViewTask}
-          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
-        >
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base">
           Task 2
         </button>
         <button
           onClick={handleViewTask}
-          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base"
-        >
+          className="text-sm text-left font-bold mt-2 underline decoration-[#0acdff] lg:text-xl md:text-base">
           Task 3
         </button>
       </div>
     </div>
-  )
-}
-export default PriorityTasks
+  );
+};
+export default PriorityTasks;

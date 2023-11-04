@@ -4,17 +4,32 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
 
-const EditProject = () => {
+const EditProject = ({ user, project, projects }) => {
   // Handles the variables for the project name and description
-  const [project_name, setProjectName] = useState('');
-  const [description, setDescription] = useState('');
+  const [project_name, setProjectName] = useState(
+    projects[project]?.name || ''
+  );
+  const [description, setDescription] = useState(
+    projects[project]?.description || ''
+  );
 
   // Handles the submission of the project name and description, currently just logs them, and alerts user
-  const handleSubmit = (e) => {
-    console.log('name', project_name);
-    console.log('description', description);
-    alert('Project edited successfully');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const projectRef = doc(db, 'projects', project);
+      await updateDoc(projectRef, {
+        name: project_name,
+        description: description,
+      });
+      console.log('Document updated with ID: ', project);
+      window.location.href = '/';
+    } catch (error) {
+      console.log(error);
+    }
   };
   // Edit Project Page
   return (
@@ -24,7 +39,7 @@ const EditProject = () => {
         <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
           Edit a Project
         </h1>
-        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-48 lg:w-72 md:w-72 h-1" />
+        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-48 md:w-72" />
         <form onSubmit={handleSubmit}>
           <div className="">
             {/* Handle the project name input*/}
@@ -35,7 +50,6 @@ const EditProject = () => {
               <input
                 type="text"
                 id="project_name"
-                value="Project"
                 className="box-border h-8 w-44 p-4 border-4"
                 onChange={(e) => setProjectName(e.target.value)}
               />
@@ -48,7 +62,6 @@ const EditProject = () => {
               <input
                 type="text"
                 id="description"
-                value="Generic description"
                 className="box-border h-8 w-44 p-4 border-4"
                 onChange={(e) => setDescription(e.target.value)}
               />

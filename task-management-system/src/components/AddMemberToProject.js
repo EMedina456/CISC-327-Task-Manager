@@ -1,20 +1,20 @@
-// Program Intention: Handle the removal of a member
+// Program Intention: Handle the addition of a member
 // Input/Output: Handle the username of the member
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
 
 import MemberForm from './MemberForm';
-const RemoveMember = ({ tasks, projects, user, project }) => {
-  // Remove Member Page
+const AddMember = ({ tasks, projects, user, project }) => {
+  // Add Member Page
   return (
     <MemberForm
-      title={'Remove a member'}
-      tasks={tasks}
-      projects={projects}
-      project={project}
+      title={'Add member to project'}
       user={user}
+      tasks={tasks}
+      project={project}
+      projects={projects}
     />
   );
 };
-export default RemoveMember;
+export default AddMember;

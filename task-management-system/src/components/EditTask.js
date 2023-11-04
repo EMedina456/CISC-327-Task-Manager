@@ -4,23 +4,64 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
+import { doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
 
-const EditTask = () => {
+const EditTask = ({ user, task, projects, tasks }) => {
   // Handle the variables of the task
-  const [task_name, setTaskName] = useState('');
-  const [description, setDescription] = useState('');
-  const [priority, setPriority] = useState('');
-  const [deadline, setDeadline] = useState('');
-  const [project, setProject] = useState('');
+  const [task_name, setTaskName] = useState(tasks[task]?.name || '');
+  const [description, setDescription] = useState(
+    tasks[task]?.description || ''
+  );
+  const [priority, setPriority] = useState(tasks[task]?.priority || '');
+  const [deadline, setDeadline] = useState(tasks[task]?.deadline || '');
+  const [project, setProject] = useState(tasks[task]?.project || '');
 
   // Handle the submission of the task, currently just prints the task vairables to the console, and alerts user
-  const handleSubmit = (e) => {
-    console.log('name', task_name);
-    console.log('description', description);
-    console.log('priority', priority);
-    console.log('deadline', deadline);
-    console.log('project', project);
-    alert('Task edited successfully');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const taskRef = doc(db, 'tasks', task);
+      await updateDoc(taskRef, {
+        name: task_name,
+        description: description,
+        priority: priority,
+        deadline: deadline,
+        project: project,
+      });
+      if (user) {
+        const userRef = doc(db, 'users', user.uid);
+        setDoc(
+          userRef,
+          {
+            tasks: arrayUnion(task),
+          },
+          { merge: true }
+        );
+      } else {
+        console.log('No user is signed in');
+      }
+      console.log('Project: ', project);
+      if (project !== '') {
+        const projectRef = doc(db, 'projects', project);
+        setDoc(
+          projectRef,
+          {
+            tasks: arrayUnion(task),
+          },
+          { merge: true }
+        );
+      } else {
+        console.log('No project is selected');
+      }
+      console.log('Document updated with ID: ', taskRef.id);
+
+      alert('Task created successfully');
+      window.location.href = '/';
+    } catch (error) {
+      console.log(error);
+    }
   };
   // Edit Task Page
   return (
@@ -30,76 +71,80 @@ const EditTask = () => {
         <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
           Edit Task
         </h1>
-        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-40 lg:w-60 md:w-60 h-1" />
+        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-56 lg:w-90 md:w-96" />
         <form onSubmit={handleSubmit}>
           <div className="">
+            {/* Handle the task name input*/}
             <label>
-              {/* Handle the task name input*/}
               <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
                 name
               </h1>
               <input
                 type="text"
                 id="task_name"
-                value="Generic name"
                 className="box-border h-8 w-44 p-4 border-4"
                 onChange={(e) => setTaskName(e.target.value)}
               />
             </label>
+            {/* Handle the task description input*/}
             <label>
-              {/* Handle the task description input*/}
               <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
                 description
               </h1>
               <input
                 type="text"
                 id="description"
-                value="Generic description"
                 className="box-border h-8 w-44 p-4 border-4"
                 onChange={(e) => setDescription(e.target.value)}
               />
             </label>
+            {/* Handle the task priority input, only numbers allowed*/}
             <label>
-              {/* Handle the task priority input, only numbers allowed*/}
               <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
                 priority
               </h1>
               <input
                 type="number"
                 id="priority"
-                value="1"
                 className="box-border h-8 w-44 p-4 border-4"
                 onChange={(e) => setPriority(e.target.value)}
               />
             </label>
+            {/* Handle the task deadline input, only dates allowed*/}
             <label>
-              {/* Handle the task deadline input, only dates allowed*/}
               <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
                 deadline
               </h1>
               <input
                 type="date"
                 id="deadline"
-                value="2023/10/19"
                 className="box-border h-8 w-44 p-4 border-4"
                 onChange={(e) => setDeadline(e.target.value)}
               />
             </label>
+            {/* Handle the task project input*/}
             <label>
-              {/* Handle the task project input*/}
               <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
                 project
               </h1>
-              <input
-                type="text"
-                id="project"
-                value="Project"
-                className="box-border h-8 w-44 p-4 border-4"
-                onChange={(e) => setProject(e.target.value)}
-              />
+              {/* This currently does not work. Needs testing */}
+              {Object.keys(projects).map((key) => {
+                return (
+                  <label className="flex flex-row space-x-3" key={key}>
+                    <input
+                      type="radio"
+                      onChange={(e) => setProject(e.target.value)}
+                      checked={project.toString() === key.toString()}
+                      value={key}
+                      className="flex text-sm font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl"
+                    />
+                    <span>{projects[key].name}</span>
+                  </label>
+                );
+              })}
             </label>
+            {/* Handle the submit button*/}
             <div className="justify-center items-center text-left">
-              {/* Handle the submit button*/}
               <button className="text-xl font-bold mt-2 underline decoration-[#0acdff]">
                 Submit
               </button>

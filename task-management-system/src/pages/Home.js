@@ -3,86 +3,94 @@
 // Run Intention: The page will run the various components and pages through the running of the website, which are all controlled by user control
 
 // Import files and dependencies here
-import { AiOutlinePlus } from 'react-icons/ai'
-import { MdOutlineAccountCircle } from 'react-icons/md'
-import { Link } from 'react-router-dom'
-import Current from '../components/Current'
-import CreateTask from '../components/CreateTask'
-import React, { useState, useEffect } from 'react'
-import CreateProject from '../components/CreateProject'
-import ViewProject from '../components/ViewProject'
-import ViewTask from '../components/ViewTask'
-import EditProject from '../components/EditProject'
-import EditTask from '../components/EditTask'
-import Tasks from '../components/Tasks'
-import PriorityTasks from '../components/PriorityTasks'
-import './../App.css'
-import { auth } from '../firebase/firebase'
-import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth'
-import { db } from '../firebase/firebase'
-import { getDoc, collection, setDoc, doc } from 'firebase/firestore'
-import { useAuth } from '../contexts/AuthContext'
+
+import { AiOutlinePlus } from 'react-icons/ai';
+import { MdOutlineAccountCircle } from 'react-icons/md';
+import Current from '../components/Current';
+import CreateTask from '../components/CreateTask';
+import React, { useState, useEffect } from 'react';
+import CreateProject from '../components/CreateProject';
+import ViewProject from '../components/ViewProject';
+import ViewTask from '../components/ViewTask';
+import EditProject from '../components/EditProject';
+import EditTask from '../components/EditTask';
+import Tasks from '../components/Tasks';
+import PriorityTasks from '../components/PriorityTasks';
+import './../App.css';
+import { auth, db } from '../firebase/firebase';
+import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
+import {
+  getDoc,
+  collection,
+  doc,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore';
 
 // Home Page
 const Home = () => {
-  //   const { currentUser } = useAuth();
-  const [tasks, setTasks] = useState([])
-  const [projects, setProjects] = useState([])
-  const [user, setUser] = useState(null)
-
-  async function getUserInfo() {
-    //  if (currentUser === null) {
-    //    window.location.href = '/login';
-    //    return;
-    //  }
-    //  setAppData((await retrieveUserData(currentUser.uid)).result);
-    try {
-      const auth = getAuth()
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log(user)
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
-          const uid = user.uid
-          setUser(user)
-          const userRef = doc(db, 'users', uid)
-          getDoc(userRef)
-            .then((docSnap) => {
-              if (docSnap.exists()) {
-                // setTasks(docSnap.data().tasks);
-
-                let userTasks = []
-                let userProjects = []
-                for (let key of docSnap.data().tasks) {
-                  userTasks.push(key)
-                }
-                for (let [key, value] of Object.entries(
-                  docSnap.data().projects
-                )) {
-                  userProjects.push(key)
-                }
-                setTasks(userTasks)
-                setProjects(userProjects)
-              } else {
-                // doc.data() will be undefined in this case
-                console.log('No such document!')
-              }
-            })
-            .catch((error) => {
-              console.log('Error getting document:', error)
-            })
-        } else {
-          window.location.href = '/login'
-        }
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const [tasks, setTasks] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [user, setUser] = useState(null);
+  const [currentProject, setCurrentProject] = useState(null);
+  const [currentTask, setCurrentTask] = useState(null);
 
   useEffect(() => {
-    getUserInfo()
-  }, [])
+    const getUserInfo = async () => {
+      try {
+        // Get the user's information
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            // User is signed in, see docs for a list of available properties
+            const uid = user.uid;
+            setUser(user);
+            const userRef = doc(db, 'users', uid);
+            getDoc(userRef)
+              .then(async (docSnap) => {
+                if (docSnap.exists()) {
+                  // Get the user's tasks and projects
+                  let userTasks = {};
+                  let userProjects = {};
+                  const t = query(
+                    collection(db, 'tasks'),
+                    where('members', 'array-contains', uid)
+                  );
+                  const taskSnapshot = await getDocs(t);
+                  taskSnapshot.forEach((doc) => {
+                    userTasks[doc.id] = doc.data();
+                  });
+
+                  for (let [key, value] of Object.entries(
+                    docSnap.data().projects
+                  )) {
+                    const projectDocRef = doc(db, 'projects', key);
+                    const projectDocSnap = await getDoc(projectDocRef);
+                    userProjects[projectDocSnap.id] = projectDocSnap.data();
+                  }
+                  // Set the user's tasks and projects
+                  setTasks(userTasks);
+                  setProjects(userProjects);
+                } else {
+                  console.log('No such document!');
+                }
+              })
+              .catch((error) => {
+                console.log('Error getting document:', error);
+              });
+          } else {
+            // User is signed out
+            window.location.href = '/login';
+            // Need to sign out the user
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUserInfo();
+  }, []);
 
   // Variables used in the page to trigger different components
   const [createTask, setCreateTask] = useState(false)
@@ -115,7 +123,7 @@ const Home = () => {
     setCreate(false)
   }
 
-  // Handle the create component, which is the plus button, by setting it true and the other components false
+  // Handle the create component, which is the plus button, by setting it its opposite state
   const handleCreate = () => {
     setCreate(!create)
   }
@@ -137,24 +145,24 @@ const Home = () => {
   }
 
   // Handle the view task component by setting it true and the other components false
-  const handleViewTask = (e) => {
-    console.log(e)
-    setViewTask(true)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-    setViewProject(false)
-  }
+  const handleViewTask = (task) => {
+    setCurrentTask(task);
+    setViewTask(true);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+    setViewProject(false);
+  };
 
   // Handle the view project component by setting it true and the other components false
-  const handleViewProject = (e) => {
-    console.log(e)
-    setViewProject(true)
-    setViewTask(false)
-    setCreateTask(false)
-    setCreateProject(false)
-    setCreate(false)
-  }
+  const handleViewProject = (project) => {
+    setCurrentProject(project);
+    setViewProject(true);
+    setViewTask(false);
+    setCreateTask(false);
+    setCreateProject(false);
+    setCreate(false);
+  };
 
   // Handle the edit project component by setting it true and the other components false
   const handleEditProject = () => {
@@ -277,23 +285,40 @@ const Home = () => {
         </div>
         {/* The main component that handles the different components, which checks which variable is true and uses that component */}
         {createTask ? (
-          <CreateTask />
+          <CreateTask user={user} projects={projects} />
         ) : createProject ? (
           <CreateProject user={user} />
         ) : viewTask ? (
           <ViewTask
             handleViewProject={handleViewProject}
             handleEditTask={handleEditTask}
+            task={currentTask}
+            tasks={tasks}
+            projects={projects}
+            user={user}
           />
         ) : viewProject ? (
           <ViewProject
             handleViewTask={handleViewTask}
             handleEditProject={handleEditProject}
+            project={currentProject}
+            projects={projects}
+            tasks={tasks}
+            user={user}
           />
         ) : editProject ? (
-          <EditProject />
+          <EditProject
+            user={user}
+            project={currentProject}
+            projects={projects}
+          />
         ) : editTask ? (
-          <EditTask />
+          <EditTask
+            user={user}
+            task={currentTask}
+            projects={projects}
+            tasks={tasks}
+          />
         ) : (
           <Current
             handleViewTask={handleViewTask}

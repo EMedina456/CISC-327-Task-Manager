@@ -4,8 +4,15 @@
 
 // Import files and dependencies here
 import MemberForm from './MemberForm';
-const TransferOwnership = () => {
+const TransferOwnership = ({ projects, user, project }) => {
   // Transfer Ownership Page
-  return <MemberForm title={'Transfer Ownership'} />;
+  return (
+    <MemberForm
+      title={'Transfer Ownership'}
+      project={project}
+      user={user}
+      projects={projects}
+    />
+  );
 };
 export default TransferOwnership;

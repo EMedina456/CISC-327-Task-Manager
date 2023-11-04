@@ -4,32 +4,21 @@
 
 // Import files and dependencies here
 
-const Tasks = ({ handleViewTask }) => {
+const Tasks = ({ handleViewTask, tasks, project, projects }) => {
   // Tasks Page
   return (
     <div>
       {/* Tasks Page */}
       {/* Be able to click on a task and view it */}
-      <button
-        onClick={handleViewTask}
-        className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "
-      >
-        Task 1
-      </button>
-      <button
-        onClick={handleViewTask}
-        className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "
-      >
-        Task 2
-      </button>
-      <button
-        onClick={handleViewTask}
-        className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "
-      >
-        Task 3
-      </button>
-      <div className="my-16" />
+      {projects[project].tasks.map((key) => (
+        <button
+          onClick={() => handleViewTask(key)}
+          key={key}
+          className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl ">
+          {tasks[key].name}
+        </button>
+      ))}
     </div>
-  )
-}
-export default Tasks
+  );
+};
+export default Tasks;

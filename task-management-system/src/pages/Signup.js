@@ -32,7 +32,7 @@ const Signup = () => {
       result = await setDoc(userRef, {
         email: userEmail,
         projects: {},
-        tasks: {},
+        tasks: [],
       })
         .then(() => {
           window.location.href = '/'
