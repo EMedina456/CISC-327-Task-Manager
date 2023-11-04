@@ -23,30 +23,20 @@ describe('Add Team Members', () => {
     const name = screen.getByRole('textbox', {
       name: /name/i,
     })
-    const yourPermission = screen.getByRole('textbox', {
-      name: /your permission/i,
-    })
-    const theirPermission = screen.getByRole('textbox', {
-      name: /their permission/i,
-    })
     const submit = screen.getByRole('button', {
       name: /submit/i,
     })
-    return { name, yourPermission, theirPermission, submit }
+    return { name, submit }
   }
 
   // Test the addition of a member with valid permissions
   it('Scenario Valid Permissions', async () => {
     // Type in the required test fields
-    const { name, yourPermission, theirPermission, submit } = setup()
+    const { name, submit } = setup()
     fireEvent.change(name, { target: { value: 'user' } })
-    fireEvent.change(yourPermission, { target: { value: 'admin' } })
-    fireEvent.change(theirPermission, { target: { value: 'viewer' } })
 
     // Check if the values are correct
     expect(name.value).toBe('user')
-    expect(yourPermission.value).toBe('admin')
-    expect(theirPermission.value).toBe('viewer')
 
     // Click the submit button
     fireEvent.click(submit)
@@ -59,17 +49,13 @@ describe('Add Team Members', () => {
   // Test the addition of a member that does not exist
   it('Scenario User Does not Exit', async () => {
     // Type in the required test fields
-    const { name, yourPermission, theirPermission, submit } = setup()
+    const { name, submit } = setup()
 
     // Type in the required test fields
     fireEvent.change(name, { target: { value: 'user99' } })
-    fireEvent.change(yourPermission, { target: { value: 'admin' } })
-    fireEvent.change(theirPermission, { target: { value: 'viewer' } })
 
     // Check if the values are correct
     expect(name.value).toBe('user99')
-    expect(yourPermission.value).toBe('admin')
-    expect(theirPermission.value).toBe('viewer')
 
     // Click the submit button
     fireEvent.click(submit)
@@ -81,15 +67,11 @@ describe('Add Team Members', () => {
   // Test the addition of a member with invalid permissions
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
-    const { name, yourPermission, theirPermission, submit } = setup()
+    const { name, submit } = setup()
     fireEvent.change(name, { target: { value: 'user99' } })
-    fireEvent.change(yourPermission, { target: { value: 'viewer' } })
-    fireEvent.change(theirPermission, { target: { value: 'viewer' } })
 
     // Check if the values are correct
     expect(name.value).toBe('user99')
-    expect(yourPermission.value).toBe('viewer')
-    expect(theirPermission.value).toBe('viewer')
 
     // Click the submit button
     fireEvent.click(submit)

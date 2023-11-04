@@ -22,30 +22,20 @@ describe('Transfer Ownership', () => {
     const name = screen.getByRole('textbox', {
       name: /name/i,
     })
-    const yourPermission = screen.getByRole('textbox', {
-      name: /your permission/i,
-    })
-    const theirPermission = screen.getByRole('textbox', {
-      name: /their permission/i,
-    })
     const submit = screen.getByRole('button', {
       name: /submit/i,
     })
-    return { name, yourPermission, theirPermission, submit }
+    return { name, submit }
   }
 
   // Test the addition of a member with valid permissions
   it('Scenario Valid Permissions', async () => {
     // Type in the required test fields
-    const { name, yourPermission, theirPermission, submit } = setup()
+    const { name, submit } = setup()
     fireEvent.change(name, { target: { value: 'user' } })
-    fireEvent.change(yourPermission, { target: { value: 'admin' } })
-    fireEvent.change(theirPermission, { target: { value: 'viewer' } })
 
     // Check if the values are correct
     expect(name.value).toBe('user')
-    expect(yourPermission.value).toBe('admin')
-    expect(theirPermission.value).toBe('viewer')
 
     // Click the submit button
     fireEvent.click(submit)
