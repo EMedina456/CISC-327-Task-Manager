@@ -3,65 +3,65 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { auth, db } from '../firebase/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { auth, db } from '../firebase/firebase'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Signup = () => {
   // Variables used in the page to handle the email and password
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   // Handle the submit of the email and password, currently just console logs them
   const handleSubmit = async () => {
-    let error = null;
-    let result = null;
+    let error = null
+    let result = null
 
     try {
       const results = await createUserWithEmailAndPassword(
         auth,
         email,
         password
-      );
-      const userRef = doc(db, 'users', results.user.uid);
-      let userEmail = results.user.email;
+      )
+      const userRef = doc(db, 'users', results.user.uid)
+      let userEmail = results.user.email
       result = await setDoc(userRef, {
         email: userEmail,
         projects: {},
         tasks: [],
       })
         .then(() => {
-          window.location.href = '/';
+          window.location.href = '/'
         })
         .catch((e) => {
-          console.error('Error writing document: ', e);
-        });
+          console.error('Error writing document: ', e)
+        })
     } catch (error) {
       if (error.code === 'auth/weak-password') {
         toast('Password must be at least 6 characters long!', {
           pauseOnHover: false,
           type: 'error',
-        });
+        })
       } else if (error.code === 'auth/email-already-in-use') {
         toast('Email already in use!', {
           pauseOnHover: false,
           type: 'error',
-        });
+        })
       } else if (error.code === 'auth/invalid-email') {
         toast('Invalid email!', {
           pauseOnHover: false,
           type: 'error',
-        });
+        })
       }
-      console.log(error);
-      return;
+      console.log(error)
+      return
     }
-    return { result, error };
-  };
+    return { result, error }
+  }
 
   // Signup Page
   return (
@@ -75,6 +75,7 @@ const Signup = () => {
           <input
             type="text"
             id="email"
+            title="email"
             className="box-border h-8 w-44 p-4 border-4"
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -85,6 +86,7 @@ const Signup = () => {
           <input
             type="password"
             id="password"
+            title="password"
             className="box-border h-8 w-44 p-4 border-4"
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -93,7 +95,8 @@ const Signup = () => {
           {/* Handle the submit button, which currently just returns to home page*/}
           <button
             onClick={handleSubmit}
-            className="text-xl font-bold mt-2 underline decoration-[#0acdff]">
+            className="text-xl font-bold mt-2 underline decoration-[#0acdff]"
+          >
             Submit
           </button>
         </div>
@@ -108,6 +111,6 @@ const Signup = () => {
       </div>
       <ToastContainer />
     </div>
-  );
-};
-export default Signup;
+  )
+}
+export default Signup

@@ -1,48 +1,37 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Create Projet Functionality
-// Input/Output: Handle the addition of a project
+// Program Intention: Implement Testing for the Delete Project Functionality
+// Input/Output: Handle the deletion of a project
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
-import user from '@testing-library/user-event'
-import ViewTask from '../components/ViewTask'
-// import Home from '../pages/Home'
-// import renderer from 'react-test-renderer'
-// import { BrowserRouter } from 'react-router-dom'
+import ViewProject from '../components/ViewProject'
 
 // Delete Project Test
 describe('Delete Project', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<ViewTask />)
+    render(<ViewProject />)
   })
 
   // Test the addition of a member with valid permissions
   it('Scenario Invalid Permissions', async () => {
-    // CREATE USER
-    // Type in the required test fields
-    user.click(
+    // Delete the project
+    fireEvent.click(
       screen.getByRole('button', {
         name: /delete/i,
       })
     )
-
-    // CHECK ERROR MESSAGE
-    // DELETE USER
   })
-  // Test the addition of a member with invalid name
+  // Test the addition of a member with invalid permission
   it('Scenario Valid Permissions', async () => {
-    // CREATE USER
-    user.click(
+    // Delete the project
+    fireEvent.click(
       screen.getByRole('button', {
         name: /delete/i,
       })
     )
-
-    // CHECK IF USER IS DELETED
-    // DELETE THE USER
   })
 })

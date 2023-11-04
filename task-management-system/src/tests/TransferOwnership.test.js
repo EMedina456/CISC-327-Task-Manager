@@ -1,58 +1,43 @@
 /** @jest-environment jsdom */
-// Program Intention: Implement Testing for the Add Team Member Functionality
+// Program Intention: Implement Testing for the Transfer Ownership Functionality
 // Input/Output: Handle the addition of a member
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
-import user from '@testing-library/user-event'
 import TransferOwnership from '../components/TransferOwnership'
-// import Home from '../pages/Home'
-// import renderer from 'react-test-renderer'
-// import { BrowserRouter } from 'react-router-dom'
 
-// Add Team Member Test
+// Transfer Ownership Test
 describe('Transfer Ownership', () => {
+  // Create a snapshot of the Home page
   // Render the Member Form before each test
   beforeEach(() => {
-    // eslint-disable-next-line testing-library/no-render-in-setup
+    //eslint-disable-next-line testing-library/no-render-in-setup
     render(<TransferOwnership />)
   })
-  // Test the addition of a member that does not exist
-  it('Scenario Valid Owner Permissions', async () => {
-    // Type in the required test fields
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /name/i,
-        })
-      ),
-      'Invalid user'
-    )
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /your permission/i,
-        })
-      ),
-      'random permission'
-    )
-    user.type(
-      user.click(
-        screen.getByRole('textbox', {
-          name: /their permission/i,
-        })
-      ),
-      'random permission'
-    )
-    user.click(screen.getByText(/submit/i))
-    user.click(
-      screen.getByRole('button', {
-        name: /submit/i,
-      })
-    )
 
-    // CHECK OWNERSHIP IS TRANSFERRED
+  // Setup the test by getting the required fields
+  const setup = () => {
+    const name = screen.getByRole('textbox', {
+      name: /name/i,
+    })
+    const submit = screen.getByRole('button', {
+      name: /submit/i,
+    })
+    return { name, submit }
+  }
+
+  // Test the addition of a member with valid permissions
+  it('Scenario Valid Permissions', async () => {
+    // Type in the required test fields
+    const { name, submit } = setup()
+    fireEvent.change(name, { target: { value: 'user' } })
+
+    // Check if the values are correct
+    expect(name.value).toBe('user')
+
+    // Click the submit button
+    fireEvent.click(submit)
   })
 })
