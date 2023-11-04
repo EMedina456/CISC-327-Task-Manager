@@ -4,7 +4,6 @@
 
 // Import files and dependencies here
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import { db } from '../firebase/firebase';
 import {
   doc,
@@ -16,6 +15,9 @@ import {
   arrayUnion,
   arrayRemove,
   deleteField,
+  getDocs,
+  addDoc,
+  setDoc,
 } from 'firebase/firestore';
 
 const MemberForm = ({ title, projects, project, task, tasks, user }) => {
@@ -30,134 +32,150 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Member: ', member);
-    console.log('Permissions: ', permissions);
+    try {
+      const userRef = doc(db, 'users', user.uid);
 
-    const userRef = doc(db, 'users', user.uid);
-    const docSnap = await getDoc(userRef); // This will be used when permission testing
+      const memberRef = query(
+        collection(db, 'users'),
+        where('email', '==', member)
+      );
 
-    const memberRef = query(
-      collection(db, 'users'),
-      where('email', '==', member)
-    );
-
-    if (memberRef === null) {
-      alert('Member does not exist');
-      return;
-    }
-    const memberSnap = await getDoc(memberRef);
-
-    // Handle the addition of a member
-    if (title === 'Add member to project') {
-      const projectRef = doc(db, 'projects', project);
-      updateDoc(
-        projectRef,
-        {
-          members: arrayUnion(memberSnap.id),
-        },
-        { merge: true }
-      );
-      updateDoc(
-        memberRef,
-        {
-          projects: { [project]: 'viewer' },
-        },
-        { merge: true }
-      );
-    } else if (title === 'Add member to task') {
-      const taskRef = doc(db, 'tasks', task);
-      updateDoc(
-        taskRef,
-        {
-          members: arrayUnion(memberSnap.id),
-        },
-        { merge: true }
-      );
-      updateDoc(
-        memberRef,
-        {
-          tasks: arrayUnion(task),
-        },
-        { merge: true }
-      );
-    } else if (title === 'Remove a member') {
-      const projectRef = doc(db, 'projects', project);
-      updateDoc(
-        projectRef,
-        {
-          members: arrayRemove(memberSnap.id),
-          user_permissions: { [memberSnap.id]: deleteField() },
-        },
-        { merge: true }
-      );
-      updateDoc(
-        memberRef,
-        {
-          projects: { [project]: deleteField() },
-        },
-        { merge: true }
-      );
-    } else if (title === 'Manage a member') {
-      if (memberSnap.id === user.uid) {
-        alert('You cannot change your own permissions');
+      const memberRefSnapshot = await getDocs(memberRef);
+      if (memberRefSnapshot.docs.length === 0) {
+        alert('Member does not exist');
         return;
       }
-      if (permissions === '') {
-        alert('Please select a permission');
-        return;
-      }
-      if (permissions === 'owner') {
-        alert(
-          'You cannot change a member to owner. Please go to transfer ownership'
+
+      const memberDoc = memberRefSnapshot.docs[0]; // Get the first document from the snapshot
+      const memberDocRef = doc(db, 'users', memberDoc.id); // Get the DocumentReference
+      const memberSnap = await getDoc(memberDocRef);
+
+      // Now you can use memberDocRef in your updateDoc calls
+
+      // Handle the addition of a member
+      if (title === 'Add member to project') {
+        const projectRef = doc(db, 'projects', project);
+        setDoc(
+          projectRef,
+          {
+            user_permissions: { [memberSnap.id]: 'viewer' },
+          },
+          { merge: true }
         );
-        return;
+
+        setDoc(
+          memberDocRef,
+          {
+            projects: { [project]: 'viewer' },
+          },
+          { merge: true }
+        );
       }
-      if (!projects[project].members.includes(memberSnap.id)) {
-        alert('This user is not a member of this project');
-        return;
+      // Handle the addition of a member to a task
+      else if (title === 'Add member to task') {
+        const taskRef = doc(db, 'tasks', task);
+        updateDoc(
+          taskRef,
+          {
+            members: arrayUnion(memberSnap.id),
+          },
+          { merge: true }
+        );
+        updateDoc(
+          memberDocRef,
+          {
+            tasks: arrayUnion(task),
+          },
+          { merge: true }
+        );
       }
-      const projectRef = doc(db, 'projects', project);
-      updateDoc(
-        projectRef,
-        {
-          user_permissions: { [memberSnap.id]: permissions },
-        },
-        { merge: true }
-      );
-      updateDoc(
-        memberRef,
-        {
-          projects: { [project]: permissions },
-        },
-        { merge: true }
-      );
-    } else if (title === 'Transfer Ownership') {
-      if (!projects[project].members.includes(memberSnap.id)) {
-        alert('This user is not a member of this project');
-        return;
+      // Handle the removal of a member from a task
+      else if (title === 'Remove a member') {
+        const projectRef = doc(db, 'projects', project);
+        setDoc(
+          projectRef,
+          {
+            user_permissions: { [memberSnap.id]: deleteField() },
+          },
+          { merge: true }
+        );
+        setDoc(
+          memberDocRef,
+          {
+            projects: { [project]: deleteField() },
+          },
+          { merge: true }
+        );
       }
-      const projectRef = doc(db, 'projects', project);
-      updateDoc(
-        projectRef,
-        {
-          user_permissions: { [memberSnap.id]: 'owner' },
-        },
-        { merge: true }
-      );
-      updateDoc(
-        memberRef,
-        {
-          projects: { [project]: 'owner' },
-        },
-        { merge: true }
-      );
-      updateDoc(
-        userRef,
-        {
-          projects: { [project]: 'admin' },
-        },
-        { merge: true }
-      );
+      // Handle the removal of a member from a task
+      else if (title === 'Manage a member') {
+        if (memberSnap.id === user.uid) {
+          alert('You cannot change your own permissions');
+          return;
+        }
+        if (permissions === '') {
+          alert('Please select a permission');
+          return;
+        }
+        if (permissions === 'owner') {
+          alert(
+            'You cannot change a member to owner. Please go to transfer ownership'
+          );
+          return;
+        }
+        if (!projects[project].user_permissions[memberSnap.id]) {
+          alert('This user is not a member of this project');
+          return;
+        }
+        const projectRef = doc(db, 'projects', project);
+        setDoc(
+          projectRef,
+          {
+            user_permissions: { [memberSnap.id]: permissions },
+          },
+          { merge: true }
+        );
+        setDoc(
+          memberDocRef,
+          {
+            projects: { [project]: permissions },
+          },
+          { merge: true }
+        );
+      }
+      // Handle the transfer of ownership
+      else if (title === 'Transfer Ownership') {
+        if (!projects[project].user_permissions[memberSnap.id]) {
+          alert('This user is not a member of this project');
+          return;
+        }
+        const projectRef = doc(db, 'projects', project);
+        setDoc(
+          projectRef,
+          {
+            user_permissions: { [memberSnap.id]: 'owner' },
+          },
+          { merge: true }
+        );
+        setDoc(
+          memberDocRef,
+          {
+            projects: { [project]: 'owner' },
+          },
+          { merge: true }
+        );
+        setDoc(
+          userRef,
+          {
+            projects: { [project]: 'admin' },
+          },
+          { merge: true }
+        );
+      }
+      alert('Member updated successfully');
+      window.location.href = '/';
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -184,34 +202,6 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
               onChange={(e) => setMember(e.target.value)}
             />
           </label>
-          {/* Handle your permission input*/}
-          {/* <label>
-            <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
-              your permission
-            </h1>
-            <input
-              type="text"
-              id="your-permisson"
-              title="your permisson"
-              className="box-border h-8 w-44 p-4 border-4"
-              onChange={(e) => setYourPermission(e.target.value)}
-            />
-          </label> */}
-          {/* Handle their permission input, not needed when removing a member*/}
-          {/* {title === 'Remove a member' ? null : (
-            <label>
-              <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
-                their permission
-              </h1>
-              <input
-                type="text"
-                id="their-permisson"
-                title="their permisson"
-                className="box-border h-8 w-44 p-4 border-4"
-                onChange={(e) => setTheirPermission(e.target.value)}
-              />
-            </label>
-          )} */}
           {/* Create this div only if the title is "Manage a member" */}
           {title === 'Manage a member' ? (
             <div>
