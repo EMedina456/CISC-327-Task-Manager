@@ -4,7 +4,15 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
-import { doc, getDoc, collection, addDoc, setDoc } from 'firebase/firestore';
+import {
+  doc,
+  getDoc,
+  collection,
+  addDoc,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+} from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 const EditTask = ({ user, task, projects, tasks }) => {
@@ -22,36 +30,20 @@ const EditTask = ({ user, task, projects, tasks }) => {
     e.preventDefault();
 
     try {
-      //   const task = collection(db, 'tasks');
-      //   const task_data = {
-      //     name: task_name,
-      //     description: description,
-      //     priority: priority,
-      //     deadline: deadline,
-      //     project: project,
-      //     members: [user.uid],
-      //   };
-      //   const taskRef = await addDoc(task, task_data);
-      //   const task_id = taskRef.id;
-
       const taskRef = doc(db, 'tasks', task);
-      const task_data = {
+      await updateDoc(taskRef, {
         name: task_name,
         description: description,
         priority: priority,
         deadline: deadline,
         project: project,
-        members: [user.uid],
-      };
-      const snap = await setDoc(taskRef, task_data, { merge: false });
+      });
       if (user) {
         const userRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(userRef);
-        const userTasks = docSnap.data().tasks || [];
         setDoc(
           userRef,
           {
-            tasks: userTasks.concat(snap.id),
+            tasks: arrayUnion(task),
           },
           { merge: true }
         );
@@ -61,18 +53,17 @@ const EditTask = ({ user, task, projects, tasks }) => {
       console.log('Project: ', project);
       if (project !== '') {
         const projectRef = doc(db, 'projects', project);
-        const projectTasks = projects[project].tasks || [];
         setDoc(
           projectRef,
           {
-            tasks: projectTasks.concat(snap.id),
+            tasks: arrayUnion(task),
           },
           { merge: true }
         );
       } else {
         console.log('No project is selected');
       }
-      console.log('Document written with ID: ', taskRef.id);
+      console.log('Document updated with ID: ', taskRef.id);
 
       alert('Task created successfully');
       window.location.href = '/';

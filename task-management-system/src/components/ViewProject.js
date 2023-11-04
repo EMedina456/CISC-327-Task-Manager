@@ -11,21 +11,17 @@ import {
   AiOutlineUserSwitch,
   AiOutlineUser,
 } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Tasks from './Tasks';
 import AddMember from './AddMember';
 import RemoveMember from './RemoveMember';
 import TransferOwnership from './TransferOwnership';
 import ManageMember from './ManageMember';
 
-import { db } from '../firebase/firebase';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
-import { doc, getDocFromServer, collection, getDoc } from 'firebase/firestore';
-
 const ViewProject = ({
   handleViewTask,
   handleEditProject,
-  project,
+  project: key,
   projects,
   tasks,
 }) => {
@@ -68,26 +64,6 @@ const ViewProject = ({
     setRemoveMember(false);
   };
 
-  //   useEffect(() => {
-  //     const getProjectInfo = async () => {
-  //       try {
-  //         for (let i = 0; i < project.tasks.length; i++) {
-  //           const taskRef = doc(db, 'tasks', project.tasks[i]);
-  //           const docSnap = await getDoc(taskRef);
-  //           if (docSnap.exists()) {
-  //             setTasks((prevTasks) => [...prevTasks, docSnap.data()]);
-  //             console.log(tasks);
-  //           } else {
-  //             console.log('No such document!');
-  //           }
-  //         }
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-  //     getProjectInfo();
-  //   }, []);
-
   // View Project Page
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
@@ -96,14 +72,14 @@ const ViewProject = ({
           <div className="flex self-start flex-col">
             {/* Handle the project name and the border*/}
             <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
-              Project
+              {projects[key]?.name || ''}
             </h1>
-            <div className="border-[#60AB9A] h-1 border-2 w-28 lg:w-44 md:w-44 h-1" />
+            <div className="border-[#60AB9A] h-1 border-2 w-28 lg:w-44 md:w-44" />
           </div>
           {/* Handle the buttons for the project*/}
           {/* Handle the edit project button*/}
           <button
-            onClick={handleEditProject}
+            onClick={() => handleEditProject(key)}
             className="flex m-auto self-end flex-col">
             <h1 className="text-xl lg:text-3xl md:text-3xl font-bold mb-2">
               Edit
@@ -161,7 +137,7 @@ const ViewProject = ({
           <Tasks
             handleViewTask={handleViewTask}
             tasks={tasks}
-            project={project}
+            project={key}
             projects={projects}
           />
         )}

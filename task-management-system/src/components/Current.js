@@ -2,17 +2,8 @@
 // Input/Output: Handle the current tasks and projects, and allow the user to click on them and redirect to their pages
 // Run Intention: Run with the entire website
 import React from 'react';
-// import the necessary components for firebase
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebase';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
-import { useState, useEffect } from 'react';
 
 const Current = ({ handleViewTask, handleViewProject, projects, tasks }) => {
-  const [user, setUser] = useState(null);
-  const [projectNames, setProjectNames] = useState([]);
-  const [taskNames, setTaskNames] = useState([]);
-
   // Current Page with the methods to handle the view of tasks and projects
   return (
     <div className="flex flex-col md:flex-row w-[80%]">

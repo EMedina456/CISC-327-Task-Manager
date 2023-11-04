@@ -86,7 +86,6 @@ const Home = () => {
       }
     };
     getUserInfo();
-    console.log('ran');
   }, []);
 
   // Variables used in the page to trigger different components
@@ -295,7 +294,11 @@ const Home = () => {
             tasks={tasks}
           />
         ) : editProject ? (
-          <EditProject />
+          <EditProject
+            user={user}
+            project={currentProject}
+            projects={projects}
+          />
         ) : editTask ? (
           <EditTask
             user={user}

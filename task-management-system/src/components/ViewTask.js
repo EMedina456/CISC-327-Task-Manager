@@ -55,7 +55,7 @@ const ViewTask = ({
           <div className="flex self-start flex-col">
             {/* Handle the view task*/}
             <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
-              Task
+              {tasks[key]?.name || ''}
             </h1>
             <div className="border-[#60AB9A] h-1 border-2 w-28 lg:w-44 md:w-44 h-1" />
           </div>

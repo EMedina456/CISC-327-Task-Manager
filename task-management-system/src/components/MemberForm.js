@@ -3,20 +3,16 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import { useState } from 'react'
+import { useState } from 'react';
 
 const MemberForm = ({ title }) => {
   // Handle the memebre and permission of the member, permissions, their permissions not needed when removing
-  const [member, setMember] = useState('')
-  const [yourPermission, setYourPermission] = useState('')
-  const [theirPermission, setTheirPermission] = useState('')
+  const [member, setMember] = useState('');
 
   // Handle the submit of the form, currently only console.log the member and permissions
   const handleSubmit = (e) => {
-    console.log('name', member)
-    console.log('permission', yourPermission)
-    console.log('permission', theirPermission)
-  }
+    console.log('name', member);
+  };
 
   // Member Form Page
   return (
@@ -42,7 +38,7 @@ const MemberForm = ({ title }) => {
             />
           </label>
           {/* Handle your permission input*/}
-          <label>
+          {/* <label>
             <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
               your permission
             </h1>
@@ -53,9 +49,9 @@ const MemberForm = ({ title }) => {
               className="box-border h-8 w-44 p-4 border-4"
               onChange={(e) => setYourPermission(e.target.value)}
             />
-          </label>
+          </label> */}
           {/* Handle their permission input, not needed when removing a member*/}
-          {title === 'Remove a member' ? null : (
+          {/* {title === 'Remove a member' ? null : (
             <label>
               <h1 className="text-2xl font-bold mb-4 mt-4 lg:text-2xl md:text-3xl">
                 their permission
@@ -68,7 +64,8 @@ const MemberForm = ({ title }) => {
                 onChange={(e) => setTheirPermission(e.target.value)}
               />
             </label>
-          )}
+          )} */}
+          {/* Create this div that changes their permissions */}
 
           <div className="justify-center items-center text-left">
             {/* Handle the submit button*/}
@@ -79,6 +76,6 @@ const MemberForm = ({ title }) => {
         </div>
       </form>
     </div>
-  )
-}
-export default MemberForm
+  );
+};
+export default MemberForm;
