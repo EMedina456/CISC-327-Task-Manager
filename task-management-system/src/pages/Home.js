@@ -38,15 +38,18 @@ const Home = () => {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
+        // Get the user's information
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
           if (user) {
+            // User is signed in, see docs for a list of available properties
             const uid = user.uid;
             setUser(user);
             const userRef = doc(db, 'users', uid);
             getDoc(userRef)
               .then(async (docSnap) => {
                 if (docSnap.exists()) {
+                  // Get the user's tasks and projects
                   let userTasks = {};
                   let userProjects = {};
                   const t = query(
@@ -65,6 +68,7 @@ const Home = () => {
                     const projectDocSnap = await getDoc(projectDocRef);
                     userProjects[projectDocSnap.id] = projectDocSnap.data();
                   }
+                  // Set the user's tasks and projects
                   setTasks(userTasks);
                   setProjects(userProjects);
                 } else {
@@ -75,7 +79,9 @@ const Home = () => {
                 console.log('Error getting document:', error);
               });
           } else {
+            // User is signed out
             window.location.href = '/login';
+            // Need to sign out the user
           }
         });
       } catch (error) {
