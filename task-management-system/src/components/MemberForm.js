@@ -13,10 +13,8 @@ import {
   collection,
   where,
   arrayUnion,
-  arrayRemove,
   deleteField,
   getDocs,
-  addDoc,
   setDoc,
 } from 'firebase/firestore';
 
@@ -35,11 +33,13 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
     try {
       const userRef = doc(db, 'users', user.uid);
 
+      // Check if the user exists (email is unique)
       const memberRef = query(
         collection(db, 'users'),
         where('email', '==', member)
       );
 
+      // Check if the member exists
       const memberRefSnapshot = await getDocs(memberRef);
       if (memberRefSnapshot.docs.length === 0) {
         alert('Member does not exist');
@@ -49,8 +49,6 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
       const memberDoc = memberRefSnapshot.docs[0]; // Get the first document from the snapshot
       const memberDocRef = doc(db, 'users', memberDoc.id); // Get the DocumentReference
       const memberSnap = await getDoc(memberDocRef);
-
-      // Now you can use memberDocRef in your updateDoc calls
 
       // Handle the addition of a member
       if (title === 'Add member to project') {
@@ -172,6 +170,7 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
           { merge: true }
         );
       }
+      // Handle the removal of a member from a task
       alert('Member updated successfully');
       window.location.href = '/';
     } catch (error) {

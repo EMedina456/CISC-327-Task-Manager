@@ -5,7 +5,6 @@
 // Import files and dependencies here
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineAccountCircle } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 import Current from '../components/Current';
 import CreateTask from '../components/CreateTask';
 import React, { useState, useEffect } from 'react';
@@ -22,13 +21,11 @@ import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
 import {
   getDoc,
   collection,
-  setDoc,
   doc,
   query,
   where,
   getDocs,
 } from 'firebase/firestore';
-import { useAuth } from '../contexts/AuthContext';
 
 // Home Page
 const Home = () => {

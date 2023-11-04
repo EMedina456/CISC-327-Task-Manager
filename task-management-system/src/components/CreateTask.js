@@ -3,11 +3,10 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import the necessary components for firebase
 import { doc, getDoc, collection, addDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 const CreateTask = ({ user, projects }) => {
   // Handle the variables for the task
@@ -22,6 +21,7 @@ const CreateTask = ({ user, projects }) => {
     e.preventDefault();
 
     try {
+      // Create a task collection
       const task = collection(db, 'tasks');
       const task_data = {
         name: task_name,
@@ -33,10 +33,12 @@ const CreateTask = ({ user, projects }) => {
       };
       const taskRef = await addDoc(task, task_data);
       const task_id = taskRef.id;
+      // Add the task to the user's tasks
       if (user) {
         const userRef = doc(db, 'users', user.uid);
         const docSnap = await getDoc(userRef);
         const userTasks = docSnap.data().tasks || [];
+        // Add the task to the user's tasks
         setDoc(
           userRef,
           {
@@ -48,6 +50,7 @@ const CreateTask = ({ user, projects }) => {
         console.log('No user is signed in');
       }
       console.log('Project: ', project);
+      // Add the task to the project's tasks
       if (project !== '') {
         const projectRef = doc(db, 'projects', project);
         const projectTasks = projects[project].tasks || [];
@@ -62,7 +65,7 @@ const CreateTask = ({ user, projects }) => {
         console.log('No project is selected');
       }
       console.log('Document written with ID: ', taskRef.id);
-
+      // Alert the user that the task was created successfully
       alert('Task created successfully');
       window.location.href = '/';
     } catch (error) {

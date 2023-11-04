@@ -4,15 +4,7 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
-import {
-  doc,
-  getDoc,
-  collection,
-  addDoc,
-  setDoc,
-  updateDoc,
-  arrayUnion,
-} from 'firebase/firestore';
+import { doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 const EditTask = ({ user, task, projects, tasks }) => {

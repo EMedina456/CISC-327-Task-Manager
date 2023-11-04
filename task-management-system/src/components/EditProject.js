@@ -4,7 +4,7 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
-import { doc, addDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 const EditProject = ({ user, project, projects }) => {
@@ -39,7 +39,7 @@ const EditProject = ({ user, project, projects }) => {
         <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
           Edit a Project
         </h1>
-        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-48 lg:w-72 md:w-72 h-1" />
+        <div className="border-[#60AB9A] lg:w-96 md:72 h-1 border-2 w-48 md:w-72" />
         <form onSubmit={handleSubmit}>
           <div className="">
             {/* Handle the project name input*/}

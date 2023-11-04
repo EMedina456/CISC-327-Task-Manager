@@ -24,7 +24,6 @@ const SingleTask = ({ handleViewProject, task, projects }) => {
       {/* Project */}
       <h1 className="text-4xl font-bold mb-4 mt-4">project</h1>
       {/* Handle the view of the project and be able to click on it*/}
-      {/* The below button doesn't work for now. Will be fixed for Unit/Integration Testing */}
       <button
         onClick={() => handleViewProject(task?.project)}
         className="text-2xl mb-4 mt-4">

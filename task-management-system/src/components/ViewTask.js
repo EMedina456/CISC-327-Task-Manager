@@ -6,13 +6,9 @@
 import { BsCheck } from 'react-icons/bs';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { AiOutlineUserAdd } from 'react-icons/ai';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SingleTask from './SingleTask';
 import AddMember from './AddMemberToTask';
-
-import { db } from '../firebase/firebase';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
-import { doc, getDoc, collection } from 'firebase/firestore';
 
 const ViewTask = ({
   handleViewProject,
@@ -39,7 +35,7 @@ const ViewTask = ({
             <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
               {tasks[key]?.name || ''}
             </h1>
-            <div className="border-[#60AB9A] h-1 border-2 w-28 lg:w-44 md:w-44 h-1" />
+            <div className="border-[#60AB9A] border-2 w-28 lg:w-44 md:w-44 h-1" />
           </div>
           {/* Handle the edit task button*/}
           <button
