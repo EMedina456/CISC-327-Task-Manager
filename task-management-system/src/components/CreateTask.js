@@ -17,10 +17,6 @@ const CreateTask = ({ user, projects }) => {
   const [deadline, setDeadline] = useState('');
   const [project, setProject] = useState('');
 
-  const [projectNames, setProjectNames] = useState([]);
-
-  const [loading, setLoading] = useState(true);
-
   // Handle the submission of the task, currently just prints the task variables to the console
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,54 +69,6 @@ const CreateTask = ({ user, projects }) => {
       console.log(error);
     }
   };
-
-  //   useEffect(() => {
-  //     const getUserInfo = async () => {
-  //       try {
-  //         const auth = getAuth();
-  //         onAuthStateChanged(auth, async (user) => {
-  //           if (user) {
-  //             const uid = user.uid;
-  //             const userRef = doc(db, 'users', uid);
-  //             const docSnap = await getDoc(userRef);
-  //             if (docSnap.exists()) {
-  //               let userProjects = docSnap.data().projects || {};
-  //               setProjects(Object.keys(userProjects));
-
-  //               // Retrieve project names and update the state
-  //               const projPromises = Object.keys(userProjects).map(
-  //                 async (key) => {
-  //                   const projectDocRef = doc(db, 'projects', key);
-  //                   const projectDocSnap = await getDoc(projectDocRef);
-  //                   if (projectDocSnap.exists()) {
-  //                     setProjectNames((prevNames) => ({
-  //                       ...prevNames,
-  //                       [key]: projectDocSnap.data().name,
-  //                     }));
-  //                   }
-  //                 }
-  //               );
-
-  //               // Wait for all promises to complete before rendering
-  //               await Promise.all(projPromises);
-  //               setLoading(false); // Move setLoading(false) here to ensure it runs after all async operations
-  //             } else {
-  //               console.log('No such document!');
-  //               setLoading(false); // Set loading to false even if there is no document
-  //             }
-  //           } else {
-  //             window.location.href = '/login';
-  //             setLoading(false); // Set loading to false if there is no user
-  //           }
-  //         });
-  //       } catch (error) {
-  //         console.log(error);
-  //         setLoading(false); // Set loading to false in case of an error
-  //       }
-  //     };
-  //     getUserInfo();
-  //     console.log('Projects: ', projects);
-  //   }, []);
 
   // Create Task Page
   return (

@@ -284,6 +284,7 @@ const Home = () => {
             task={currentTask}
             tasks={tasks}
             projects={projects}
+            user={user}
           />
         ) : viewProject ? (
           <ViewProject
@@ -292,6 +293,7 @@ const Home = () => {
             project={currentProject}
             projects={projects}
             tasks={tasks}
+            user={user}
           />
         ) : editProject ? (
           <EditProject

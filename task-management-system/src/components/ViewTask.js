@@ -8,7 +8,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import SingleTask from './SingleTask';
-import AddMember from './AddMember';
+import AddMember from './AddMemberToTask';
 
 import { db } from '../firebase/firebase';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
@@ -20,28 +20,10 @@ const ViewTask = ({
   task: key,
   tasks,
   projects,
+  user,
 }) => {
   // Handle the variables required for the page
   const [addMember, setAddMember] = useState(false);
-  const [user, setUser] = useState(null);
-  const [taskData, setTaskData] = useState(null);
-
-  //   useEffect(() => {
-  //     const getTaskInfo = async () => {
-  //       try {
-  //         const taskRef = doc(db, 'tasks', task);
-  //         const docSnap = await getDoc(taskRef);
-  //         if (docSnap.exists()) {
-  //           setTaskData(docSnap.data());
-  //         } else {
-  //           console.log('No such document!');
-  //         }
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-  //     getTaskInfo();
-  //   }, []);
 
   // Handle the addition of a member, set addMember to true and the rest to false
   const handleAddMember = () => {
@@ -70,7 +52,7 @@ const ViewTask = ({
           </button>
           {/* Handle the add member button*/}
           <button
-            onClick={handleAddMember}
+            onClick={() => handleAddMember(key)}
             className="flex m-auto self-end flex-col">
             <AiOutlineUserAdd className="text-3xl lg:text-5xl md:text-5xl" />
           </button>
@@ -91,7 +73,7 @@ const ViewTask = ({
         </div>
         {/* Handle which component to display, either the add member or the single task*/}
         {addMember ? (
-          <AddMember />
+          <AddMember task={key} tasks={tasks} projects={projects} user={user} />
         ) : (
           <SingleTask
             handleViewProject={handleViewProject}

@@ -13,7 +13,7 @@ import {
 } from 'react-icons/ai';
 import { useState } from 'react';
 import Tasks from './Tasks';
-import AddMember from './AddMember';
+import AddMember from './AddMemberToProject';
 import RemoveMember from './RemoveMember';
 import TransferOwnership from './TransferOwnership';
 import ManageMember from './ManageMember';
@@ -24,6 +24,7 @@ const ViewProject = ({
   project: key,
   projects,
   tasks,
+  user,
 }) => {
   // Handle the variables required for the page
   const [addMember, setAddMember] = useState(false);
@@ -126,7 +127,12 @@ const ViewProject = ({
         </div>
         {/* Handle which view to show, based on the button clicked*/}
         {addMember ? (
-          <AddMember />
+          <AddMember
+            tasks={tasks}
+            projects={projects}
+            user={user}
+            project={key}
+          />
         ) : removeMember ? (
           <RemoveMember />
         ) : manageMember ? (
