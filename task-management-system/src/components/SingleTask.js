@@ -6,6 +6,7 @@
 
 const SingleTask = ({ handleViewProject, task, projects }) => {
   // Single Task Page with handleViewProject method
+  console.log(task);
   return (
     <div>
       {/* Single Task Page */}
@@ -27,7 +28,7 @@ const SingleTask = ({ handleViewProject, task, projects }) => {
       <button
         onClick={() => handleViewProject(task?.project)}
         className="text-2xl mb-4 mt-4">
-        {projects[task?.project].name}
+        {projects[task?.project] && projects[task?.project].name}
       </button>
     </div>
   );

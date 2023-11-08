@@ -16,6 +16,7 @@ import EditProject from '../components/EditProject';
 import EditTask from '../components/EditTask';
 import Tasks from '../components/Tasks';
 import PriorityTasks from '../components/PriorityTasks';
+import DeadlineTasks from '../components/DeadlineTasks';
 import './../App.css';
 import { auth, db } from '../firebase/firebase';
 import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -37,59 +38,59 @@ const Home = () => {
   const [currentTask, setCurrentTask] = useState(null);
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        // Get the user's information
-        const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            // User is signed in, see docs for a list of available properties
-            const uid = user.uid;
-            setUser(user);
-            const userRef = doc(db, 'users', uid);
-            getDoc(userRef)
-              .then(async (docSnap) => {
-                if (docSnap.exists()) {
-                  // Get the user's tasks and projects
-                  let userTasks = {};
-                  let userProjects = {};
-                  const t = query(
-                    collection(db, 'tasks'),
-                    where('members', 'array-contains', uid)
-                  );
-                  const taskSnapshot = await getDocs(t);
-                  taskSnapshot.forEach((doc) => {
-                    userTasks[doc.id] = doc.data();
-                  });
+    const user = getAuth().currentUser;
+    if (user) {
+      // User is already authenticated, set the user state
+      setUser(user);
+      // Fetch user data and tasks here if needed
+    } else {
+      // Get the user's information
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          const uid = user.uid;
+          setUser(user);
+          const userRef = doc(db, 'users', uid);
+          getDoc(userRef)
+            .then(async (docSnap) => {
+              if (docSnap.exists()) {
+                // Get the user's tasks and projects
+                let userTasks = {};
+                let userProjects = {};
+                const t = query(
+                  collection(db, 'tasks'),
+                  where('members', 'array-contains', uid)
+                );
+                const taskSnapshot = await getDocs(t);
+                taskSnapshot.forEach((doc) => {
+                  userTasks[doc.id] = doc.data();
+                });
 
-                  for (let [key, value] of Object.entries(
-                    docSnap.data().projects
-                  )) {
-                    const projectDocRef = doc(db, 'projects', key);
-                    const projectDocSnap = await getDoc(projectDocRef);
-                    userProjects[projectDocSnap.id] = projectDocSnap.data();
-                  }
-                  // Set the user's tasks and projects
-                  setTasks(userTasks);
-                  setProjects(userProjects);
-                } else {
-                  console.log('No such document!');
+                for (let [key, value] of Object.entries(
+                  docSnap.data().projects
+                )) {
+                  const projectDocRef = doc(db, 'projects', key);
+                  const projectDocSnap = await getDoc(projectDocRef);
+                  userProjects[projectDocSnap.id] = projectDocSnap.data();
                 }
-              })
-              .catch((error) => {
-                console.log('Error getting document:', error);
-              });
-          } else {
-            // User is signed out
-            window.location.href = '/login';
-            // Need to sign out the user
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUserInfo();
+                // Set the user's tasks and projects
+                setTasks(userTasks);
+                setProjects(userProjects);
+              } else {
+                console.log('No such document!');
+              }
+            })
+            .catch((error) => {
+              console.log('Error getting document:', error);
+            });
+        } else {
+          // User is signed out
+          window.location.href = '/login';
+          // Need to sign out the user
+        }
+      });
+    }
   }, []);
 
   // Variables used in the page to trigger different components
@@ -147,6 +148,7 @@ const Home = () => {
   // Handle the view task component by setting it true and the other components false
   const handleViewTask = (task) => {
     setCurrentTask(task);
+    setCurrentProject(null);
     setViewTask(true);
     setCreateTask(false);
     setCreateProject(false);
@@ -157,6 +159,7 @@ const Home = () => {
   // Handle the view project component by setting it true and the other components false
   const handleViewProject = (project) => {
     setCurrentProject(project);
+    setCurrentTask(null);
     setViewProject(true);
     setViewTask(false);
     setCreateTask(false);
@@ -239,7 +242,7 @@ const Home = () => {
         {/* The sidebar that handles the different sorting components */}
         <div className="flex flex-col justify-top p-[2%] items-center space-y-8 w-3/12 min-h-[100vh] bg-[#FBDCE2]">
           <h1 className="text-lg m-0 font-bold mb-2 md:text-2xl lg:text-4xl sm:text-base">
-            Sort By{' '}
+            Sort By
           </h1>
           <div className="border-[#60AB9A]  h-1 border-2 w-3/12 lg:w-full md:w-6/12" />
           <div className="flex flex-row ">
@@ -251,7 +254,7 @@ const Home = () => {
                 onClick={handleDeadline}
                 alt="handleDeadline">
                 <h1 className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm">
-                  Deadline{' '}
+                  Deadline
                 </h1>
                 <div className="mr-2 border-[#60AB9A] w-11/12 lg:w-full md:w-11/12 h-1 border-2" />
               </button>
@@ -264,7 +267,7 @@ const Home = () => {
                 onClick={handlePriority}
                 alt="handlePriority">
                 <h1 className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm">
-                  Priority{' '}
+                  Priority
                 </h1>
                 <div className=" ml-2 border-[#60AB9A] w-11/12 lg:w-full md:w-11/12 h-1 border-2" />
               </button>
@@ -273,9 +276,17 @@ const Home = () => {
           {/* The tasks and priority tasks components that handle the different sorting components */}
           {/* Deadline is still in progress */}
           {deadline ? (
-            <div />
+            <DeadlineTasks
+              handleViewTask={handleViewTask}
+              tasks={tasks}
+              projects={projects}
+            />
           ) : (
-            <PriorityTasks handleViewTask={handleViewTask} />
+            <PriorityTasks
+              handleViewTask={handleViewTask}
+              tasks={tasks}
+              projects={projects}
+            />
           )}
         </div>
         {/* The main component that handles the different components, which checks which variable is true and uses that component */}
