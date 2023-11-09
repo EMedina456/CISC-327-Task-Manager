@@ -18,6 +18,9 @@ import RemoveMember from './RemoveMember';
 import TransferOwnership from './TransferOwnership';
 import ManageMember from './ManageMember';
 
+import { doc, deleteDoc, setDoc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
+
 const ViewProject = ({
   handleViewTask,
   handleEditProject,
@@ -32,6 +35,68 @@ const ViewProject = ({
   const [removeMember, setRemoveMember] = useState(false);
   const [transfer, setTransfer] = useState(false);
   //   const [tasks, setTasks] = useState([]);
+
+  const handleDeleteProject = async (e) => {
+    e.preventDefault();
+    try {
+      const projectRef = doc(db, 'projects', key);
+      for (let task in projects[key].tasks) {
+        const taskRef = doc(db, 'tasks', task);
+        await setDoc(
+          taskRef,
+          {
+            project: '',
+          },
+          { merge: true }
+        );
+      }
+      for (let member in projects[key].user_permissions) {
+        const memberRef = doc(db, 'users', member);
+        const memberSnap = await getDoc(memberRef);
+        const memberProjects = memberSnap.data().projects || {};
+        delete memberProjects[key];
+        const memberTasks = memberSnap.data().tasks || [];
+        console.log('projects', memberProjects);
+        console.log('tasks', memberTasks);
+        await setDoc(
+          memberRef,
+          {
+            projects: memberProjects,
+            tasks: memberTasks.filter(
+              (task) => !projects[key].tasks.includes(task)
+            ),
+          },
+          { merge: true }
+        );
+      }
+      if (user) {
+        const userRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(userRef);
+        const userProjects = docSnap.data().projects || {};
+        delete userProjects[key];
+        const userTasks = docSnap.data().tasks || [];
+        await setDoc(
+          userRef,
+          {
+            projects: userProjects,
+            tasks: userTasks.filter(
+              (task) => !projects[key].tasks.includes(task)
+            ),
+          },
+          { merge: true }
+        );
+      } else {
+        console.log('No user is signed in');
+      }
+
+      await deleteDoc(projectRef);
+      console.log('Document deleted with ID: ', key);
+      alert('Project deleted successfully');
+      window.location.href = '/';
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Handle the addition of a member, set addMember to true and the rest to false
   const handleAddMember = () => {
@@ -114,7 +179,7 @@ const ViewProject = ({
           {/* Handle the delete project button, and send alert that project has been deleted*/}
           {/* Under progress */}
           <button
-            onClick={() => alert('Project Deleted')}
+            onClick={(e) => handleDeleteProject(e)}
             className="flex m-auto self-end flex-col"
             title="delete">
             <RiDeleteBin5Line className="text-3xl lg:text-5xl md:text-5xl" />

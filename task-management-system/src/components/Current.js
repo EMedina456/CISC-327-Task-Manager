@@ -4,6 +4,18 @@
 import React from 'react';
 
 const Current = ({ handleViewTask, handleViewProject, projects, tasks }) => {
+  // Get the current date
+  const currentDate = new Date();
+
+  // Filter the tasks that are overdue
+  const overdueTasks = Object.keys(tasks).filter((key) => {
+    const taskDeadline = new Date(tasks[key].deadline);
+    taskDeadline.setDate(taskDeadline.getDate() + 2);
+    console.log(taskDeadline);
+    console.log(currentDate);
+    return taskDeadline <= currentDate;
+  });
+
   // Current Page with the methods to handle the view of tasks and projects
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
@@ -29,7 +41,7 @@ const Current = ({ handleViewTask, handleViewProject, projects, tasks }) => {
         </h1>
         <div className="border-[#60AB9A] w-80 h-1 border-2" />
         {/* Handle the view and be able to click on the overdue tasks*/}
-        {Object.keys(tasks).map((key) => {
+        {overdueTasks.map((key) => {
           return (
             <button
               onClick={() => handleViewTask(key)}

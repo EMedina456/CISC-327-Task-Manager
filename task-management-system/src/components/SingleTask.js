@@ -27,7 +27,7 @@ const SingleTask = ({ handleViewProject, task, projects }) => {
       <button
         onClick={() => handleViewProject(task?.project)}
         className="text-2xl mb-4 mt-4">
-        {projects[task?.project].name}
+        {projects[task?.project] && projects[task?.project].name}
       </button>
     </div>
   );

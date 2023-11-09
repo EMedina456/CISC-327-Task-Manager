@@ -10,6 +10,9 @@ import { useState } from 'react';
 import SingleTask from './SingleTask';
 import AddMember from './AddMemberToTask';
 
+import { doc, deleteDoc, setDoc, arrayRemove } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
+
 const ViewTask = ({
   handleViewProject,
   handleEditTask,
@@ -20,6 +23,36 @@ const ViewTask = ({
 }) => {
   // Handle the variables required for the page
   const [addMember, setAddMember] = useState(false);
+
+  const handleDeleteTask = async (e) => {
+    e.preventDefault();
+    try {
+      console.log('key', key);
+      const taskRef = doc(db, 'tasks', key);
+      if (tasks[key].project !== '') {
+        const projectRef = doc(db, 'projects', tasks[key].project);
+        await setDoc(
+          projectRef,
+          {
+            tasks: arrayRemove(key),
+          },
+          { merge: true }
+        );
+      }
+      console.log('members', tasks[key].members);
+      tasks[key].members.forEach(async (member) => {
+        const memberRef = doc(db, 'users', member);
+        await setDoc(memberRef, { tasks: arrayRemove(key) }, { merge: true });
+      });
+      console.log('tasks before delete', tasks);
+      await deleteDoc(taskRef);
+      console.log('Document deleted with ID: ', taskRef.id);
+      alert('Task deleted successfully');
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
+  };
 
   // Handle the addition of a member, set addMember to true and the rest to false
   const handleAddMember = () => {
@@ -55,7 +88,7 @@ const ViewTask = ({
           {/* Handle the delete button, and send an alert to confirm the deletion*/}
           {/* Under Progress */}
           <button
-            onClick={() => alert('Task Deleted')}
+            onClick={(e) => handleDeleteTask(e)}
             className="flex m-auto self-end flex-col"
             title="delete">
             <RiDeleteBin5Line className="text-3xl lg:text-5xl md:text-5xl" />
@@ -63,7 +96,7 @@ const ViewTask = ({
           {/* Handle the complete button, and send an alert to confirm the completion*/}
           {/* Under Progress */}
           <button
-            onClick={() => alert('Task Completed')}
+            onClick={(e) => handleDeleteTask(e)}
             className="flex m-auto self-end flex-col"
             title="complete">
             <BsCheck className="text-3xl lg:text-5xl md:text-5xl" />
