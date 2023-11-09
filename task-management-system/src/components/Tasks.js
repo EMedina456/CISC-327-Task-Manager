@@ -6,7 +6,7 @@
 
 const Tasks = ({ handleViewTask, tasks, project, projects }) => {
   // Tasks Page
-  //   console.log(projects[project].tasks);
+  console.log(projects[project].tasks);
   return (
     <div>
       {/* Tasks Page */}
@@ -17,7 +17,7 @@ const Tasks = ({ handleViewTask, tasks, project, projects }) => {
             onClick={() => handleViewTask(key)}
             key={key}
             className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl ">
-            {tasks[key].name}
+            {tasks[key] && tasks[key].name}
           </button>
         );
       })}

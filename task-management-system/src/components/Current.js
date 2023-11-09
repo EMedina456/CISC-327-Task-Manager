@@ -10,7 +10,10 @@ const Current = ({ handleViewTask, handleViewProject, projects, tasks }) => {
   // Filter the tasks that are overdue
   const overdueTasks = Object.keys(tasks).filter((key) => {
     const taskDeadline = new Date(tasks[key].deadline);
-    return taskDeadline < currentDate;
+    taskDeadline.setDate(taskDeadline.getDate() + 2);
+    console.log(taskDeadline);
+    console.log(currentDate);
+    return taskDeadline <= currentDate;
   });
 
   // Current Page with the methods to handle the view of tasks and projects

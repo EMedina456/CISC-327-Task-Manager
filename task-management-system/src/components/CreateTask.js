@@ -33,6 +33,7 @@ const CreateTask = ({ user, projects }) => {
       };
       const taskRef = await addDoc(task, task_data);
       const task_id = taskRef.id;
+      const taskSnap = await getDoc(taskRef);
       // Add the task to the user's tasks
       if (user) {
         const userRef = doc(db, 'users', user.uid);
@@ -54,6 +55,27 @@ const CreateTask = ({ user, projects }) => {
       if (project !== '') {
         const projectRef = doc(db, 'projects', project);
         const projectTasks = projects[project].tasks || [];
+        Object.keys(projects[project].user_permissions).forEach(
+          async (member) => {
+            const memberRef = doc(db, 'users', member);
+            const memberSnap = await getDoc(memberRef);
+            const memberTasks = memberSnap.data().tasks || [];
+            setDoc(
+              memberRef,
+              {
+                tasks: memberTasks.concat(task_id),
+              },
+              { merge: true }
+            );
+            setDoc(
+              taskRef,
+              {
+                members: taskSnap.data().concat(member),
+              },
+              { merge: true }
+            );
+          }
+        );
         setDoc(
           projectRef,
           {

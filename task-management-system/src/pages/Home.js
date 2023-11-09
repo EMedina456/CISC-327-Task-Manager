@@ -14,7 +14,7 @@ import ViewProject from '../components/ViewProject';
 import ViewTask from '../components/ViewTask';
 import EditProject from '../components/EditProject';
 import EditTask from '../components/EditTask';
-import Tasks from '../components/Tasks';
+// import Tasks from '../components/Tasks';
 import PriorityTasks from '../components/PriorityTasks';
 import DeadlineTasks from '../components/DeadlineTasks';
 import './../App.css';
@@ -67,9 +67,7 @@ const Home = () => {
                   userTasks[doc.id] = doc.data();
                 });
 
-                for (let [key, value] of Object.entries(
-                  docSnap.data().projects
-                )) {
+                for (let [key] of Object.entries(docSnap.data().projects)) {
                   const projectDocRef = doc(db, 'projects', key);
                   const projectDocSnap = await getDoc(projectDocRef);
                   userProjects[projectDocSnap.id] = projectDocSnap.data();
@@ -102,19 +100,11 @@ const Home = () => {
   const [editProject, setEditProject] = useState(false);
   const [editTask, setEditTask] = useState(false);
   const [deadline, setDeadline] = useState(false);
-  const [priority, setPriority] = useState(true);
 
   // Functions to handle the different components
   // Handle the deadline component, by setting it true and the priority component false
   const handleDeadline = () => {
-    setDeadline(true);
-    setPriority(false);
-  };
-
-  // Handle the priority component, by setting it true and the deadline component false
-  const handlePriority = () => {
-    setPriority(true);
-    setDeadline(false);
+    setDeadline(!deadline);
   };
 
   // Handle the create task component, by setting it true and the other components false
@@ -264,7 +254,7 @@ const Home = () => {
               {/* The priority button is used to sort the tasks by priority */}
               <button
                 id="handlePriority"
-                onClick={handlePriority}
+                onClick={handleDeadline}
                 alt="handlePriority">
                 <h1 className="text-base m-2 font-bold mb-2 md:text-xl lg:text-3xl sm:text-sm">
                   Priority
