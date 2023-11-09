@@ -8,7 +8,11 @@ const PriorityTasks = ({ handleViewTask, tasks }) => {
   //   Check if tasks are available (not undefined or null)
   if (tasks.length === 0) {
     // Tasks are not yet available, show a loading message or return null
-    return <div>Loading tasks...</div>;
+    return (
+      <div className="flex text-lg font-bold mt-2 md:text-xl lg:text-2xl">
+        Loading tasks...
+      </div>
+    );
   }
 
   const sortedItems = Object.keys(tasks).sort(

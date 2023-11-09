@@ -11,8 +11,6 @@ const Current = ({ handleViewTask, handleViewProject, projects, tasks }) => {
   const overdueTasks = Object.keys(tasks).filter((key) => {
     const taskDeadline = new Date(tasks[key].deadline);
     taskDeadline.setDate(taskDeadline.getDate() + 2);
-    console.log(taskDeadline);
-    console.log(currentDate);
     return taskDeadline <= currentDate;
   });
 
