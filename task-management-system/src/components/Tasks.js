@@ -6,7 +6,6 @@
 
 const Tasks = ({ handleViewTask, tasks, project, projects }) => {
   // Tasks Page
-  console.log(projects[project].tasks);
   return (
     <div>
       {/* Tasks Page */}

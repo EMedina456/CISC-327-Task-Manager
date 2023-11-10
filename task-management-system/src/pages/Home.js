@@ -31,8 +31,8 @@ import {
 
 // Home Page
 const Home = () => {
-  const [tasks, setTasks] = useState([]);
-  const [projects, setProjects] = useState([]);
+  const [tasks, setTasks] = useState({});
+  const [projects, setProjects] = useState({});
   const [user, setUser] = useState(null);
   const [currentProject, setCurrentProject] = useState(null);
   const [currentTask, setCurrentTask] = useState(null);
@@ -45,8 +45,8 @@ const Home = () => {
       // Fetch user data and tasks here if needed
     } else {
       // Get the user's information
-      const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
+      const userAuth = getAuth();
+      onAuthStateChanged(userAuth, (user) => {
         if (user) {
           // User is signed in, see docs for a list of available properties
           const uid = user.uid;
@@ -66,6 +66,7 @@ const Home = () => {
                 taskSnapshot.forEach((doc) => {
                   userTasks[doc.id] = doc.data();
                 });
+                console.log('userTasks', userTasks);
 
                 for (let [key] of Object.entries(docSnap.data().projects)) {
                   const projectDocRef = doc(db, 'projects', key);
