@@ -27,7 +27,6 @@ import {
   query,
   where,
   getDocs,
-  connectFirestoreEmulator,
 } from 'firebase/firestore';
 
 // Home Page

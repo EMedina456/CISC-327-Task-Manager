@@ -16,6 +16,7 @@ import {
   deleteField,
   getDocs,
   setDoc,
+  arrayRemove,
 } from 'firebase/firestore';
 
 const MemberForm = ({ title, projects, project, task, tasks, user }) => {
@@ -23,7 +24,7 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
   const [member, setMember] = useState('');
   const [permissions, setPermissions] = useState('');
 
-  const roles = ['owner', 'admin', 'editor', 'commenter', 'viewer'];
+  const roles = ['admin', 'editor', 'commenter', 'viewer'];
 
   // Handle the submit of the form
   // This function is not full implemented due to rule testing
@@ -31,11 +32,11 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
     e.preventDefault();
 
     try {
-      console.log('User: ', user);
+      // Check if the user exists
       const userRef = doc(db, 'users', user.uid);
 
       // Check if the user exists (email is unique)
-      const memberRef = await query(
+      const memberRef = query(
         collection(db, 'users'),
         where('email', '==', member)
       );
@@ -104,11 +105,15 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
       }
       // Handle the removal of a member from a task
       else if (title === 'Remove a member') {
+        if (!projects[project].user_permissions[memberSnap.id]) {
+          alert('This user is not a member of this project');
+          return;
+        }
         const projectRef = doc(db, 'projects', project);
         setDoc(
           projectRef,
           {
-            user_permissions: { [memberSnap.id]: deleteField() },
+            user_permissions: { [memberDoc.id]: deleteField() },
           },
           { merge: true }
         );
@@ -119,6 +124,23 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
           },
           { merge: true }
         );
+        for (const task of projects[project].tasks) {
+          const taskRef = doc(db, 'tasks', task);
+          updateDoc(
+            taskRef,
+            {
+              members: arrayRemove(memberSnap.id),
+            },
+            { merge: true }
+          );
+          updateDoc(
+            memberDocRef,
+            {
+              tasks: arrayRemove(task),
+            },
+            { merge: true }
+          );
+        }
       }
       // Handle the removal of a member from a task
       else if (title === 'Manage a member') {
@@ -130,21 +152,17 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
           alert('Please select a permission');
           return;
         }
-        if (permissions === 'owner') {
-          alert(
-            'You cannot change a member to owner. Please go to transfer ownership'
-          );
-          return;
-        }
         if (!projects[project].user_permissions[memberSnap.id]) {
           alert('This user is not a member of this project');
           return;
         }
+        console.log(permissions);
+        console.log(memberSnap.id);
         const projectRef = doc(db, 'projects', project);
         setDoc(
           projectRef,
           {
-            user_permissions: { [memberSnap.id]: permissions },
+            user_permissions: { [memberDoc.id]: permissions },
           },
           { merge: true }
         );
