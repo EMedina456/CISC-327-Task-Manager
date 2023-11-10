@@ -159,6 +159,13 @@ const CreateTask = ({ user, projects }) => {
               </h1>
               {/* This currently does not work. Needs testing */}
               {Object.keys(projects).map((key) => {
+                if (
+                  projects[key].user_permissions[user.uid] !== 'owner' &&
+                  projects[key].user_permissions[user.uid] !== 'admin' &&
+                  projects[key].user_permissions[user.uid] !== 'editor'
+                ) {
+                  return null;
+                }
                 return (
                   <label className="flex flex-row space-x-3" key={key}>
                     <input

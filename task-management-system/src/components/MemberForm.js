@@ -52,8 +52,28 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
       const memberDocRef = doc(db, 'users', memberDoc.id); // Get the DocumentReference
       const memberSnap = await getDoc(memberDocRef);
 
+      if (memberSnap.id === user.uid) {
+        alert('You cannot make changes for yourself in a project');
+        return;
+      }
+
       // Handle the addition of a member
       if (title === 'Add member to project') {
+        // Error handling
+        // Check if the user is owner or admin of the project
+        if (
+          projects[project].user_permissions[user.uid] !== 'owner' &&
+          projects[project].user_permissions[user.uid] !== 'admin'
+        ) {
+          alert('You do not have permission to add a member to this project');
+          return;
+        }
+        // Check if the member already exists in the project
+        if (projects[project].user_permissions[memberSnap.id]) {
+          alert('This user is already a member of this project');
+          return;
+        }
+
         const projectRef = doc(db, 'projects', project);
         const projectSnap = await getDoc(projectRef);
         setDoc(
@@ -87,6 +107,19 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
       }
       // Handle the addition of a member to a task
       else if (title === 'Add member to task') {
+        // Error handling
+        // Check if the task has a project associated with it
+        if (tasks[task].project !== '') {
+          // Check if the user is owner or admin of the project
+          if (
+            projects[tasks[task].project].user_permissions[user.uid] !==
+              'owner' &&
+            projects[tasks[task].project].user_permissions[user.uid] !== 'admin'
+          ) {
+            alert('You do not have permission to add a member to this task');
+            return;
+          }
+        }
         const taskRef = doc(db, 'tasks', task);
         updateDoc(
           taskRef,
@@ -105,10 +138,36 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
       }
       // Handle the removal of a member from a task
       else if (title === 'Remove a member') {
+        // Error handling
+        // Check if the user is owner or admin of the project
+        if (
+          projects[project].user_permissions[user.uid] !== 'owner' &&
+          projects[project].user_permissions[user.uid] !== 'admin'
+        ) {
+          alert(
+            'You do not have permission to remove a member from this project'
+          );
+          return;
+        }
+        // Check if the user is owner of the project
+        if (projects[project].user_permissions[memberSnap.id] === 'owner') {
+          alert('You cannot remove the owner of the project');
+          return;
+        }
+        // Check if the user is admin of the project but not owner
+        if (
+          projects[project].user_permissions[memberSnap.id] === 'admin' &&
+          projects[project].user_permissions[user.uid] !== 'owner'
+        ) {
+          alert('You cannot remove an admin of the project');
+          return;
+        }
+        // Check if the member does not exist in the project
         if (!projects[project].user_permissions[memberSnap.id]) {
           alert('This user is not a member of this project');
           return;
         }
+
         const projectRef = doc(db, 'projects', project);
         setDoc(
           projectRef,
@@ -142,22 +201,28 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
           );
         }
       }
-      // Handle the removal of a member from a task
+      // Handle the management of a member (change of permissions)
       else if (title === 'Manage a member') {
-        if (memberSnap.id === user.uid) {
-          alert('You cannot change your own permissions');
-          return;
-        }
+        // Error handling
+        // Make sure the user selects a permission
         if (permissions === '') {
           alert('Please select a permission');
           return;
         }
+        // Check if the member does not exist in the project
         if (!projects[project].user_permissions[memberSnap.id]) {
           alert('This user is not a member of this project');
           return;
         }
-        console.log(permissions);
-        console.log(memberSnap.id);
+        // Check if the user is not owner or admin of the project
+        if (
+          projects[project].user_permissions[user.uid] !== 'owner' &&
+          projects[project].user_permissions[user.uid] !== 'admin'
+        ) {
+          alert('You do not have permission to manage a member');
+          return;
+        }
+
         const projectRef = doc(db, 'projects', project);
         setDoc(
           projectRef,
@@ -176,10 +241,18 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
       }
       // Handle the transfer of ownership
       else if (title === 'Transfer Ownership') {
+        // Error handling
+        // Check if the member does not exist in the project
         if (!projects[project].user_permissions[memberSnap.id]) {
           alert('This user is not a member of this project');
           return;
         }
+        // Check if the user is not owner of the project
+        if (projects[project].user_permissions[user.uid] !== 'owner') {
+          alert('You do not have permission to transfer ownership');
+          return;
+        }
+
         const projectRef = doc(db, 'projects', project);
         setDoc(
           projectRef,
@@ -202,6 +275,8 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
           },
           { merge: true }
         );
+      } else {
+        return;
       }
       // Handle the removal of a member from a task
       alert('Member updated successfully');

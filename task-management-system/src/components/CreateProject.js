@@ -23,6 +23,7 @@ const CreateProject = ({ user }) => {
         tasks: [],
         user_permissions: { [user.uid]: 'owner' },
       };
+
       const projRef = await addDoc(project, proj_data);
       const proj_id = projRef.id;
       if (user) {

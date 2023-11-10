@@ -4,7 +4,7 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
-import { doc, setDoc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 const EditTask = ({ user, task, projects, tasks }) => {
@@ -24,7 +24,6 @@ const EditTask = ({ user, task, projects, tasks }) => {
     try {
       console.log('Task: ', task);
       const taskRef = doc(db, 'tasks', task);
-      const taskSnap = await getDoc(taskRef);
 
       await updateDoc(taskRef, {
         name: task_name,
@@ -146,6 +145,13 @@ const EditTask = ({ user, task, projects, tasks }) => {
               </h1>
               {/* This currently does not work. Needs testing */}
               {Object.keys(projects).map((key) => {
+                if (
+                  projects[key].user_permissions[user.uid] !== 'owner' &&
+                  projects[key].user_permissions[user.uid] !== 'admin' &&
+                  projects[key].user_permissions[user.uid] !== 'editor'
+                ) {
+                  return null;
+                }
                 return (
                   <label className="flex flex-row space-x-3" key={key}>
                     <input
