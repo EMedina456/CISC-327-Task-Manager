@@ -39,7 +39,7 @@ const CreateProject = ({ user }) => {
       } else {
         console.log('No user is signed in');
       }
-      console.log('Document written with ID: ', projRef.id);
+      alert('Project created successfully');
       window.location.href = '/';
     } catch (error) {
       console.log(error);

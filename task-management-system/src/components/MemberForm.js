@@ -31,10 +31,11 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
     e.preventDefault();
 
     try {
+      console.log('User: ', user);
       const userRef = doc(db, 'users', user.uid);
 
       // Check if the user exists (email is unique)
-      const memberRef = query(
+      const memberRef = await query(
         collection(db, 'users'),
         where('email', '==', member)
       );
@@ -53,6 +54,7 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
       // Handle the addition of a member
       if (title === 'Add member to project') {
         const projectRef = doc(db, 'projects', project);
+        const projectSnap = await getDoc(projectRef);
         setDoc(
           projectRef,
           {
@@ -65,9 +67,22 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
           memberDocRef,
           {
             projects: { [project]: 'viewer' },
+            tasks: arrayUnion(...projectSnap.data().tasks),
           },
           { merge: true }
         );
+
+        const projectTasks = projectSnap.data().tasks || [];
+        projectTasks.forEach(async (task) => {
+          const taskRef = doc(db, 'tasks', task);
+          await updateDoc(
+            taskRef,
+            {
+              members: arrayUnion(memberSnap.id),
+            },
+            { merge: true }
+          );
+        });
       }
       // Handle the addition of a member to a task
       else if (title === 'Add member to task') {

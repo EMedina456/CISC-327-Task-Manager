@@ -56,8 +56,6 @@ const ViewProject = ({
         const memberProjects = memberSnap.data().projects || {};
         delete memberProjects[key];
         const memberTasks = memberSnap.data().tasks || [];
-        console.log('projects', memberProjects);
-        console.log('tasks', memberTasks);
         await setDoc(
           memberRef,
           {

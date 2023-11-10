@@ -4,7 +4,7 @@
 
 // Import files and dependencies here
 import React, { useState } from 'react';
-import { doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 const EditTask = ({ user, task, projects, tasks }) => {
@@ -22,29 +22,47 @@ const EditTask = ({ user, task, projects, tasks }) => {
     e.preventDefault();
 
     try {
+      console.log('Task: ', task);
       const taskRef = doc(db, 'tasks', task);
+      const taskSnap = await getDoc(taskRef);
+
       await updateDoc(taskRef, {
         name: task_name,
         description: description,
         priority: priority,
         deadline: deadline,
         project: project,
+        members: [user.uid],
       });
-      if (user) {
-        const userRef = doc(db, 'users', user.uid);
-        setDoc(
-          userRef,
-          {
-            tasks: arrayUnion(task),
-          },
-          { merge: true }
-        );
-      } else {
-        console.log('No user is signed in');
-      }
-      console.log('Project: ', project);
+      const userRef = doc(db, 'users', user.uid);
+      setDoc(
+        userRef,
+        {
+          tasks: arrayUnion(task),
+        },
+        { merge: true }
+      );
       if (project !== '') {
         const projectRef = doc(db, 'projects', project);
+        Object.keys(projects[project].user_permissions).forEach(
+          async (member) => {
+            const memberRef = doc(db, 'users', member);
+            setDoc(
+              memberRef,
+              {
+                tasks: arrayUnion(task),
+              },
+              { merge: true }
+            );
+            setDoc(
+              taskRef,
+              {
+                members: arrayUnion(member),
+              },
+              { merge: true }
+            );
+          }
+        );
         setDoc(
           projectRef,
           {
@@ -55,7 +73,6 @@ const EditTask = ({ user, task, projects, tasks }) => {
       } else {
         console.log('No project is selected');
       }
-      console.log('Document updated with ID: ', taskRef.id);
 
       alert('Task created successfully');
       window.location.href = '/';
