@@ -22,7 +22,7 @@ describe('Create Project', () => {
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<CreateProject />)
+    render(<CreateProject user={user} />)
   })
 
   // Setup the test by getting the required fields
@@ -74,6 +74,9 @@ describe('Create Project', () => {
     expect(description.value).toBe('Something')
 
     await user.click(submit)
+
+    // Check the error message
+    expect(await screen.findAllByText('Invalid login credentials')).toBeTruthy()
 
     // const user = await handleLogin('t@t.com', 'test123')
     // expect(await handleCreateProject(user, '', 'Something')).toBe('success')
