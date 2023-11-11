@@ -7,7 +7,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import ViewProject from '../components/ViewProject'
-
+import userEvent from '@testing-library/user-event'
 // Delete Project Test
 describe('Delete Project', () => {
   // Render the Member Form before each test
@@ -18,8 +18,9 @@ describe('Delete Project', () => {
 
   // Test the addition of a member with valid permissions
   it('Scenario Invalid Permissions', async () => {
+    const user = userEvent.setup()
     // Delete the project
-    fireEvent.click(
+    await user.click(
       screen.getByRole('button', {
         name: /delete/i,
       })
@@ -27,8 +28,9 @@ describe('Delete Project', () => {
   })
   // Test the addition of a member with invalid permission
   it('Scenario Valid Permissions', async () => {
+    const user = userEvent.setup()
     // Delete the project
-    fireEvent.click(
+    await user.click(
       screen.getByRole('button', {
         name: /delete/i,
       })

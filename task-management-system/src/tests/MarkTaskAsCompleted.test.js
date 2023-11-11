@@ -7,7 +7,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import ViewTask from '../components/ViewTask'
-
+import userEvent from '@testing-library/user-event'
 // Mark Task As Completed Test
 describe('Mark Task as Completed', () => {
   // Render the View Task before each test
@@ -19,8 +19,8 @@ describe('Mark Task as Completed', () => {
   // Test the completion of a task
   it('Click Completed', async () => {
     // Type in the required test fields
-
-    fireEvent.click(
+    const user = userEvent.setup()
+    await user.click(
       screen.getByRole('button', {
         name: /complete/i,
       })

@@ -8,59 +8,49 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { db } from '../firebase/firebase'
 import { getDoc, doc } from 'firebase/firestore'
 import { handleLogin } from './handleLogin'
+import { getDocs, query, where, collection } from 'firebase/firestore'
 
 // Get User Info
 async function getUserInfo() {
-  // Login
-  await handleLogin('t@t.com', 'test123')
-  try {
-    // Get the user info
-    const auth = getAuth()
+  // Get the user's information
+  const userAuth = getAuth()
+  onAuthStateChanged(userAuth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      const uid = user.uid
+      const userRef = doc(db, 'users', uid)
+      getDoc(userRef)
+        .then(async (docSnap) => {
+          if (docSnap.exists()) {
+            // Get the user's tasks and projects
+            let userTasks = {}
+            let userProjects = {}
+            const t = query(
+              collection(db, 'tasks'),
+              where('members', 'array-contains', uid)
+            )
+            const taskSnapshot = await getDocs(t)
+            taskSnapshot.forEach((doc) => {
+              userTasks[doc.id] = doc.data()
+            })
+            console.log('userTasks', userTasks)
 
-    // Check if the user is logged in
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in
-
-        // Get the user info
-        const uid = user.uid
-        const userRef = doc(db, 'users', uid)
-
-        // Get the document of user info
-        getDoc(userRef)
-          .then((docSnap) => {
-            // Update the tasks and user projects
-            if (docSnap.exists()) {
-              // setTasks(docSnap.data().tasks);
-
-              let userTasks = []
-              let userProjects = []
-              for (let key of docSnap.data().tasks) {
-                userTasks.push(key)
-              }
-              for (let [key, value] of Object.entries(
-                docSnap.data().projects
-              )) {
-                userProjects.push(key)
-              }
-              // Return the user info
-              return { user }
-            } else {
-              console.log('No such document!')
+            for (let [key] of Object.entries(docSnap.data().projects)) {
+              const projectDocRef = doc(db, 'projects', key)
+              const projectDocSnap = await getDoc(projectDocRef)
+              userProjects[projectDocSnap.id] = projectDocSnap.data()
             }
-          })
-          // Handle the error
-          .catch((error) => {
-            console.log('Error getting document:', error)
-          })
-      } else {
-        console.log('No user is signed in')
-      }
-    })
-    // Handle the error
-  } catch (error) {
-    return error
-  }
+            // Set the user's tasks and projects
+            return { user, userTasks, userProjects }
+          } else {
+            console.log('No such document!')
+          }
+        })
+        .catch((error) => {
+          console.log('Error getting document:', error)
+        })
+    }
+  })
 }
 
 export { getUserInfo }

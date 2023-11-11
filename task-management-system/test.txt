@@ -1,0 +1,595 @@
+Test Document
+ FAIL  src/tests/ModifyProject.test.js
+  Modify Project
+    ✕ Scenario Valid Permissions (140 ms)
+    ✕ Scenario Invalid Permissions (9 ms)
+
+  ● Modify Project › Scenario Valid Permissions
+    Needs to be integrated with the backend properties
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+
+      11 |   // Handles the variables for the project name and description
+      12 |   const [project_name, setProjectName] = useState(
+    > 13 |     projects[project]?.name || ''
+         |             ^
+      14 |   );
+      15 |   const [description, setDescription] = useState(
+      16 |     projects[project]?.description || ''
+
+      at EditProject (src/components/EditProject.js:13:13)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at Object.<anonymous> (src/tests/ModifyProject.test.js:17:11)
+
+  ● Modify Project › Scenario Invalid Permissions
+
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+    Needs to be integrated with the backend properties
+      11 |   // Handles the variables for the project name and description
+      12 |   const [project_name, setProjectName] = useState(
+    > 13 |     projects[project]?.name || ''
+         |             ^
+      14 |   );
+      15 |   const [description, setDescription] = useState(
+      16 |     projects[project]?.description || ''
+
+      at EditProject (src/components/EditProject.js:13:13)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at Object.<anonymous> (src/tests/ModifyProject.test.js:17:11)
+
+ FAIL  src/tests/RenameProject.test.js
+  Rename Project
+    ✕ Scenario Valid Name (154 ms)
+    ✕ Scenario Invalid Name (10 ms)
+
+  ● Rename Project › Scenario Valid Name
+
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+    Needs to be integrated with the backend properties
+      11 |   // Handles the variables for the project name and description
+      12 |   const [project_name, setProjectName] = useState(
+    > 13 |     projects[project]?.name || ''
+         |             ^
+      14 |   );
+      15 |   const [description, setDescription] = useState(
+      16 |     projects[project]?.description || ''
+
+      at EditProject (src/components/EditProject.js:13:13)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at Object.<anonymous> (src/tests/RenameProject.test.js:17:11)
+
+  ● Rename Project › Scenario Invalid Name
+
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+    Needs to be integrated with the backend properties
+      11 |   // Handles the variables for the project name and description
+      12 |   const [project_name, setProjectName] = useState(
+    > 13 |     projects[project]?.name || ''
+         |             ^
+      14 |   );
+      15 |   const [description, setDescription] = useState(
+      16 |     projects[project]?.description || ''
+
+      at EditProject (src/components/EditProject.js:13:13)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at Object.<anonymous> (src/tests/RenameProject.test.js:17:11)
+
+ FAIL  src/tests/MarkTaskAsCompleted.test.js
+  Mark Task as Completed
+    ✕ Click Completed (86 ms)
+
+  ● Mark Task as Completed › Click Completed
+    Needs to be integrated with the backend properties
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+
+      34 |             {/* Handle the view task*/}
+      35 |             <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
+    > 36 |               {tasks[key]?.name || ''}
+         |                     ^
+      37 |             </h1>
+      38 |             <div className="border-[#60AB9A] border-2 w-28 lg:w-44 md:w-44 h-1" />
+      39 |           </div>
+
+      at ViewTask (src/components/ViewTask.js:36:21)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at Object.<anonymous> (src/tests/MarkTaskAsCompleted.test.js:16:11)
+
+ FAIL  src/tests/TaskManagementDelete.test.js
+  Delete Project
+    ✕ Scenario Invalid Permissions (101 ms)
+    ✕ Scenario Valid Permissions (8 ms)
+
+  ● Delete Project › Scenario Invalid Permissions
+    Needs to be integrated with the backend properties
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+
+      74 |             {/* Handle the project name and the border*/}
+      75 |             <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
+    > 76 |               {projects[key]?.name || ''}
+         |                        ^
+      77 |             </h1>
+      78 |             <div className="border-[#60AB9A] h-1 border-2 w-28 lg:w-44 md:w-44" />
+      79 |           </div>
+
+      at ViewProject (src/components/ViewProject.js:76:24)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at Object.<anonymous> (src/tests/TaskManagementDelete.test.js:16:11)
+
+  ● Delete Project › Scenario Valid Permissions
+    Needs to be integrated with the backend properties
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+
+      74 |             {/* Handle the project name and the border*/}
+      75 |             <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
+    > 76 |               {projects[key]?.name || ''}
+         |                        ^
+      77 |             </h1>
+      78 |             <div className="border-[#60AB9A] h-1 border-2 w-28 lg:w-44 md:w-44" />
+      79 |           </div>
+
+      at ViewProject (src/components/ViewProject.js:76:24)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at Object.<anonymous> (src/tests/TaskManagementDelete.test.js:16:11)
+
+ FAIL  src/tests/TaskRegistration.test.js
+  Task Registration
+    ✕ Scenario Invalid Permissions (161 ms)
+    ✕ Scenario Valid Permissions (12 ms)
+    ✕ Scenario Already Created (9 ms)
+
+  ● Task Registration › Scenario Invalid Permissions
+    Needs to be integrated with the backend properties
+    TypeError: Cannot convert undefined or null to object
+        at Function.keys (<anonymous>)
+
+      139 |               </h1>
+      140 |               {/* This currently does not work. Needs testing */}
+    > 141 |               {Object.keys(projects).map((key) => {
+          |                       ^
+      142 |                 return (
+      143 |                   <label className="flex flex-row space-x-3" key={key}>
+      144 |                     <input
+
+      at CreateTask (src/components/CreateTask.js:141:23)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at call (src/tests/TaskRegistration.test.js:21:11)
+      at tryCatch (src/tests/TaskRegistration.test.js:2:1)
+      at Generator._invoke (src/tests/TaskRegistration.test.js:2:1)
+      at Generator.next (src/tests/TaskRegistration.test.js:2:1)
+      at asyncGeneratorStep (src/tests/TaskRegistration.test.js:2:1)
+      at _next (src/tests/TaskRegistration.test.js:2:1)
+      at src/tests/TaskRegistration.test.js:2:1
+      at Object.<anonymous> (src/tests/TaskRegistration.test.js:2:1)
+
+  ● Task Registration › Scenario Valid Permissions
+    Needs to be integrated with the backend properties
+    TypeError: Cannot convert undefined or null to object
+        at Function.keys (<anonymous>)
+
+      139 |               </h1>
+      140 |               {/* This currently does not work. Needs testing */}
+    > 141 |               {Object.keys(projects).map((key) => {
+          |                       ^
+      142 |                 return (
+      143 |                   <label className="flex flex-row space-x-3" key={key}>
+      144 |                     <input
+
+      at CreateTask (src/components/CreateTask.js:141:23)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at call (src/tests/TaskRegistration.test.js:21:11)
+      at tryCatch (src/tests/TaskRegistration.test.js:2:1)
+      at Generator._invoke (src/tests/TaskRegistration.test.js:2:1)
+      at Generator.next (src/tests/TaskRegistration.test.js:2:1)
+      at asyncGeneratorStep (src/tests/TaskRegistration.test.js:2:1)
+      at _next (src/tests/TaskRegistration.test.js:2:1)
+      at src/tests/TaskRegistration.test.js:2:1
+      at Object.<anonymous> (src/tests/TaskRegistration.test.js:2:1)
+
+  ● Task Registration › Scenario Already Created
+    Needs to be integrated with the backend properties
+    TypeError: Cannot convert undefined or null to object
+        at Function.keys (<anonymous>)
+
+      139 |               </h1>
+      140 |               {/* This currently does not work. Needs testing */}
+    > 141 |               {Object.keys(projects).map((key) => {
+          |                       ^
+      142 |                 return (
+      143 |                   <label className="flex flex-row space-x-3" key={key}>
+      144 |                     <input
+
+      at CreateTask (src/components/CreateTask.js:141:23)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at call (src/tests/TaskRegistration.test.js:21:11)
+      at tryCatch (src/tests/TaskRegistration.test.js:2:1)
+      at Generator._invoke (src/tests/TaskRegistration.test.js:2:1)
+      at Generator.next (src/tests/TaskRegistration.test.js:2:1)
+      at asyncGeneratorStep (src/tests/TaskRegistration.test.js:2:1)
+      at _next (src/tests/TaskRegistration.test.js:2:1)
+      at src/tests/TaskRegistration.test.js:2:1
+      at Object.<anonymous> (src/tests/TaskRegistration.test.js:2:1)
+
+ FAIL  src/tests/DeleteProject.test.js
+  Delete Project
+    ✕ Delete Confirmation Pressed (80 ms)
+    ✕ Delete Confirmation Not Pressed (10 ms)
+
+  ● Delete Project › Delete Confirmation Pressed
+    Needs to be integrated with the backend properties
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+
+      74 |             {/* Handle the project name and the border*/}
+      75 |             <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
+    > 76 |               {projects[key]?.name || ''}
+         |                        ^
+      77 |             </h1>
+      78 |             <div className="border-[#60AB9A] h-1 border-2 w-28 lg:w-44 md:w-44" />
+      79 |           </div>
+
+      at ViewProject (src/components/ViewProject.js:76:24)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at Object.<anonymous> (src/tests/DeleteProject.test.js:17:11)
+
+  ● Delete Project › Delete Confirmation Not Pressed
+    Needs to be integrated with the backend properties
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+
+      74 |             {/* Handle the project name and the border*/}
+      75 |             <h1 className="flex text-3xl font-bold mb-2 lg:text-5xl md:text-5xl">
+    > 76 |               {projects[key]?.name || ''}
+         |                        ^
+      77 |             </h1>
+      78 |             <div className="border-[#60AB9A] h-1 border-2 w-28 lg:w-44 md:w-44" />
+      79 |           </div>
+
+      at ViewProject (src/components/ViewProject.js:76:24)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at Object.<anonymous> (src/tests/DeleteProject.test.js:17:11)
+
+ FAIL  src/tests/ViewTasks.test.js
+  View Tasks
+    ✕ View Tasks renders correctly (20 ms)
+
+  ● View Tasks › View Tasks renders correctly
+    Needs to be integrated with the backend properties
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+
+      11 |       {/* Tasks Page */}
+      12 |       {/* Be able to click on a task and view it */}
+    > 13 |       {projects[project].tasks.map((key) => (
+         |                ^
+      14 |         <button
+      15 |           onClick={() => handleViewTask(key)}
+      16 |           key={key}
+
+      at Tasks (src/components/Tasks.js:13:16)
+      at renderWithHooks (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6351:18)
+      at mountIndeterminateComponent (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9855:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11312:16)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15811:12)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15745:5)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15717:7)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15422:20)
+      at flushSyncCallbacks (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2597:22)
+      at flushSyncCallbacksOnlyInLegacyMode (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2576:5)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14910:7)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17770:5)
+      at Object.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:18510:3)
+      at Object.<anonymous> (src/tests/ViewTasks.test.js:14:27)
+
+ FAIL  src/tests/TaskManagementEdit.test.js
+  Task Edit
+    ✕ Scenario Invalid Permissions (121 ms)
+    ✕ Scenario Valid Permissions (7 ms)
+
+  ● Task Edit › Scenario Invalid Permissions
+    Needs to be integrated with the backend properties
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+
+      10 | const EditTask = ({ user, task, projects, tasks }) => {
+      11 |   // Handle the variables of the task
+    > 12 |   const [task_name, setTaskName] = useState(tasks[task]?.name || '');
+         |                                                  ^
+      13 |   const [description, setDescription] = useState(
+      14 |     tasks[task]?.description || ''
+      15 |   );
+
+      at EditTask (src/components/EditTask.js:12:50)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at call (src/tests/TaskManagementEdit.test.js:17:11)
+      at tryCatch (src/tests/TaskManagementEdit.test.js:2:1)
+      at Generator._invoke (src/tests/TaskManagementEdit.test.js:2:1)
+      at Generator.next (src/tests/TaskManagementEdit.test.js:2:1)
+      at asyncGeneratorStep (src/tests/TaskManagementEdit.test.js:2:1)
+      at _next (src/tests/TaskManagementEdit.test.js:2:1)
+      at src/tests/TaskManagementEdit.test.js:2:1
+      at Object.<anonymous> (src/tests/TaskManagementEdit.test.js:2:1)
+
+  ● Task Edit › Scenario Valid Permissions
+    Needs to be integrated with the backend properties
+    TypeError: Cannot read properties of undefined (reading 'undefined')
+
+      10 | const EditTask = ({ user, task, projects, tasks }) => {
+      11 |   // Handle the variables of the task
+    > 12 |   const [task_name, setTaskName] = useState(tasks[task]?.name || '');
+         |                                                  ^
+      13 |   const [description, setDescription] = useState(
+      14 |     tasks[task]?.description || ''
+      15 |   );
+
+      at EditTask (src/components/EditTask.js:12:50)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at recoverFromConcurrentError (node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25750:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:161:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:247:10)
+      at call (src/tests/TaskManagementEdit.test.js:17:11)
+      at tryCatch (src/tests/TaskManagementEdit.test.js:2:1)
+      at Generator._invoke (src/tests/TaskManagementEdit.test.js:2:1)
+      at Generator.next (src/tests/TaskManagementEdit.test.js:2:1)
+      at asyncGeneratorStep (src/tests/TaskManagementEdit.test.js:2:1)
+      at _next (src/tests/TaskManagementEdit.test.js:2:1)
+      at src/tests/TaskManagementEdit.test.js:2:1
+      at Object.<anonymous> (src/tests/TaskManagementEdit.test.js:2:1)
+
+ PASS  src/tests/TrackTasksByPriority.test.js
+  ✓ Track Tasks by Priority (319 ms)
+
+ PASS  src/tests/TrackTasksByDeadline.test.js
+  ✓ Track Tasks by Deadline (316 ms)
+
+ PASS  src/tests/UserLogout.test.js
+  Logout
+    ✓ Scenario Valid Permissions (300 ms)
+
+ PASS  src/tests/AddTeamMember.test.js
+  Add Team Members
+    ✓ Scenario Valid Permissions (181 ms)
+    ✓ Scenario User Does not Exit (48 ms)
+    ✓ Scenario Invalid Permissions (41 ms)
+
+ FAIL  src/tests/UserRegister.test.js
+  Signup
+    ✓ Scenario: Invalid Username (522 ms)
+    ✓ Password Incorrect (536 ms)
+    ✓ User already exists (355 ms)
+    ✕ Valid Credentials (354 ms)
+
+  ● Signup › Valid Credentials
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: undefined
+    Received: "auth/email-already-in-use"
+
+      109 |     let result,
+      110 |       code = await handleSignup('test@t.com', 'test123')
+    > 111 |     expect(code).toBe(undefined)
+          |                  ^
+      112 |     var user = firebase.auth().currentUser
+      113 |
+      114 |     user
+
+      at call (src/tests/UserRegister.test.js:111:18)
+      at tryCatch (src/tests/UserRegister.test.js:2:1)
+      at Generator._invoke (src/tests/UserRegister.test.js:2:1)
+      at Generator.next (src/tests/UserRegister.test.js:2:1)
+      at asyncGeneratorStep (src/tests/UserRegister.test.js:2:1)
+      at _next (src/tests/UserRegister.test.js:2:1)
+
+ PASS  src/tests/AssignTask.test.js
+  Assign a Task
+    ✓ Scenario Valid Permissions (98 ms)
+    ✓ Scenario Invalid Permissions (44 ms)
+
+ PASS  src/tests/UserLogin.test.js
+  Login
+    ✓ User does not exist (403 ms)
+    ✓ Password Incorrect (254 ms)
+    ✓ Valid Credentials (660 ms)
+
+ PASS  src/tests/ManageTeamMember.test.js
+  Manage Team Member Permissions
+    ✓ Scenario Invalid Permissions (109 ms)
+    ✓ Scenario Valid Admin Permissions (39 ms)
+    ✓ Scenario Invalid Admin Permissions 1 (34 ms)
+    ✓ Scenario Invalid Admin Permissions 2 (36 ms)
+    ✓ Scenario Valid Owner Permissions (36 ms)
+
+ PASS  src/tests/TransferOwnership.test.js
+  Transfer Ownership
+    ✓ Scenario Valid Permissions (86 ms)
+
+ PASS  src/tests/RemoveTeamMember.test.js
+  Remove Team Member
+    ✓ Scenario Invalid Permissions (86 ms)
+    ✓ Scenario Valid Admin Permissions (33 ms)
+    ✓ Scenario Invalid Admin Permissions (32 ms)
+    ✓ Scenario Valid Owner Permissions (30 ms)
+
+ PASS  src/tests/CreateProject.test.js
+  Create Project
+    ✓ Scenario Valid Name (1394 ms)
+    ✓ Scenario Invalid Name (542 ms)
+
+Test Suites: 9 failed, 10 passed, 19 total
+Tests:       16 failed, 26 passed, 42 total
+Snapshots:   4 passed, 4 total
+Time:        6.003 s
