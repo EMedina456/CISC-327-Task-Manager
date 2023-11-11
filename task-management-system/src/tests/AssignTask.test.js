@@ -6,7 +6,8 @@
 // Import files and dependencies here
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
-import AddMember from '../components/AddMember'
+import AddMember from '../components/AddMemberToTask'
+import userEvent from '@testing-library/user-event'
 
 // Assign Task Test
 describe('Assign a Task', () => {
@@ -32,27 +33,29 @@ describe('Assign a Task', () => {
   it('Scenario Valid Permissions', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-    fireEvent.change(name, { target: { value: 'user' } })
+    const user = userEvent.setup()
+    await user.type(name, 'user')
 
     // Check if the values are correct
     expect(name.value).toBe('user')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 
   // Test the assignment of a member with invalid permissions
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
+    const user = userEvent.setup()
 
     // Type in the required test fields
-    fireEvent.change(name, { target: { value: 'user99' } })
+    await user.type(name, 'user99')
 
     // Check if the values are correct
-    expect(name.value).toBe('user99')
+    await expect(name.value).toBe('user99')
 
     // Click the submit button
-    fireEvent.click(submit)
+    user.click(submit)
   })
 })

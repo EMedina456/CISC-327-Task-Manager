@@ -7,7 +7,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import TransferOwnership from '../components/TransferOwnership'
-
+import userEvent from '@testing-library/user-event'
 // Transfer Ownership Test
 describe('Transfer Ownership', () => {
   // Create a snapshot of the Home page
@@ -32,12 +32,13 @@ describe('Transfer Ownership', () => {
   it('Scenario Valid Permissions', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-    fireEvent.change(name, { target: { value: 'user' } })
+    const user = userEvent.setup()
+    await user.type(name, 'user')
 
     // Check if the values are correct
     expect(name.value).toBe('user')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 })

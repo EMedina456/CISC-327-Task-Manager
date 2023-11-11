@@ -8,7 +8,7 @@ import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
 import EditProject from '../components/EditProject'
-
+import userEvent from '@testing-library/user-event'
 // Modify Project Test
 describe('Modify Project', () => {
   // Render the Member Form before each test
@@ -35,28 +35,30 @@ describe('Modify Project', () => {
   it('Scenario Valid Permissions', async () => {
     // Type in the required test fields
     const { name, description, submit } = setup()
-    fireEvent.change(name, { target: { value: 'Project' } })
-    fireEvent.change(description, { target: { value: 'Generic description' } })
+    const user = userEvent.setup()
+    await user.type(name, 'Project')
+    await user.type(description, 'Generic description')
 
     // Check if the values are correct
     expect(name.value).toBe('Project')
     expect(description.value).toBe('Generic description')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
   // Test the addition of a member with invalid name
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
     const { name, description, submit } = setup()
-    fireEvent.change(name, { target: { value: '' } })
-    fireEvent.change(description, { target: { value: 'Generic description' } })
+    const user = userEvent.setup()
+    await user.type(name, '')
+    await user.type(description, 'Generic description')
 
     // Check if the values are correct
     expect(name.value).toBe('')
     expect(description.value).toBe('Generic description')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 })

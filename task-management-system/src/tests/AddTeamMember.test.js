@@ -6,7 +6,8 @@
 // Import files and dependencies here
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
-import AddMember from '../components/AddMember'
+import AddMember from '../components/AddMemberToProject'
+import userEvent from '@testing-library/user-event'
 
 // Add Team Member Test
 describe('Add Team Members', () => {
@@ -32,39 +33,41 @@ describe('Add Team Members', () => {
   it('Scenario Valid Permissions', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-    fireEvent.change(name, { target: { value: 'user' } })
+    const user = userEvent.setup()
+    await user.type(name, 'user')
 
     // Check if the values are correct
     expect(name.value).toBe('user')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 
   // Test the addition of a member that does not exist
   it('Scenario User Does not Exit', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-
+    const user = userEvent.setup()
     // Type in the required test fields
-    fireEvent.change(name, { target: { value: 'user99' } })
+    await user.type(name, 'user99')
 
     // Check if the values are correct
     expect(name.value).toBe('user99')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
   // Test the addition of a member with invalid permissions
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-    fireEvent.change(name, { target: { value: 'user99' } })
+    const user = userEvent.setup()
+    await user.type(name, 'user99')
 
     // Check if the values are correct
     expect(name.value).toBe('user99')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 })

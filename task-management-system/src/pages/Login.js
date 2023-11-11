@@ -91,6 +91,6 @@ const Login = () => {
       </div>
       <ToastContainer />
     </div>
-  );
-};
-export default Login;
+  )
+}
+export default Login

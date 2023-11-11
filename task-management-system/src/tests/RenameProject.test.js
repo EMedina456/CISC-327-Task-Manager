@@ -8,7 +8,7 @@ import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
 import EditProject from '../components/EditProject'
-
+import userEvent from '@testing-library/user-event'
 // Rename Project Test
 describe('Rename Project', () => {
   // Render the Member Form before each test
@@ -22,41 +22,39 @@ describe('Rename Project', () => {
     const name = screen.getByRole('textbox', {
       name: /name/i,
     })
-    const description = screen.getByRole('textbox', {
-      name: /description/i,
-    })
     const submit = screen.getByRole('button', {
       name: /submit/i,
     })
-    return { name, description, submit }
+    return { name, submit }
   }
 
   // Test the addition of a member with valid permissions
   it('Scenario Valid Name', async () => {
     // Type in the required test fields
-    const { name, description, submit } = setup()
-    fireEvent.change(name, { target: { value: 'Project' } })
-    fireEvent.change(description, { target: { value: 'Project' } })
+    const { name, submit } = setup()
+    const user = userEvent.setup()
+    await user.type(name, 'Project')
 
     // Check if the values are correct
     expect(name.value).toBe('Project')
     expect(name.value).toBe('Project')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
   // Test the addition of a member with invalid name
   it('Scenario Invalid Name', async () => {
     // Type in the required test fields
     const { name, description, submit } = setup()
-    fireEvent.change(name, { target: { value: '' } })
-    fireEvent.change(description, { target: { value: 'Something' } })
+    const user = userEvent.setup()
+    await user.type(name, '')
+    await user.type(description, 'Something')
 
     // Check if the values are correct
     expect(name.value).toBe('')
     expect(description.value).toBe('Something')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 })

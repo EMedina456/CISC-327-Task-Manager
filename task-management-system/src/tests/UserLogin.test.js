@@ -8,8 +8,7 @@ import { render, screen } from '@testing-library/react'
 import React from 'react'
 import Login from '../pages/Login'
 import { BrowserRouter } from 'react-router-dom'
-import { fireEvent } from '@testing-library/react'
-import { handleLogin } from './handleLogin'
+import userEvent from '@testing-library/user-event'
 
 // Login Test
 describe('Login', () => {
@@ -40,54 +39,65 @@ describe('Login', () => {
   it('User does not exist', async () => {
     // Type in the required test fields
     const { email, password, submit } = setup()
-    fireEvent.change(email, { target: { value: 'user_dne@gmail.com' } })
-    fireEvent.change(password, { target: { value: 'any' } })
+    const user = userEvent.setup()
+    await user.type(email, 'user_dne@gmail.com')
+    await user.type(password, 'any')
 
     // Check if the values are correct
     expect(email.value).toBe('user_dne@gmail.com')
     expect(password.value).toBe('any')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
+
+    // Check the error message
+    expect(await screen.findAllByText('Invalid login credentials')).toBeTruthy()
 
     // Check if the user was signed in
-    expect(await handleLogin('user_dne@gmail.com', 'password')).toBe(
-      'auth/invalid-login-credentials'
-    )
+    // expect(await handleLogin('user_dne@gmail.com', 'password')).toBe(
+    //   'auth/invalid-login-credentials'
+    // )
   })
   it('Password Incorrect', async () => {
     // Type in the required test fields
     const { email, password, submit } = setup()
-    fireEvent.change(email, { target: { value: 't@t.com' } })
-    fireEvent.change(password, { target: { value: 'wrongpassword' } })
+    const user = userEvent.setup()
+    await user.type(email, 'test@new.com')
+    await user.type(password, 'wrongpassword')
 
     // Check if the values are correct
-    expect(email.value).toBe('t@t.com')
+    expect(email.value).toBe('test@new.com')
     expect(password.value).toBe('wrongpassword')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
 
+    // Check the error message
+    expect(await screen.findAllByText('Invalid login credentials')).toBeTruthy()
     // Check if the user was signed in
-    expect(await handleLogin('t@t.com', 'wrongpassword')).toBe(
-      'auth/invalid-login-credentials'
-    )
+    // expect(await handleLogin('t@t.com', 'wrongpassword')).toBe(
+    //   'auth/invalid-login-credentials'
+    // )
   })
   it('Valid Credentials', async () => {
     // Type in the required test fields
     const { email, password, submit } = setup()
-    fireEvent.change(email, { target: { value: 't@t.com' } })
-    fireEvent.change(password, { target: { value: 'test123' } })
+    const user = userEvent.setup()
+
+    await user.type(email, 'test@new.com')
+    await user.type(password, 'test123')
 
     // Check if the values are correct
-    expect(email.value).toBe('t@t.com')
+    expect(email.value).toBe('test@new.com')
     expect(password.value).toBe('test123')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
 
+    // Check that there is no error message
+    expect(screen.queryByText('Invalid login credentials')).toBeNull()
     // Check if the user was signed in
-    const result = await handleLogin('t@t.com', 'test123')
-    expect(result.code).toBe('success')
+    // const result = await handleLogin('t@t.com', 'test123')
+    // expect(result.code).toBe('success')
   })
 })

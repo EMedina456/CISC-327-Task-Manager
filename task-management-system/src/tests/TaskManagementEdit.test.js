@@ -8,6 +8,7 @@ import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
 import EditTask from '../components/EditTask'
+import userEvent from '@testing-library/user-event'
 
 // Task Edit Test
 describe('Task Edit', () => {
@@ -31,21 +32,24 @@ describe('Task Edit', () => {
     const priority = screen.getByRole('spinbutton', {
       name: /priority/i,
     })
-    const project = screen.getByRole('textbox', {
+    const project = screen.getByRole('radio', {
       name: /project/i,
     })
+    const deadline = screen.getByLabelText('/\n \n deadline\n \n \n/i')
 
-    return { name, description, submit, priority, project }
+    return { name, description, submit, priority, project, deadline }
   }
 
   // Test the registration of a task with invalid permissions
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
-    const { name, description, submit, priority, project } = setup()
-    fireEvent.change(name, { target: { value: 'Generic name' } })
-    fireEvent.change(description, { target: { value: 'Generic description' } })
-    fireEvent.change(priority, { target: { value: 1 } })
-    fireEvent.change(project, { target: { value: 'Project' } })
+    const { name, description, submit, priority, project, deadline } = setup()
+    const user = userEvent.setup()
+    await user.type(name, 'Generic name')
+    await user.type(description, 'Generic description')
+    await user.type(priority, 1)
+    await user.click(project)
+    await user.type(deadline, '2024-05-05')
 
     // Check if the values are correct
     expect(name.value).toBe('Generic name')
@@ -54,25 +58,28 @@ describe('Task Edit', () => {
     expect(project.value).toBe('Project')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 
   // Test the registration of a task with invalid permissions
   it('Scenario Valid Permissions', async () => {
     // Type in the required test fields
-    const { name, description, submit, priority, project } = setup()
-    fireEvent.change(name, { target: { value: 'Generic name' } })
-    fireEvent.change(description, { target: { value: 'Generic description' } })
-    fireEvent.change(priority, { target: { value: 1 } })
-    fireEvent.change(project, { target: { value: 'Project' } })
+    const { name, description, submit, priority, project, deadline } = setup()
+    const user = userEvent.setup()
+    await user.type(name, 'Generic name')
+    await user.type(description, 'Generic description')
+    await user.type(priority, 1)
+    await user.click(project)
+    await user.type(deadline, '2024-05-05')
 
     // Check if the values are correct
     expect(name.value).toBe('Generic name')
     expect(description.value).toBe('Generic description')
     expect(priority.value).toBe('1')
-    expect(project.value).toBe('Project')
+    expect(project.value).toBe('project')
+    expect(deadline.value).toBe('2024-05-05')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 })

@@ -7,7 +7,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import ManageMember from '../components/ManageMember'
-
+import userEvent from '@testing-library/user-event'
 // Add Team Member Test
 describe('Manage Team Member Permissions', () => {
   // Create a snapshot of the Home page
@@ -31,61 +31,66 @@ describe('Manage Team Member Permissions', () => {
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-    fireEvent.change(name, { target: { value: 'user99' } })
+    const user = userEvent.setup()
+    await user.type(name, 'user99')
 
     // Check if the values are correct
     expect(name.value).toBe('user99')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 
   // Test the addition of a member with valid permissions
   it('Scenario Valid Admin Permissions', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-    fireEvent.change(name, { target: { value: 'user' } })
+    const user = userEvent.setup()
+    await user.type(name, 'user')
 
     // Check if the values are correct
     expect(name.value).toBe('user')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 
   // Test the addition of a member that does not exist
   it('Scenario Invalid Admin Permissions 1', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-    fireEvent.change(name, { target: { value: 'user99' } })
+    const user = userEvent.setup()
+    await user.type(name, 'user99')
 
     // Check if the values are correct
     expect(name.value).toBe('user99')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 
   it('Scenario Invalid Admin Permissions 2', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-    fireEvent.change(name, { target: { value: 'user99' } })
+    const user = userEvent.setup()
+    await user.type(name, 'user99')
 
     // Check if the values are correct
     expect(name.value).toBe('user99')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
   it('Scenario Valid Owner Permissions', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
-    fireEvent.change(name, { target: { value: 'user99' } })
+    const user = userEvent.setup()
+    await user.type(name, 'user99')
 
     // Check if the values are correct
     expect(name.value).toBe('user99')
 
     // Click the submit button
-    fireEvent.click(submit)
+    await user.click(submit)
   })
 })
