@@ -26,6 +26,15 @@ const CreateTask = ({ user, projects }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (task_name === '') {
+      alert('Please enter a task name');
+      return;
+    }
+    if (priority === '') {
+      alert('Please enter a priority');
+      return;
+    }
+
     try {
       // Create a task collection
       const task = collection(db, 'tasks');
