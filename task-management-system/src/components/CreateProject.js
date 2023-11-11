@@ -15,6 +15,11 @@ const CreateProject = ({ user }) => {
   // Handle the submission of the project name and description, currently just console logs them
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (project_name === '') {
+      alert('Please enter a task name');
+      return;
+    }
     try {
       const project = collection(db, 'projects');
       const proj_data = {
