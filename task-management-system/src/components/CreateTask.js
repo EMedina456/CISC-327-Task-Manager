@@ -5,7 +5,13 @@
 // Import files and dependencies here
 import React, { useState } from 'react';
 // import the necessary components for firebase
-import { doc, getDoc, collection, addDoc, setDoc } from 'firebase/firestore';
+import {
+  doc,
+  collection,
+  addDoc,
+  setDoc,
+  arrayUnion,
+} from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 const CreateTask = ({ user, projects }) => {
@@ -33,44 +39,24 @@ const CreateTask = ({ user, projects }) => {
       };
       const taskRef = await addDoc(task, task_data);
       const task_id = taskRef.id;
-      const taskSnap = await getDoc(taskRef);
-      // Add the task to the user's tasks
-      if (user) {
-        const userRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(userRef);
-        const userTasks = docSnap.data().tasks || [];
-        // Add the task to the user's tasks
-        setDoc(
-          userRef,
-          {
-            tasks: userTasks.concat(task_id),
-          },
-          { merge: true }
-        );
-      } else {
-        console.log('No user is signed in');
-      }
-      console.log('Project: ', project);
       // Add the task to the project's tasks
       if (project !== '') {
         const projectRef = doc(db, 'projects', project);
-        const projectTasks = projects[project].tasks || [];
+        console.log('Project: ', projects[project].name);
         Object.keys(projects[project].user_permissions).forEach(
           async (member) => {
             const memberRef = doc(db, 'users', member);
-            const memberSnap = await getDoc(memberRef);
-            const memberTasks = memberSnap.data().tasks || [];
             setDoc(
               memberRef,
               {
-                tasks: memberTasks.concat(task_id),
+                tasks: arrayUnion(task_id),
               },
               { merge: true }
             );
             setDoc(
               taskRef,
               {
-                members: taskSnap.data().concat(member),
+                members: arrayUnion(member),
               },
               { merge: true }
             );
@@ -79,14 +65,26 @@ const CreateTask = ({ user, projects }) => {
         setDoc(
           projectRef,
           {
-            tasks: projectTasks.concat(task_id),
+            tasks: arrayUnion(task_id),
           },
           { merge: true }
         );
       } else {
-        console.log('No project is selected');
+        // Add the task to the user's tasks
+        if (user) {
+          const userRef = doc(db, 'users', user.uid);
+          setDoc(
+            userRef,
+            {
+              tasks: arrayUnion(task_id),
+            },
+            { merge: true }
+          );
+        } else {
+          console.log('No user is signed in');
+        }
+        console.log('Project: ', project);
       }
-      console.log('Document written with ID: ', taskRef.id);
       // Alert the user that the task was created successfully
       alert('Task created successfully');
       window.location.href = '/';
@@ -161,6 +159,13 @@ const CreateTask = ({ user, projects }) => {
               </h1>
               {/* This currently does not work. Needs testing */}
               {Object.keys(projects).map((key) => {
+                if (
+                  projects[key].user_permissions[user.uid] !== 'owner' &&
+                  projects[key].user_permissions[user.uid] !== 'admin' &&
+                  projects[key].user_permissions[user.uid] !== 'editor'
+                ) {
+                  return null;
+                }
                 return (
                   <label className="flex flex-row space-x-3" key={key}>
                     <input

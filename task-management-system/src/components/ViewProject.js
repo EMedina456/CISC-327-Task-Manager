@@ -56,8 +56,6 @@ const ViewProject = ({
         const memberProjects = memberSnap.data().projects || {};
         delete memberProjects[key];
         const memberTasks = memberSnap.data().tasks || [];
-        console.log('projects', memberProjects);
-        console.log('tasks', memberTasks);
         await setDoc(
           memberRef,
           {
@@ -201,11 +199,26 @@ const ViewProject = ({
             project={key}
           />
         ) : removeMember ? (
-          <RemoveMember />
+          <RemoveMember
+            tasks={tasks}
+            projects={projects}
+            user={user}
+            project={key}
+          />
         ) : manageMember ? (
-          <ManageMember />
+          <ManageMember
+            tasks={tasks}
+            projects={projects}
+            user={user}
+            project={key}
+          />
         ) : transfer ? (
-          <TransferOwnership />
+          <TransferOwnership
+            tasks={tasks}
+            projects={projects}
+            user={user}
+            project={key}
+          />
         ) : (
           <Tasks
             handleViewTask={handleViewTask}

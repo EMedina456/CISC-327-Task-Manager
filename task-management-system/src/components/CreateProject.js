@@ -23,6 +23,7 @@ const CreateProject = ({ user }) => {
         tasks: [],
         user_permissions: { [user.uid]: 'owner' },
       };
+
       const projRef = await addDoc(project, proj_data);
       const proj_id = projRef.id;
       if (user) {
@@ -39,7 +40,7 @@ const CreateProject = ({ user }) => {
       } else {
         console.log('No user is signed in');
       }
-      console.log('Document written with ID: ', projRef.id);
+      alert('Project created successfully');
       window.location.href = '/';
     } catch (error) {
       console.log(error);

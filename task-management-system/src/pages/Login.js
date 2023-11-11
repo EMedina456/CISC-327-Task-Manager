@@ -3,46 +3,46 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import { auth } from '../firebase/firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { auth } from '../firebase/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   // Variables used in the page to handle the email and password
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   // Handle the submit of the email and password, currently just console logs them
   const handleSubmit = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password)
-      window.location.href = '/'
+      await signInWithEmailAndPassword(auth, email, password);
+      window.location.href = '/';
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
         toast('No user with that email exists', {
           type: 'error',
-        })
-        return
+        });
+        return;
       } else if (error.code === 'auth/wrong-password') {
-        toast('Wrong password', { type: 'error' })
-        return
+        toast('Wrong password', { type: 'error' });
+        return;
       } else if (error.code === 'auth/email-not-verified') {
         toast('Email not verified. Check your inbox and spam.', {
           type: 'error',
-        })
-        return
+        });
+        return;
       } else if (error.code === 'auth/invalid-login-credentials') {
-        toast('Invalid login credentials', { type: 'error' })
-        return
+        toast('Invalid login credentials', { type: 'error' });
+        return;
       } else {
-        toast(error, { type: 'error' })
-        return
+        toast(error, { type: 'error' });
+        return;
       }
     }
-  }
+  };
 
   // Login Page
   return (
@@ -76,8 +76,7 @@ const Login = () => {
           {/* Handle the submit button, which currently just returns to home page*/}
           <button
             onClick={handleSubmit}
-            className="text-xl font-bold mt-2 underline decoration-[#0acdff]"
-          >
+            className="text-xl font-bold mt-2 underline decoration-[#0acdff]">
             Submit
           </button>
         </div>

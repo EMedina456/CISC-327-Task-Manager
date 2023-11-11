@@ -22,29 +22,46 @@ const EditTask = ({ user, task, projects, tasks }) => {
     e.preventDefault();
 
     try {
+      console.log('Task: ', task);
       const taskRef = doc(db, 'tasks', task);
+
       await updateDoc(taskRef, {
         name: task_name,
         description: description,
         priority: priority,
         deadline: deadline,
         project: project,
+        members: [user.uid],
       });
-      if (user) {
-        const userRef = doc(db, 'users', user.uid);
-        setDoc(
-          userRef,
-          {
-            tasks: arrayUnion(task),
-          },
-          { merge: true }
-        );
-      } else {
-        console.log('No user is signed in');
-      }
-      console.log('Project: ', project);
+      const userRef = doc(db, 'users', user.uid);
+      setDoc(
+        userRef,
+        {
+          tasks: arrayUnion(task),
+        },
+        { merge: true }
+      );
       if (project !== '') {
         const projectRef = doc(db, 'projects', project);
+        Object.keys(projects[project].user_permissions).forEach(
+          async (member) => {
+            const memberRef = doc(db, 'users', member);
+            setDoc(
+              memberRef,
+              {
+                tasks: arrayUnion(task),
+              },
+              { merge: true }
+            );
+            setDoc(
+              taskRef,
+              {
+                members: arrayUnion(member),
+              },
+              { merge: true }
+            );
+          }
+        );
         setDoc(
           projectRef,
           {
@@ -55,7 +72,6 @@ const EditTask = ({ user, task, projects, tasks }) => {
       } else {
         console.log('No project is selected');
       }
-      console.log('Document updated with ID: ', taskRef.id);
 
       alert('Task created successfully');
       window.location.href = '/';
@@ -129,6 +145,13 @@ const EditTask = ({ user, task, projects, tasks }) => {
               </h1>
               {/* This currently does not work. Needs testing */}
               {Object.keys(projects).map((key) => {
+                if (
+                  projects[key].user_permissions[user.uid] !== 'owner' &&
+                  projects[key].user_permissions[user.uid] !== 'admin' &&
+                  projects[key].user_permissions[user.uid] !== 'editor'
+                ) {
+                  return null;
+                }
                 return (
                   <label className="flex flex-row space-x-3" key={key}>
                     <input
