@@ -1,4 +1,7 @@
 /** @jest-environment jsdom */
+/* eslint-disable jest/no-conditional-expect */
+/* eslint-disable jest/valid-expect-in-promise */
+
 // Program Intention: Implement Testing for the Signup Functionality
 // Input/Output: Handle the signup of a user
 // Run Intention: Run with the other test cases
@@ -8,10 +11,10 @@ import { render, screen } from '@testing-library/react'
 import React from 'react'
 import Signup from '../pages/Signup'
 import { BrowserRouter } from 'react-router-dom'
-import { fireEvent } from '@testing-library/react'
-import { handleSignup } from './handleSignup'
-import { firebase } from '../firebase/firebase'
 import userEvent from '@testing-library/user-event'
+// import { query, collection, where, deleteDoc } from '../firebase/firestore'
+// import { db } from '../firebase/firebase'
+// import { getAuth, deleteUser } from '../firebase/auth'
 
 // Signup Test
 describe('Signup', () => {
@@ -53,12 +56,8 @@ describe('Signup', () => {
     // Click the submit button
     await user.click(submit)
 
+    // Check error message
     expect(await screen.findAllByText('Invalid email!')).toBeTruthy()
-
-    // // Check if the user was added
-    // let result,
-    //   code = await handleSignup('user_dne', 'password')
-    // expect(code).toBe('Email already in use!')
   })
   it('Scenario: Invalid Password', async () => {
     // Type in the required test fields
@@ -74,13 +73,10 @@ describe('Signup', () => {
     // Click the submit button
     await user.click(submit)
 
+    // Check error message
     expect(
       await screen.findAllByText('Password must be at least 6 characters long!')
     ).toBeTruthy()
-    //   // Check if the user was added
-    //   let result,
-    //     code = await handleSignup('t@t.com', 'wrongpassword')
-    //   expect(code).toBe('auth/email-already-in-use')
   })
   it('User already exists', async () => {
     // Type in the required test fields
@@ -96,21 +92,18 @@ describe('Signup', () => {
     // Click the submit button
     await user.click(submit)
 
+    // Check error message
     expect(await screen.findAllByText('Email already in use!')).toBeTruthy()
-    // // Check if the user was added
-    // let result,
-    //   code = await handleSignup('t@t.com', 'wrongpassword')
-    // expect(code).toBe('auth/email-already-in-use')
   })
   it('Valid Credentials', async () => {
     // Type in the required test fields
     const { email, password, submit } = setup()
     const user = userEvent.setup()
-    await user.type(email, 'test@new.com')
+    await user.type(email, 'random@new.com')
     await user.type(password, 'test123')
 
     // Check if the values are correct
-    expect(email.value).toBe('test@new.com')
+    expect(email.value).toBe('random@new.com')
     expect(password.value).toBe('test123')
 
     // Click the submit button
@@ -118,19 +111,5 @@ describe('Signup', () => {
 
     // NEED TO DELETE USER AFTER THIS TEST
     expect(screen.queryByText('Email already in use!')).toBeNull()
-    // Check if the user was added
-    // let result,
-    //   code = await handleSignup('test@t.com', 'test123')
-    // expect(code).toBe(undefined)
-    // var user = firebase.auth().currentUser
-
-    // user
-    //   .delete()
-    //   .then(function () {
-    //     // User deleted.
-    //   })
-    //   .catch(function (error) {
-    //     // An error happened.
-    //   })
   })
 })

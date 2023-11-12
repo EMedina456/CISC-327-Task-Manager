@@ -4,7 +4,7 @@
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import React from 'react'
 import TransferOwnership from '../components/TransferOwnership'
 import userEvent from '@testing-library/user-event'
@@ -40,5 +40,10 @@ describe('Transfer Ownership', () => {
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is not displayed
+    expect(
+      screen.queryByText('You do not have permission to transfer ownership')
+    ).toBeNull()
   })
 })

@@ -4,21 +4,15 @@ exports[`View Tasks View Tasks renders correctly 1`] = `
 <div>
   <button
     className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "
-  >
-    Task 1
-  </button>
+    onClick={[Function]}
+  />
   <button
     className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "
-  >
-    Task 2
-  </button>
+    onClick={[Function]}
+  />
   <button
     className="flex text-base font-bold mt-2 underline decoration-[#0acdff] md:text-lg lg:text-2xl "
-  >
-    Task 3
-  </button>
-  <div
-    className="my-16"
+    onClick={[Function]}
   />
 </div>
 `;

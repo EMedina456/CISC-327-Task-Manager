@@ -4,7 +4,7 @@
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import React from 'react'
 import ManageMember from '../components/ManageMember'
 import userEvent from '@testing-library/user-event'
@@ -32,13 +32,20 @@ describe('Manage Team Member Permissions', () => {
     // Type in the required test fields
     const { name, submit } = setup()
     const user = userEvent.setup()
-    await user.type(name, 'user99')
+    await user.type(name, 'user93')
 
     // Check if the values are correct
-    expect(name.value).toBe('user99')
+    expect(name.value).toBe('user93')
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is displayed
+    expect(
+      await screen.findAllByText(
+        'You do not have permission to manage a member'
+      )
+    ).toBeTruthy()
   })
 
   // Test the addition of a member with valid permissions
@@ -53,6 +60,9 @@ describe('Manage Team Member Permissions', () => {
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is not displayed
+    expect(screen.queryByText('Error')).toBeNull()
   })
 
   // Test the addition of a member that does not exist
@@ -60,37 +70,54 @@ describe('Manage Team Member Permissions', () => {
     // Type in the required test fields
     const { name, submit } = setup()
     const user = userEvent.setup()
-    await user.type(name, 'user99')
+    await user.type(name, 'user93')
 
     // Check if the values are correct
-    expect(name.value).toBe('user99')
+    expect(name.value).toBe('user93')
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is displayed
+    expect(
+      await screen.findAllByText(
+        'You do not have permission to manage a member'
+      )
+    ).toBeTruthy()
   })
 
   it('Scenario Invalid Admin Permissions 2', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
     const user = userEvent.setup()
-    await user.type(name, 'user99')
+    await user.type(name, 'user93')
 
     // Check if the values are correct
-    expect(name.value).toBe('user99')
+    expect(name.value).toBe('user93')
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is displayed
+    expect(
+      await screen.findAllByText(
+        'You do not have permission to manage a member'
+      )
+    ).toBeTruthy()
   })
   it('Scenario Valid Owner Permissions', async () => {
     // Type in the required test fields
     const { name, submit } = setup()
     const user = userEvent.setup()
-    await user.type(name, 'user99')
+    await user.type(name, 'user199')
 
     // Check if the values are correct
-    expect(name.value).toBe('user99')
+    expect(name.value).toBe('user199')
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is not displayed
+    expect(screen.queryByText('Error')).toBeNull()
   })
 })

@@ -4,7 +4,7 @@
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import React from 'react'
 import RemoveMember from '../components/RemoveMember'
 import userEvent from '@testing-library/user-event'
@@ -33,13 +33,20 @@ describe('Remove Team Member', () => {
     // Type in the required test fields
     const { name, submit } = setup()
     const user = userEvent.setup()
-    await user.type(name, 'user99')
+    await user.type(name, 'user94')
 
     // Check if the values are correct
-    expect(name.value).toBe('user99')
+    expect(name.value).toBe('user94')
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is displayed
+    expect(
+      await screen.findAllByText(
+        'You do not have permission to remove a member'
+      )
+    ).toBeTruthy()
   })
 
   // Test the addition of a member with valid permissions
@@ -54,6 +61,11 @@ describe('Remove Team Member', () => {
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is not displayed
+    expect(
+      screen.queryByText('You do not have permission to remove a member')
+    ).toBeNull()
   })
 
   // Test the addition of a member that does not exist
@@ -61,13 +73,20 @@ describe('Remove Team Member', () => {
     // Type in the required test fields
     const { name, submit } = setup()
     const user = userEvent.setup()
-    await user.type(name, 'user99')
+    await user.type(name, 'user94')
 
     // Check if the values are correct
-    expect(name.value).toBe('user99')
+    expect(name.value).toBe('user94')
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is displayed
+    expect(
+      await screen.findAllByText(
+        'You do not have permission to remove a member'
+      )
+    ).toBeTruthy()
   })
 
   it('Scenario Valid Owner Permissions', async () => {
@@ -81,5 +100,10 @@ describe('Remove Team Member', () => {
 
     // Click the submit button
     await user.click(submit)
+
+    // Check if the error message is not displayed
+    expect(
+      screen.queryByText('You do not have permission to remove a member')
+    ).toBeNull()
   })
 })

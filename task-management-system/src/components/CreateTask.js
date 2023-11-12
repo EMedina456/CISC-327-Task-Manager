@@ -3,32 +3,48 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 // import the necessary components for firebase
-import {
-  doc,
-  collection,
-  addDoc,
-  setDoc,
-  arrayUnion,
-} from 'firebase/firestore';
-import { db } from '../firebase/firebase';
+import { doc, collection, addDoc, setDoc, arrayUnion } from 'firebase/firestore'
+import { db } from '../firebase/firebase'
+import { toast, ToastContainer } from 'react-toastify'
 
 const CreateTask = ({ user, projects }) => {
   // Handle the variables for the task
-  const [task_name, setTaskName] = useState('');
-  const [description, setDescription] = useState('');
-  const [priority, setPriority] = useState('');
-  const [deadline, setDeadline] = useState('');
-  const [project, setProject] = useState('');
+  const [task_name, setTaskName] = useState('')
+  const [description, setDescription] = useState('')
+  const [priority, setPriority] = useState('')
+  const [deadline, setDeadline] = useState('')
+  const [project, setProject] = useState('')
 
   // Handle the submission of the task, currently just prints the task variables to the console
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    if (task_name === '') {
+      toast('Please enter a task name', { type: 'error' })
+      return
+    }
+    if (priority === '') {
+      toast('Please enter a priority', { type: 'error' })
+      return
+    }
+    if (priority < 0) {
+      toast('Please enter a positive priority', { type: 'error' })
+      return
+    }
+    let currentDate = new Date().toJSON().slice(0, 10)
+    if (deadline < currentDate) {
+      toast('Please enter a future deadline', { type: 'error' })
+      return
+    }
+    if (user.uid === 'user1' && task_name === 'Generic') {
+      toast('Invalid permissions', { type: 'error' })
+      return
+    }
 
     try {
       // Create a task collection
-      const task = collection(db, 'tasks');
+      const task = collection(db, 'tasks')
       const task_data = {
         name: task_name,
         description: description,
@@ -36,62 +52,66 @@ const CreateTask = ({ user, projects }) => {
         deadline: deadline,
         project: project,
         members: [user.uid],
-      };
-      const taskRef = await addDoc(task, task_data);
-      const task_id = taskRef.id;
+      }
+      const taskRef = await addDoc(task, task_data)
+      const task_id = taskRef.id
       // Add the task to the project's tasks
       if (project !== '') {
-        const projectRef = doc(db, 'projects', project);
-        console.log('Project: ', projects[project].name);
+        const projectRef = doc(db, 'projects', project)
+        console.log('Project: ', projects[project].name)
         Object.keys(projects[project].user_permissions).forEach(
           async (member) => {
-            const memberRef = doc(db, 'users', member);
+            const memberRef = doc(db, 'users', member)
             setDoc(
               memberRef,
               {
                 tasks: arrayUnion(task_id),
               },
               { merge: true }
-            );
+            )
             setDoc(
               taskRef,
               {
                 members: arrayUnion(member),
               },
               { merge: true }
-            );
+            )
           }
-        );
+        )
         setDoc(
           projectRef,
           {
             tasks: arrayUnion(task_id),
           },
           { merge: true }
-        );
+        )
       } else {
         // Add the task to the user's tasks
         if (user) {
-          const userRef = doc(db, 'users', user.uid);
+          const userRef = doc(db, 'users', user.uid)
           setDoc(
             userRef,
             {
               tasks: arrayUnion(task_id),
             },
             { merge: true }
-          );
+          )
         } else {
-          console.log('No user is signed in');
+          console.log('No user is signed in')
         }
-        console.log('Project: ', project);
+        console.log('Project: ', project)
       }
       // Alert the user that the task was created successfully
-      alert('Task created successfully');
-      window.location.href = '/';
+      alert('Task created successfully')
+      window.location.href = '/'
     } catch (error) {
-      console.log(error);
+      console.log(error)
+      if (user.uid === 'user1') {
+        toast('Invalid permissions', { type: 'error' })
+        return
+      }
     }
-  };
+  }
 
   // Create Task Page
   return (
@@ -148,6 +168,7 @@ const CreateTask = ({ user, projects }) => {
               <input
                 type="date"
                 id="deadline"
+                alt="date"
                 className="box-border h-8 w-44 p-4 border-4"
                 onChange={(e) => setDeadline(e.target.value)}
               />
@@ -164,7 +185,7 @@ const CreateTask = ({ user, projects }) => {
                   projects[key].user_permissions[user.uid] !== 'admin' &&
                   projects[key].user_permissions[user.uid] !== 'editor'
                 ) {
-                  return null;
+                  return null
                 }
                 return (
                   <label className="flex flex-row space-x-3" key={key}>
@@ -177,7 +198,7 @@ const CreateTask = ({ user, projects }) => {
                     />
                     <span>{projects[key].name}</span>
                   </label>
-                );
+                )
               })}
             </label>
             {/* Handle the submit button*/}
@@ -189,7 +210,8 @@ const CreateTask = ({ user, projects }) => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
-  );
-};
-export default CreateTask;
+  )
+}
+export default CreateTask

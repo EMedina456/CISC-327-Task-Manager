@@ -3,31 +3,36 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react';
-import { setDoc, addDoc, doc, collection } from 'firebase/firestore';
-import { db } from '../firebase/firebase';
+import React, { useState } from 'react'
+import { setDoc, addDoc, doc, collection } from 'firebase/firestore'
+import { db } from '../firebase/firebase'
+import { toast, ToastContainer } from 'react-toastify'
 
 const CreateProject = ({ user }) => {
   // Variables that handle the project name and description
-  const [project_name, setProjectName] = useState('');
-  const [description, setDescription] = useState('');
+  const [project_name, setProjectName] = useState('')
+  const [description, setDescription] = useState('')
 
   // Handle the submission of the project name and description, currently just console logs them
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    if (project_name === '') {
+      toast('Please enter a project name', { type: 'error' })
+      return
+    }
     try {
-      const project = collection(db, 'projects');
+      const project = collection(db, 'projects')
       const proj_data = {
         name: project_name,
         description: description,
         tasks: [],
         user_permissions: { [user.uid]: 'owner' },
-      };
+      }
 
-      const projRef = await addDoc(project, proj_data);
-      const proj_id = projRef.id;
+      const projRef = await addDoc(project, proj_data)
+      const proj_id = projRef.id
       if (user) {
-        const userRef = doc(db, 'users', user.uid);
+        const userRef = doc(db, 'users', user.uid)
         setDoc(
           userRef,
           {
@@ -36,16 +41,16 @@ const CreateProject = ({ user }) => {
             },
           },
           { merge: true }
-        );
+        )
       } else {
-        console.log('No user is signed in');
+        console.log('No user is signed in')
       }
-      alert('Project created successfully');
-      window.location.href = '/';
+      alert('Project created successfully')
+      window.location.href = '/'
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   // Create Project Page
   return (
@@ -91,7 +96,8 @@ const CreateProject = ({ user }) => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
-  );
-};
-export default CreateProject;
+  )
+}
+export default CreateProject
