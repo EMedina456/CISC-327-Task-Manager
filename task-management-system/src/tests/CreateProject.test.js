@@ -7,18 +7,16 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import CreateProject from '../components/CreateProject'
-import { fireEvent } from '@testing-library/react'
-import { handleCreateProject } from './handleProjectCreate'
-import { handleLogin } from './handleLogin'
-import { auth } from '../firebase/firebase'
-import { signOut } from 'firebase/auth'
 import userEvent from '@testing-library/user-event'
-import { getUserInfo } from './getUserInfo'
 
 // Create Project Test
 describe('Create Project', () => {
-  const { user, projects, tasks } = getUserInfo()
-
+  // Test Data
+  const user = {
+    email: 'user1@gmail.com',
+    projects: { project1: 'owner', project2: 'owner' },
+    tasks: ['task1', 'task2'],
+  }
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
@@ -55,12 +53,8 @@ describe('Create Project', () => {
     // Click the submit button
     await user.click(submit)
 
-    // // Check if the project was added
-    // const user = await handleLogin('t@t.com', 'test123')
-    // expect(await handleCreateProject(user, 'Example', 'Something')).toBe(
-    //   'success'
-    // )
-    // signOut(auth)
+    // Check if the error message is not displayed
+    expect(screen.queryByText('Please enter a project name')).toBeNull()
   })
   // Test the addition of a member with invalid name
   it('Scenario Invalid Name', async () => {
@@ -70,16 +64,14 @@ describe('Create Project', () => {
     await user.clear(name)
     await user.type(description, 'Something')
 
+    // Check if the values are correct
     expect(name.value).toBe('')
     expect(description.value).toBe('Something')
 
+    // Click the submit button
     await user.click(submit)
 
     // Check the error message
-    expect(await screen.findAllByText('Invalid login credentials')).toBeTruthy()
-
-    // const user = await handleLogin('t@t.com', 'test123')
-    // expect(await handleCreateProject(user, '', 'Something')).toBe('success')
-    // signOut(auth)
+    expect(await screen.findByText('Please enter a project name')).toBeTruthy()
   })
 })

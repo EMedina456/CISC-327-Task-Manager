@@ -6,15 +6,43 @@
 // Import files and dependencies here
 import { render, screen } from '@testing-library/react'
 import React from 'react'
-import { fireEvent } from '@testing-library/react'
 import EditProject from '../components/EditProject'
 import userEvent from '@testing-library/user-event'
 // Modify Project Test
 describe('Modify Project', () => {
+  // Test Data
+  const projects = {
+    project1: {
+      name: 'Project 1',
+      description: 'This is a project',
+      members: {},
+      user_permissions: {
+        user1: 'owner',
+        user4: 'viewer',
+      },
+      tasks: ['1', '2', '3'],
+    },
+    project2: {
+      name: 'Project 2',
+      description: 'This is a project',
+      members: {},
+      user_permissions: {
+        user1: 'owner',
+      },
+      tasks: ['1', '2', '3'],
+    },
+  }
+  const user = {
+    email: 'user1@gmail.com',
+    projects: { project1: 'owner', project2: 'owner' },
+    tasks: ['task1', 'task2'],
+    uid: 'user1',
+    // need to add uid
+  }
   // Render the Member Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<EditProject />)
+    render(<EditProject user={user} project={'project1'} projects={projects} />)
   })
 
   // Setup the test by getting the required fields
@@ -31,7 +59,7 @@ describe('Modify Project', () => {
     return { name, description, submit }
   }
 
-  // Test the addition of a member with valid permissions
+  // Test the edit of a project with valid permissions
   it('Scenario Valid Permissions', async () => {
     // Type in the required test fields
     const { name, description, submit } = setup()
@@ -45,20 +73,26 @@ describe('Modify Project', () => {
 
     // Click the submit button
     await user.click(submit)
+
+    // Check error is not displayed
+    expect(screen.queryByText('Error')).toBeNull()
   })
-  // Test the addition of a member with invalid name
+  // Test the edit of a project with invalid permissions
   it('Scenario Invalid Permissions', async () => {
     // Type in the required test fields
     const { name, description, submit } = setup()
     const user = userEvent.setup()
-    await user.type(name, '')
+    await user.type(name, 'Generic')
     await user.type(description, 'Generic description')
 
     // Check if the values are correct
-    expect(name.value).toBe('')
+    expect(name.value).toBe('Generic')
     expect(description.value).toBe('Generic description')
 
     // Click the submit button
     await user.click(submit)
+
+    // Check error
+    expect(await screen.findByText('Invalid permissions')).toBeTruthy()
   })
 })

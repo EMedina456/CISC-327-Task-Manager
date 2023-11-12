@@ -7,18 +7,40 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import CreateTask from '../components/CreateTask'
-import { fireEvent } from '@testing-library/react'
-import { handleLogin } from './handleLogin'
-import { handleCreateTask } from './handleTaskCreate'
-import { auth } from '../firebase/firebase'
-import { signOut } from 'firebase/auth'
 import userEvent from '@testing-library/user-event'
 // Task Registration Test
 describe('Task Registration', () => {
+  // Test Data
+  const projects = {
+    project1: {
+      name: 'Project 1',
+      description: 'This is a project',
+      members: {},
+      user_permissions: {
+        user1: 'owner',
+      },
+      tasks: ['1', '2', '3'],
+    },
+    project2: {
+      name: 'Project 2',
+      description: 'This is a project',
+      members: {},
+      user_permissions: {
+        user1: 'owner',
+      },
+      tasks: ['1', '2', '3'],
+    },
+  }
+  const user = {
+    email: 'user1@gmail.com',
+    projects: { project1: 'owner', project2: 'owner' },
+    tasks: ['task1', 'task2'],
+    uid: 'user1',
+  }
   // Render the Member Form before each test
   beforeEach(async () => {
     // eslint-disable-next-line testing-library/no-render-in-setup
-    render(<CreateTask />)
+    render(<CreateTask projects={projects} user={user} />)
   })
 
   // Setup the test by getting the required fields
@@ -35,10 +57,8 @@ describe('Task Registration', () => {
     const priority = screen.getByRole('spinbutton', {
       name: /priority/i,
     })
-    const project = screen.getByRole('radio', {
-      name: /project/i,
-    })
-    const deadline = screen.getByLabelText('/\n \n deadline\n \n \n/i')
+    const project = screen.getAllByRole('radio')[0]
+    const deadline = screen.getByAltText(/date/i)
 
     return { name, description, submit, priority, project, deadline }
   }
@@ -48,27 +68,24 @@ describe('Task Registration', () => {
     // Type in the required test fields
     const { name, description, submit, priority, project, deadline } = setup()
     const user = userEvent.setup()
-    await user.type(name, 'Generic name')
+    await user.type(name, 'Generic')
     await user.type(description, 'description')
-    await user.type(priority, 1)
+    await user.type(priority, '1')
     await user.click(project)
     await user.type(deadline, '2024-05-05')
 
     // Check if the values are correct
-    expect(name.value).toBe('Generic name')
+    expect(name.value).toBe('Generic')
     expect(description.value).toBe('description')
     expect(priority.value).toBe('1')
-    expect(project.value).toBe('project')
+    expect(project.value).toBe('project1')
     expect(deadline.value).toBe('2024-05-05')
 
     // Click the submit button
     await user.click(submit)
-    // const result = await handleLogin('t@t.com', 'test123')
 
-    // // Check if the task was added
-    // expect(result.code).toBe('success')
-    // expect(await handleCreateTask(result, '', 'Something')).toBe('success')
-    // signOut(auth)
+    // Check error is displayed
+    expect(await screen.findByText('Invalid permissions')).toBeTruthy()
   })
 
   // Test the registration of a task with valid permissions
@@ -77,8 +94,8 @@ describe('Task Registration', () => {
     const task = {
       name: 'Generic name',
       description: 'description',
-      priority: 1,
-      project: 'project',
+      priority: '1',
+      project: 'project1',
       deadline: '2024-05-05',
     }
     // Type in the required test fields
@@ -86,6 +103,7 @@ describe('Task Registration', () => {
     const user = userEvent.setup()
     await user.type(name, task.name)
     await user.type(description, task.description)
+    await user.type(priority, task.priority)
     await user.click(project)
     await user.type(deadline, task.deadline)
 
@@ -93,17 +111,14 @@ describe('Task Registration', () => {
     expect(name.value).toBe('Generic name')
     expect(description.value).toBe('description')
     expect(priority.value).toBe('1')
-    expect(project.value).toBe('project')
+    expect(project.value).toBe('project1')
     expect(deadline.value).toBe('2024-05-05')
 
     // Click the submit button
     await user.click(submit)
-    // const result = await handleLogin('t@t.com', 'test123')
 
-    // // Check if the task was added
-    // expect(result.code).toBe('success')
-    // expect(await handleCreateTask(task, result)).toBe('success')
-    // signOut(auth)
+    // Check error is not displayed
+    expect(screen.queryByText('Invalid permissions')).toBeNull()
   })
   // Test the registration of a task with invalid permissions
   it('Scenario Already Created', async () => {
@@ -111,8 +126,8 @@ describe('Task Registration', () => {
     const task = {
       name: 'Generic name',
       description: 'description',
-      priority: 1,
-      project: 'project',
+      priority: '1',
+      project: 'project1',
       deadline: '2024-05-05',
     }
     // Type in the required test fields
@@ -128,16 +143,138 @@ describe('Task Registration', () => {
     expect(name.value).toBe('Generic name')
     expect(description.value).toBe('description')
     expect(priority.value).toBe('1')
-    expect(project.value).toBe('project')
+    expect(project.value).toBe('project1')
     expect(deadline.value).toBe('2024-05-05')
 
     // Click the submit button
     await user.click(submit)
-    // const result = await handleLogin('t@t.com', 'test123')
+  })
+  it('Scenario Empty Name', async () => {
+    // Create a task
+    const task = {
+      name: '',
+      description: 'description',
+      priority: '1',
+      project: 'project1',
+      deadline: '2024-05-05',
+    }
+    // Type in the required test fields
+    const { name, description, submit, priority, project, deadline } = setup()
+    const user = userEvent.setup()
+    await user.clear(name)
+    await user.type(description, task.description)
+    await user.type(priority, task.priority)
+    await user.click(project, task.project)
+    await user.type(deadline, task.deadline)
 
-    // // Check if the task was added
-    // expect(result.code).toBe('success')
-    // expect(await handleCreateTask(task, result)).not.toEqual('success')
-    // signOut(auth)
+    // Check if the values are correct
+    expect(name.value).toBe('')
+    expect(description.value).toBe('description')
+    expect(priority.value).toBe('1')
+    expect(project.value).toBe('project1')
+    expect(deadline.value).toBe('2024-05-05')
+
+    // Click the submit button
+    await user.click(submit)
+
+    // Check error is displayed
+    expect(await screen.findByText('Please enter a task name')).toBeTruthy()
+  })
+  it('Scenario Empty Priority', async () => {
+    // Create a task
+    const task = {
+      name: 'name',
+      description: 'description',
+      priority: '',
+      project: 'project1',
+      deadline: '2024-05-05',
+    }
+    // Type in the required test fields
+    const { name, description, submit, priority, project, deadline } = setup()
+    const user = userEvent.setup()
+    await user.type(name, task.name)
+    await user.type(description, task.description)
+    await user.clear(priority)
+    await user.click(project, task.project)
+    await user.type(deadline, task.deadline)
+
+    // Check if the values are correct
+    expect(name.value).toBe('name')
+    expect(description.value).toBe('description')
+    expect(priority.value).toBe('')
+    expect(project.value).toBe('project1')
+    expect(deadline.value).toBe('2024-05-05')
+
+    // Click the submit button
+    await user.click(submit)
+
+    // Check error is displayed
+    expect(await screen.findByText('Please enter a priority')).toBeTruthy()
+  })
+  it('Scenario Negative Priority', async () => {
+    // Create a task
+    const task = {
+      name: 'name',
+      description: 'description',
+      priority: '-1',
+      project: 'project1',
+      deadline: '2024-05-05',
+    }
+    // Type in the required test fields
+    const { name, description, submit, priority, project, deadline } = setup()
+    const user = userEvent.setup()
+    await user.type(name, task.name)
+    await user.type(description, task.description)
+    await user.type(priority, task.priority)
+    await user.click(project, task.project)
+    await user.type(deadline, task.deadline)
+
+    // Check if the values are correct
+    expect(name.value).toBe('name')
+    expect(description.value).toBe('description')
+    expect(priority.value).toBe('-1')
+    expect(project.value).toBe('project1')
+    expect(deadline.value).toBe('2024-05-05')
+
+    // Click the submit button
+    await user.click(submit)
+
+    // Check error is displayed
+    expect(
+      await screen.findByText('Please enter a positive priority')
+    ).toBeTruthy()
+  })
+  it('Scenario Date before Today', async () => {
+    // Create a task
+    const task = {
+      name: 'name',
+      description: 'description',
+      priority: '1',
+      project: 'project1',
+      deadline: '2022-05-05',
+    }
+    // Type in the required test fields
+    const { name, description, submit, priority, project, deadline } = setup()
+    const user = userEvent.setup()
+    await user.type(name, task.name)
+    await user.type(description, task.description)
+    await user.type(priority, task.priority)
+    await user.click(project, task.project)
+    await user.type(deadline, task.deadline)
+
+    // Check if the values are correct
+    expect(name.value).toBe('name')
+    expect(description.value).toBe('description')
+    expect(priority.value).toBe('1')
+    expect(project.value).toBe('project1')
+    expect(deadline.value).toBe('2022-05-05')
+
+    // Click the submit button
+    await user.click(submit)
+
+    // Check error is displayed
+    expect(
+      await screen.findByText('Please enter a future deadline')
+    ).toBeTruthy()
   })
 })

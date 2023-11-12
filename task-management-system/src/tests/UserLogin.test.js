@@ -52,11 +52,6 @@ describe('Login', () => {
 
     // Check the error message
     expect(await screen.findAllByText('Invalid login credentials')).toBeTruthy()
-
-    // Check if the user was signed in
-    // expect(await handleLogin('user_dne@gmail.com', 'password')).toBe(
-    //   'auth/invalid-login-credentials'
-    // )
   })
   it('Password Incorrect', async () => {
     // Type in the required test fields
@@ -74,10 +69,6 @@ describe('Login', () => {
 
     // Check the error message
     expect(await screen.findAllByText('Invalid login credentials')).toBeTruthy()
-    // Check if the user was signed in
-    // expect(await handleLogin('t@t.com', 'wrongpassword')).toBe(
-    //   'auth/invalid-login-credentials'
-    // )
   })
   it('Valid Credentials', async () => {
     // Type in the required test fields
@@ -96,8 +87,5 @@ describe('Login', () => {
 
     // Check that there is no error message
     expect(screen.queryByText('Invalid login credentials')).toBeNull()
-    // Check if the user was signed in
-    // const result = await handleLogin('t@t.com', 'test123')
-    // expect(result.code).toBe('success')
   })
 })

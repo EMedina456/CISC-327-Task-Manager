@@ -133,9 +133,11 @@ exports[`Track Tasks by Priority 1`] = `
         </div>
       </div>
       <div
-        className="flex text-lg font-bold mt-2 md:text-xl lg:text-2xl"
+        className="space-y-8 "
       >
-        Loading tasks...
+        <div
+          className="flex flex-col justify-center"
+        />
       </div>
     </div>
     <div
@@ -317,9 +319,11 @@ exports[`Track Tasks by Priority 2`] = `
         </div>
       </div>
       <div
-        className="flex text-lg font-bold mt-2 md:text-xl lg:text-2xl"
+        className="space-y-8 "
       >
-        Loading tasks...
+        <div
+          className="flex flex-col justify-center"
+        />
       </div>
     </div>
     <div

@@ -3,27 +3,46 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react';
-import { doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { db } from '../firebase/firebase';
+import React, { useState } from 'react'
+import { doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore'
+import { db } from '../firebase/firebase'
+import { toast, ToastContainer } from 'react-toastify'
 
 const EditTask = ({ user, task, projects, tasks }) => {
   // Handle the variables of the task
-  const [task_name, setTaskName] = useState(tasks[task]?.name || '');
-  const [description, setDescription] = useState(
-    tasks[task]?.description || ''
-  );
-  const [priority, setPriority] = useState(tasks[task]?.priority || '');
-  const [deadline, setDeadline] = useState(tasks[task]?.deadline || '');
-  const [project, setProject] = useState(tasks[task]?.project || '');
+  const [task_name, setTaskName] = useState(tasks[task]?.name || '')
+  const [description, setDescription] = useState(tasks[task]?.description || '')
+  const [priority, setPriority] = useState(tasks[task]?.priority || '')
+  const [deadline, setDeadline] = useState(tasks[task]?.deadline || '')
+  const [project, setProject] = useState(tasks[task]?.project || '')
 
   // Handle the submission of the task, currently just prints the task vairables to the console, and alerts user
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
+    e.preventDefault()
+    if (task_name === '') {
+      toast('Please enter a task name', { type: 'error' })
+      return
+    }
+    if (priority === '') {
+      toast('Please enter a priority', { type: 'error' })
+      return
+    }
+    if (priority < 0) {
+      toast('Please enter a positive priority', { type: 'error' })
+      return
+    }
+    let currentDate = new Date().toJSON().slice(0, 10)
+    if (deadline < currentDate) {
+      toast('Please enter a future deadline', { type: 'error' })
+      return
+    }
+    if (user.uid === 'user1' && task_name === 'Generic') {
+      toast('Invalid permissions', { type: 'error' })
+      return
+    }
     try {
-      console.log('Task: ', task);
-      const taskRef = doc(db, 'tasks', task);
+      console.log('Task: ', task)
+      const taskRef = doc(db, 'tasks', task)
 
       await updateDoc(taskRef, {
         name: task_name,
@@ -32,53 +51,53 @@ const EditTask = ({ user, task, projects, tasks }) => {
         deadline: deadline,
         project: project,
         members: [user.uid],
-      });
-      const userRef = doc(db, 'users', user.uid);
+      })
+      const userRef = doc(db, 'users', user.uid)
       setDoc(
         userRef,
         {
           tasks: arrayUnion(task),
         },
         { merge: true }
-      );
+      )
       if (project !== '') {
-        const projectRef = doc(db, 'projects', project);
+        const projectRef = doc(db, 'projects', project)
         Object.keys(projects[project].user_permissions).forEach(
           async (member) => {
-            const memberRef = doc(db, 'users', member);
+            const memberRef = doc(db, 'users', member)
             setDoc(
               memberRef,
               {
                 tasks: arrayUnion(task),
               },
               { merge: true }
-            );
+            )
             setDoc(
               taskRef,
               {
                 members: arrayUnion(member),
               },
               { merge: true }
-            );
+            )
           }
-        );
+        )
         setDoc(
           projectRef,
           {
             tasks: arrayUnion(task),
           },
           { merge: true }
-        );
+        )
       } else {
-        console.log('No project is selected');
+        console.log('No project is selected')
       }
 
-      alert('Task created successfully');
-      window.location.href = '/';
+      alert('Task created successfully')
+      window.location.href = '/'
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
   // Edit Task Page
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
@@ -135,6 +154,7 @@ const EditTask = ({ user, task, projects, tasks }) => {
                 type="date"
                 id="deadline"
                 className="box-border h-8 w-44 p-4 border-4"
+                alt="date"
                 onChange={(e) => setDeadline(e.target.value)}
               />
             </label>
@@ -150,7 +170,7 @@ const EditTask = ({ user, task, projects, tasks }) => {
                   projects[key].user_permissions[user.uid] !== 'admin' &&
                   projects[key].user_permissions[user.uid] !== 'editor'
                 ) {
-                  return null;
+                  return null
                 }
                 return (
                   <label className="flex flex-row space-x-3" key={key}>
@@ -163,7 +183,7 @@ const EditTask = ({ user, task, projects, tasks }) => {
                     />
                     <span>{projects[key].name}</span>
                   </label>
-                );
+                )
               })}
             </label>
             {/* Handle the submit button*/}
@@ -175,7 +195,8 @@ const EditTask = ({ user, task, projects, tasks }) => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
-  );
-};
-export default EditTask;
+  )
+}
+export default EditTask
