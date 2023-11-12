@@ -42,6 +42,15 @@ const CreateTask = ({ user, projects }) => {
       return
     }
 
+    if (task_name === '') {
+      alert('Please enter a task name');
+      return;
+    }
+    if (priority === '') {
+      alert('Please enter a priority');
+      return;
+    }
+
     try {
       // Create a task collection
       const task = collection(db, 'tasks')

@@ -15,10 +15,11 @@ const CreateProject = ({ user }) => {
 
   // Handle the submission of the project name and description, currently just console logs them
   const handleSubmit = async (e) => {
-    e.preventDefault()
+
+    e.preventDefault();
     if (project_name === '') {
-      toast('Please enter a project name', { type: 'error' })
-      return
+      toast('Please enter a project name', { type: 'error' });
+      return;
     }
     try {
       const project = collection(db, 'projects')
