@@ -3,29 +3,40 @@
 // Run Intention: Run with the other test cases
 
 // Import files and dependencies here
-import { doc, toast, addDoc, setDoc, collection } from './FirebaseFunctionsTest'
-import { db, user } from './FirebaseDBTest'
-jest.mock('./FirebaseFunctionsTest')
+import {
+  doc,
+  toast,
+  addDoc,
+  setDoc,
+  collection,
+} from './FirebaseFunctionsTest';
+import { db, user } from './FirebaseDBTest';
+jest.mock('./FirebaseFunctionsTest');
 
 // Create Project Test Function
 const handleSubmit = async ({ project_name, description, user }) => {
+  // Check if project name is empty
   if (project_name === '') {
-    toast('Please enter a project name', { type: 'error' })
-    return
+    toast('Please enter a project name', { type: 'error' });
+    return;
   }
+
   try {
-    const project = collection(db, 'projects')
+    // Add project to database
+    const project = collection(db, 'projects');
     const proj_data = {
       name: project_name,
       description: description,
       tasks: [],
       user_permissions: { 'user.uid': 'owner' },
-    }
+    };
 
-    const projRef = await addDoc(project, proj_data)
-    const proj_id = projRef.id
+    const projRef = await addDoc(project, proj_data);
+    const proj_id = projRef.id;
+
+    // Check if user is signed in
     if (user) {
-      const userRef = doc(db, 'users', user.uid)
+      const userRef = doc(db, 'users', user.uid);
       setDoc(
         userRef,
         {
@@ -34,68 +45,70 @@ const handleSubmit = async ({ project_name, description, user }) => {
           },
         },
         { merge: true }
-      )
+      );
     } else {
-      console.log('No user is signed in')
+      console.log('No user is signed in');
     }
-    toast('Project created successfully')
-    window.location.href = '/'
+
+    // Redirect to home page
+    toast('Project created successfully');
+    window.location.href = '/';
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 // Create Project Test
 describe('White Box Test: Create Project', () => {
   it('Path 1: Project name is empty', async () => {
     // Test Data
-    const project_name = ''
-    const description = 'This is a project'
+    const project_name = '';
+    const description = 'This is a project';
     addDoc.mockImplementation(() => {
-      return { id: 'project1' }
-    })
-    await handleSubmit({ project_name, description, user })
+      return { id: 'project1' };
+    });
+    await handleSubmit({ project_name, description, user });
     // Expect toast to be called with an error
     expect(toast).toHaveBeenCalledWith('Please enter a project name', {
       type: 'error',
-    })
-  })
+    });
+  });
   it('Path 2: Project name is not empty', async () => {
     // Test Data
-    const project_name = 'Project 1'
-    const description = 'This is a project'
-    await handleSubmit({ project_name, description, user })
+    const project_name = 'Project 1';
+    const description = 'This is a project';
+    await handleSubmit({ project_name, description, user });
     // Expect toast to be called with a success
-    expect(toast).toHaveBeenCalledWith('Project created successfully')
-  })
+    expect(toast).toHaveBeenCalledWith('Project created successfully');
+  });
   it('Path 3: User is not signed in', async () => {
     // Test Data
-    const project_name = 'Project 1'
-    const description = 'This is a project'
-    const user = null
-    const consoleLogSpy = jest.spyOn(console, 'log')
-    await handleSubmit({ project_name, description, user })
+    const project_name = 'Project 1';
+    const description = 'This is a project';
+    const user = null;
+    const consoleLogSpy = jest.spyOn(console, 'log');
+    await handleSubmit({ project_name, description, user });
     // Expect console log to be called with an error
-    expect(consoleLogSpy).toHaveBeenCalledWith('No user is signed in')
-  })
+    expect(consoleLogSpy).toHaveBeenCalledWith('No user is signed in');
+  });
   it('Path 4: User is signed in', async () => {
     // Test Data
-    const project_name = 'Project 1'
-    const description = 'This is a project'
-    await handleSubmit({ project_name, description, user })
+    const project_name = 'Project 1';
+    const description = 'This is a project';
+    await handleSubmit({ project_name, description, user });
     // Expect toast to be called with a success
-    expect(toast).toHaveBeenCalledWith('Project created successfully')
-  })
+    expect(toast).toHaveBeenCalledWith('Project created successfully');
+  });
   it('Path 5: Error in try block', async () => {
     // Test Data
-    const project_name = 'Project 1'
-    const description = 'This is a project'
-    const consoleLogSpy = jest.spyOn(console, 'log')
+    const project_name = 'Project 1';
+    const description = 'This is a project';
+    const consoleLogSpy = jest.spyOn(console, 'log');
     addDoc.mockImplementation(() => {
-      throw new Error('Error')
-    })
-    await handleSubmit({ project_name, description, user })
+      throw new Error('Error');
+    });
+    await handleSubmit({ project_name, description, user });
     // Expect console log to be called with an error
-    expect(consoleLogSpy).toHaveBeenCalledWith(Error('Error'))
-  })
-})
+    expect(consoleLogSpy).toHaveBeenCalledWith(Error('Error'));
+  });
+});

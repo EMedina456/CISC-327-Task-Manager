@@ -12,6 +12,7 @@ const project = 'project1';
 
 // Edit Project Test Function
 const handleSubmit = async ({ project_name, description, user }) => {
+  // Check if project name is empty
   if (project_name === projects[project]?.name) {
     toast('Project has the same name', { type: 'info' });
   }
@@ -21,11 +22,13 @@ const handleSubmit = async ({ project_name, description, user }) => {
     return;
   }
   try {
+    // Update project in database
     const projectRef = doc(db, 'projects', project);
     await updateDoc(projectRef, {
       name: project_name,
       description: description,
     });
+    // Redirect to home page
     console.log('Document updated with ID: ', project);
     window.location.href = '/';
   } catch (error) {
