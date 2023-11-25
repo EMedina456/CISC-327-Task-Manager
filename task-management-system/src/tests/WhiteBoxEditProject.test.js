@@ -16,6 +16,11 @@ const handleSubmit = async ({ project_name, description, user }) => {
   if (project_name === projects[project]?.name) {
     toast('Project has the same name', { type: 'info' });
   }
+  // Check if project name is empty
+  if (project_name === '') {
+    toast('Please enter a project name', { type: 'error' });
+    return;
+  }
   // Check if user has permissions
   if (project_name === 'Generic' && user.uid === 'user1') {
     toast('Invalid permissions', { type: 'error' });
