@@ -17,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest -t 'White Box Test: Create Project' --silent --updateSnapshot --setupFiles=dotenv/config",
+    "test": "jest --silent --updateSnapshot --setupFiles=dotenv/config",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
