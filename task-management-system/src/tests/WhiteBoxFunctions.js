@@ -1,14 +1,14 @@
 const toast = () => {
-  return 'Error'
-}
+  return 'Error';
+};
 const doc = () => {
-  return 'Error'
-}
+  return 'Error';
+};
 const updateDoc = ({ ref, obj }) => {
-  console.log(obj)
-}
-const addDoc = () => {}
-const setDoc = () => {}
-const collection = () => {}
+  console.log(obj);
+};
+const addDoc = () => {};
+const setDoc = () => {};
+const collection = () => {};
 
-export { toast, doc, updateDoc, addDoc, setDoc, collection }
+export { toast, doc, updateDoc, addDoc, setDoc, collection };
