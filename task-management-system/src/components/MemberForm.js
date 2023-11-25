@@ -339,6 +339,12 @@ const MemberForm = ({ title, projects, project, task, tasks, user }) => {
         })
         return
       }
+      if (member === 'user94') {
+        toast('You do not have permission to remove a member', {
+          type: 'error',
+        })
+        return
+      }
     }
   }
 
