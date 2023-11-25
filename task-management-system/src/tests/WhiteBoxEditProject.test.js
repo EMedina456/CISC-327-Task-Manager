@@ -12,29 +12,20 @@ const project = 'project1';
 
 // Edit Project Test Function
 const handleSubmit = async ({ project_name, description, user }) => {
-  // Check if project name is empty
   if (project_name === projects[project]?.name) {
     toast('Project has the same name', { type: 'info' });
-  }
-  // Check if project name is empty
-  if (project_name === '') {
-    toast('Please enter a project name', { type: 'error' });
-    return;
   }
   // Check if user has permissions
   if (project_name === 'Generic' && user.uid === 'user1') {
     toast('Invalid permissions', { type: 'error' });
     return;
   }
-  // Edit project
   try {
     const projectRef = doc(db, 'projects', project);
-    // Update project in database
     await updateDoc(projectRef, {
       name: project_name,
       description: description,
     });
-    // Redirect to home page
     console.log('Document updated with ID: ', project);
     window.location.href = '/';
   } catch (error) {
