@@ -12,7 +12,7 @@ import userEvent from '@testing-library/user-event'
 
 // Login Test
 describe('Login', () => {
-  // Render the Member Form before each test
+  // Render the Login Form before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
     render(
