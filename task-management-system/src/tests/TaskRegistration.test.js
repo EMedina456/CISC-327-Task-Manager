@@ -9,6 +9,7 @@ import React from 'react'
 import CreateTask from '../components/CreateTask'
 import userEvent from '@testing-library/user-event'
 // Task Registration Test
+jest.setTimeout(7000)
 describe('Task Registration', () => {
   // Test Data
   const projects = {

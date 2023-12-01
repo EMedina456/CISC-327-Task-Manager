@@ -64,6 +64,8 @@ describe('Modify Project', () => {
     // Type in the required test fields
     const { name, description, submit } = setup()
     const user = userEvent.setup()
+    await user.clear(name)
+    await user.clear(description)
     await user.type(name, 'Project')
     await user.type(description, 'Generic description')
 
@@ -82,6 +84,8 @@ describe('Modify Project', () => {
     // Type in the required test fields
     const { name, description, submit } = setup()
     const user = userEvent.setup()
+    await user.clear(name)
+    await user.clear(description)
     await user.type(name, 'Generic')
     await user.type(description, 'Generic description')
 

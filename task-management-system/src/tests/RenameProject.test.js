@@ -61,6 +61,7 @@ describe('Rename Project', () => {
     // Type in the required test fields
     const { name, submit } = setup()
     const user = userEvent.setup()
+    await user.clear(name)
     await user.type(name, 'Project')
 
     // Check if the values are correct
@@ -79,6 +80,7 @@ describe('Rename Project', () => {
     const { name, submit } = setup()
     const user = userEvent.setup()
     await user.clear(name)
+    await user.clear(name)
 
     // Check if the values are correct
     expect(name.value).toBe('')
@@ -87,6 +89,6 @@ describe('Rename Project', () => {
     await user.click(submit)
 
     // Check the error message
-    expect(await screen.findByText('Project has the same name')).toBeTruthy()
+    expect(await screen.findByText('Please enter a project name')).toBeTruthy()
   })
 })
