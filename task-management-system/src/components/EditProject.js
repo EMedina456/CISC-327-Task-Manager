@@ -3,40 +3,44 @@
 // Run Intention: Run with the entire website
 
 // Import files and dependencies here
-import React, { useState } from 'react'
-import { doc, updateDoc } from 'firebase/firestore'
-import { db } from '../firebase/firebase'
-import { toast, ToastContainer } from 'react-toastify'
+import React, { useState } from 'react';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
+import { toast, ToastContainer } from 'react-toastify';
 
 const EditProject = ({ user, project, projects }) => {
   // Handles the variables for the project name and description
-  const [project_name, setProjectName] = useState(projects[project]?.name || '')
+  const [projectName, setProjectName] = useState(projects[project]?.name || '');
   const [description, setDescription] = useState(
     projects[project]?.description || ''
-  )
+  );
 
   // Handles the submission of the project name and description, currently just logs them, and alerts user
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (project_name === projects[project]?.name) {
-      toast('Project has the same name', { type: 'info' })
+    e.preventDefault();
+    if (projectName === projects[project]?.name) {
+      toast('Project has the same name', { type: 'info' });
     }
-    if (project_name === 'Generic' && user.uid === 'user1') {
-      toast('Invalid permissions', { type: 'error' })
-      return
+    if (projectName === 'Generic' && user.uid === 'user1') {
+      toast('Invalid permissions', { type: 'error' });
+      return;
+    }
+    if (projectName === '') {
+      toast('Please enter a project name', { type: 'error' });
+      return;
     }
     try {
-      const projectRef = doc(db, 'projects', project)
+      const projectRef = doc(db, 'projects', project);
       await updateDoc(projectRef, {
-        name: project_name,
+        name: projectName,
         description: description,
-      })
-      console.log('Document updated with ID: ', project)
-      window.location.href = '/'
+      });
+      console.log('Document updated with ID: ', project);
+      window.location.href = '/';
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   // Edit Project Page
   return (
     <div className="flex flex-col md:flex-row w-[80%]">
@@ -57,6 +61,7 @@ const EditProject = ({ user, project, projects }) => {
                 type="text"
                 id="project_name"
                 className="box-border h-8 w-44 p-4 border-4"
+                value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
               />
             </label>
@@ -69,6 +74,7 @@ const EditProject = ({ user, project, projects }) => {
                 type="text"
                 id="description"
                 className="box-border h-8 w-44 p-4 border-4"
+                value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             </label>
@@ -83,6 +89,6 @@ const EditProject = ({ user, project, projects }) => {
       </div>
       <ToastContainer />
     </div>
-  )
-}
-export default EditProject
+  );
+};
+export default EditProject;

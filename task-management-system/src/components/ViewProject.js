@@ -18,7 +18,7 @@ import RemoveMember from './RemoveMember';
 import TransferOwnership from './TransferOwnership';
 import ManageMember from './ManageMember';
 
-import { doc, deleteDoc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, deleteDoc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 const ViewProject = ({
@@ -42,13 +42,7 @@ const ViewProject = ({
       const projectRef = doc(db, 'projects', key);
       for (let task in projects[key].tasks) {
         const taskRef = doc(db, 'tasks', task);
-        await setDoc(
-          taskRef,
-          {
-            project: '',
-          },
-          { merge: true }
-        );
+        await deleteDoc(taskRef);
       }
       for (let member in projects[key].user_permissions) {
         const memberRef = doc(db, 'users', member);
