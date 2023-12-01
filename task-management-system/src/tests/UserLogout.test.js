@@ -17,7 +17,7 @@ describe('Logout', () => {
     render(<Home />)
   })
 
-  // Test the addition of a member with valid permissions
+  // Log out the user
   it('Scenario Valid Permissions', async () => {
     // Logout
     user.click(

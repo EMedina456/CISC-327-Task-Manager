@@ -89,6 +89,10 @@ describe('Task Edit', () => {
     // Type in the required test fields
     const { name, description, submit, priority, project, deadline } = setup()
     const user = userEvent.setup()
+    await user.clear(name)
+    await user.clear(description)
+    await user.clear(priority)
+    await user.clear(deadline)
     await user.type(name, 'Generic')
     await user.type(description, 'Generic description')
     await user.type(priority, '1')
@@ -113,6 +117,10 @@ describe('Task Edit', () => {
     // Type in the required test fields
     const { name, description, submit, priority, project, deadline } = setup()
     const user = userEvent.setup()
+    await user.clear(name)
+    await user.clear(description)
+    await user.clear(priority)
+    await user.clear(deadline)
     await user.type(name, 'Generic name')
     await user.type(description, 'Generic description')
     await user.type(priority, '1')
