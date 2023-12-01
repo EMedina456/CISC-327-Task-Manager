@@ -8,9 +8,9 @@ import { render, screen } from '@testing-library/react'
 import React from 'react'
 import Home from '../pages/Home'
 
-// Logout Test
+// Check In Test
 describe('Check In', () => {
-  // Render the Home Bage before each test
+  // Render the Home Page before each test
   beforeEach(() => {
     // eslint-disable-next-line testing-library/no-render-in-setup
     render(<Home />)
